@@ -364,7 +364,6 @@ if (isset($_POST["editprd"])) {
                                 Category <br>
                                 <select class="form-control" aria-label="Default select example" name="category">
                                     <option>none</option>
-                                    <option value="none">None</option>
                                     <?php foreach ($category as $ctg): ?>
                                         <?php if ($ctg['category'] == $prd['category']): ?>
                                             <option value="<?= $ctg['category']; ?>" selected><?= $ctg['category']; ?></option>
