@@ -391,4 +391,13 @@ function editclr($data)
     mysqli_query($conn,$query);
     return mysqli_affected_rows($conn);
 }
+
+function deleteclr($id)
+{
+    global $conn;
+
+    $query = "DELETE FROM `color` WHERE `id`=$id;";
+    mysqli_query($conn,$query);
+    return mysqli_affected_rows($conn);
+}
 ?>
