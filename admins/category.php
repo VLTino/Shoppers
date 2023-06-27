@@ -69,7 +69,7 @@ if (isset($_POST["ctg"])) {
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="admins.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -110,7 +110,7 @@ if (isset($_POST["ctg"])) {
                         <a class="collapse-item" href="listprd.php">List Product</a>
                         <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item active" href="category.php">Category</a>
-                        
+                        <a class="collapse-item" href="color.php">Color</a> 
                     </div>
                 </div>
             </li>

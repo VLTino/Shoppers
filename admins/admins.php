@@ -93,7 +93,7 @@ require 'functions.php';
                         <a class="collapse-item" href="listprd.php">List Product</a>
                         <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
-                        
+                        <a class="collapse-item" href="color.php">Color</a> 
                     </div>
                 </div>
             </li>

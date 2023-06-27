@@ -8,18 +8,19 @@ if (!isset($_SESSION["login"])) {
 
 require 'functions.php';
 
-$product = query("SELECT * FROM `product` ");
+$id = $_GET["id"];
+$color = query("SELECT * FROM `color` WHERE `id`=$id ");
 
-if (isset($_POST["prd"])) {
-    if (plusctg($_POST)) {
+if (isset($_POST["clr"])) {
+    if (editclr($_POST)) {
         echo "<script>
-        alert('data berhasil ditambahkan');
-        document.location.href = 'product.php';
+        alert('data berhasil diedit');
+        document.location.href = 'color.php';
         </script>";
     } else {
         echo "<script>
-        alert('data gagal ditambahkan');
-        document.location.href = 'product.php';
+        alert('data gagal diedit');
+        document.location.href = 'color.php';
         </script>";
     }
 }
@@ -47,6 +48,18 @@ if (isset($_POST["prd"])) {
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- colorpicker -->
+    
+    <link rel="stylesheet" type="text/css" href="spectrum/dist/spectrum.css">
+    <link rel="stylesheet" type="text/css" href="spectrum/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="spectrum/docs/highlight/styles/default.css">
+    <link rel="stylesheet" type="text/css" href="spectrum/docs/highlight/styles/monokai-sublime.css">
+    <script type="text/javascript" src="spectrum/docs/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="spectrum/dist/spectrum.js"></script>
+    <script type='text/javascript' src='spectrum/docs/toc.js'></script>
+    <script type='text/javascript' src='spectrum/docs/docs.js'></script>
+    <script type='text/javascript' src='spectrum/docs/highlight/highlight.pack.js'></script>
+</head>
 
 <body id="page-top">
 
@@ -105,10 +118,11 @@ if (isset($_POST["prd"])) {
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
-                        <a class="collapse-item active" href="listprd.php">List Product</a>
+                        <a class="collapse-item" href="listprd.php">List Product</a>
                         <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
-                        <a class="collapse-item" href="color.php">Color</a> 
+                        <a class="collapse-item active" href="color.php">Color</a>
+
                     </div>
                 </div>
             </li>
@@ -335,72 +349,28 @@ if (isset($_POST["prd"])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Category</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Color</h1>
                     </div>
-                    <h5>List Product</h5>
+                    <h5>Edit Color</h5>
+                    <?php foreach ($color as $clr):?>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" id="" value="<?= $clr["id"]; ?>">
+                        <div class="form-group">
+                            Name Color
+                            <input type="text" name="name" id="" class="form-control" value="<?= $clr["color"]; ?>">
+                            Color Picker <br>
+                            <input id="colorpicker" name="color" type="text" value="<?= $clr["codeclr"]; ?>"/><br>
+                            <script>
+                                $("#colorpicker").spectrum({
+                                    color: ""
+                                });
+                            </script>
+                            <button type="submit" class="btn btn-primary" name="clr">Submit</button>
+                        </div>
+                    </form>
+                    <?php endforeach; ?>
 
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Short</th>
-                                <th scope="col">About Product</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Color</th>
-                                <th scope="col">Size</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($product as $prd): ?>
-                                <tr>
-                                    <td>
-                                        <?= $i++; ?>
-                                    </td>
-                                    <td><img src="../images/<?= $prd["gambar"]; ?>" alt="" srcset="" style="width:200px;">
-                                    </td>
-                                    <td>
-                                        <?= $prd["name"]; ?>
-                                    </td>
-                                    <td>
-                                        <?php $priceFromDatabase = $prd["price"];
-                                        $formattedPrice = "Rp " . number_format($priceFromDatabase, 0, ',', '.');
-                                        echo $formattedPrice; ?>
-                                    </td>
-                                    <td>
-                                        <?= $prd["short"]; ?>
-                                    </td>
-                                    <td>
-                                        Hidden
-                                    </td>
-                                    <td>
-                                        <?= $prd["category"]; ?>
-                                    </td>
-                                    <td>
-                                        <?php 
-                                        $color = $prd["color"];
-                                        $color= str_replace('[', '', $color);
-                                        $color= str_replace(']', '', $color);
-                                        $color= str_replace('"', '', $color);
-                                        echo $color; ?>
-                                    </td>
-                                    <td>
-                                        <?= $prd["size"]; ?>
-                                    </td>
-                                    <td>
-                                    <a href="editprd.php?id=<?= $prd["id"];?>" class="btn-circle btn-success btn-sm"><i
-                                                class="fas fa-pen"></i></a>
-                                        <a onclick="return confirm('Apakah kamu yakin ingin mengapus ini?')" href="deleteprd.php?id=<?= $prd["id"];?>" class="btn-circle btn-danger btn-sm"><i
-                                                class="fas fa-trash-alt"></i></a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                    
 
                 </div>
                 <!-- /.container-fluid -->
@@ -465,7 +435,7 @@ if (isset($_POST["prd"])) {
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
+    
 </body>
 
 </html>

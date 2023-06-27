@@ -366,4 +366,29 @@ function deleteprd($id)
     mysqli_query($conn,$query);
     return mysqli_affected_rows($conn);
 }
+
+function plusclr($data)
+{
+    global $conn;
+
+    $color = htmlspecialchars($data["name"]);
+    $code = $data["color"];
+
+    $query = "INSERT INTO `color` VALUES (NULL,'$color','$code')";
+    mysqli_query($conn,$query);
+    return mysqli_affected_rows($conn);
+}
+
+function editclr($data)
+{
+    global $conn;
+
+    $id = $data["id"];
+    $color = htmlspecialchars($data["name"]);
+    $code = $data["color"];
+
+    $query = "UPDATE `color` SET `color`='$color',`codeclr`='$code' WHERE `id`=$id";
+    mysqli_query($conn,$query);
+    return mysqli_affected_rows($conn);
+}
 ?>

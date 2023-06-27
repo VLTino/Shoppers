@@ -71,7 +71,7 @@ if (isset($_POST["prd"])) {
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="admins.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -112,7 +112,7 @@ if (isset($_POST["prd"])) {
                         <a class="collapse-item" href="listprd.php">List Product</a>
                         <a class="collapse-item active" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
-                        
+                        <a class="collapse-item" href="color.php">Color</a> 
                     </div>
                 </div>
             </li>
@@ -339,9 +339,9 @@ if (isset($_POST["prd"])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Category</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Product</h1>
                     </div>
-                    <h5>Plus Category</h5>
+                    <h5>Plus Product</h5>
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             Image <br>
