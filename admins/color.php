@@ -121,6 +121,7 @@ if (isset($_POST["clr"])) {
                         <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
                         <a class="collapse-item active" href="color.php">Color</a>
+                        <a class="collapse-item" href="size.php">Size</a>
 
                     </div>
                 </div>

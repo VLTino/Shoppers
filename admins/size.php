@@ -8,22 +8,18 @@ if (!isset($_SESSION["login"])) {
 
 require 'functions.php';
 
-$category = query("SELECT * FROM `category` ");
-$color = query("SELECT * FROM `color` ");
 $size = query("SELECT * FROM `size` ");
-$id = $_GET["id"];
-$product = query("SELECT * FROM `product` WHERE `id` = $id ");
 
-if (isset($_POST["editprd"])) {
-    if (editprd($_POST)) {
+if (isset($_POST["sz"])) {
+    if (plussize($_POST)) {
         echo "<script>
         alert('data berhasil ditambahkan');
-        document.location.href = 'listprd.php';
+        document.location.href = 'size.php';
         </script>";
     } else {
         echo "<script>
         alert('data gagal ditambahkan');
-        document.location.href = 'listprd.php';
+        document.location.href = 'size.php';
         </script>";
     }
 }
@@ -50,8 +46,18 @@ if (isset($_POST["editprd"])) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="https://cdn.tiny.cloud/1/oqlwijnpf68ywo2qvmh366eagscvjp81hp37x99y45f0h92z/tinymce/6/tinymce.min.js"
-        referrerpolicy="origin"></script>
+
+    <!-- colorpicker -->
+    
+    <link rel="stylesheet" type="text/css" href="spectrum/dist/spectrum.css">
+    <link rel="stylesheet" type="text/css" href="spectrum/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="spectrum/docs/highlight/styles/default.css">
+    <link rel="stylesheet" type="text/css" href="spectrum/docs/highlight/styles/monokai-sublime.css">
+    <script type="text/javascript" src="spectrum/docs/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="spectrum/dist/spectrum.js"></script>
+    <script type='text/javascript' src='spectrum/docs/toc.js'></script>
+    <script type='text/javascript' src='spectrum/docs/docs.js'></script>
+    <script type='text/javascript' src='spectrum/docs/highlight/highlight.pack.js'></script>
 </head>
 
 <body id="page-top">
@@ -112,9 +118,11 @@ if (isset($_POST["editprd"])) {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="listprd.php">List Product</a>
-                        <a class="collapse-item active" href="product.php">Add Product</a>
+                        <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
-                        <a class="collapse-item" href="color.php">Color</a> 
+                        <a class="collapse-item" href="color.php">Color</a>
+                        <a class="collapse-item active" href="size.php">Size</a>
+
                     </div>
                 </div>
             </li>
@@ -341,59 +349,52 @@ if (isset($_POST["editprd"])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Category</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Size</h1>
                     </div>
-                    <h5>Plus Category</h5>
+                    <h5>Plus Size</h5>
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <?php foreach ($product as $prd): ?>
-                                <input type="hidden" name="id" id="" value="<?= $prd["id"]; ?>">
-                                Image <br>
-                                <img src="../images/<?= $prd["gambar"]; ?>" alt="" srcset="" style="width:500px;">
-                                <input type="file" name="gambar" id=""> <br>
-                                Name Product
-                                <input type="text" name="product" id="" class="form-control" value="<?= $prd["name"]; ?>">
-                                Short About Product
-                                <input type="text" name="sabout" id="" class="form-control" value="<?= $prd["short"]; ?>">
-                                About Product
-                                <textarea name="about" id="" cols="30" rows="10"
-                                    class="form-control"><?= $prd["about"]; ?></textarea> <br>
-                                Price
-                                <input type="text" name="price" id="" class="form-control" value=" <?php $priceFromDatabase = $prd["price"];
-                                $formattedPrice = number_format($priceFromDatabase, 0, ',', '.');
-                                echo $formattedPrice; ?>">
-                                Category <br>
-                                <select class="form-control" aria-label="Default select example" name="category">
-                                    <option>none</option>
-                                    <?php foreach ($category as $ctg): ?>
-                                        <?php if ($ctg['category'] == $prd['category']): ?>
-                                            <option value="<?= $ctg['category']; ?>" selected><?= $ctg['category']; ?></option>
-                                        <?php else: ?>
-                                            <option value="<?= $ctg['category']; ?>"><?= $ctg['category']; ?></option>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-
-                                </select><br>
-                                Color <br>
-                                <?php foreach ($color as $clr): ?>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="color[]"
-                                            id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>">
-                                        <label class="form-check-label" for="<?= $clr["color"]; ?>"><?= $clr["color"]; ?></label>
-                                    </div>
-                                <?php endforeach; ?>
-                                <br>
-                                Size <br>
-                                <?php foreach ($size as $sz):?>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="size[]" id="<?= $sz["size"]; ?>" value="<?= $sz["size"]; ?>">
-                                <label class="form-check-label" for="<?= $sz["size"]; ?>"><?= $sz["size"]; ?></label>
-                            </div>
-                            <?php endforeach; ?><br>
-                            <?php endforeach; ?>
-                            <button type="submit" class="btn btn-primary" name="editprd">Submit</button>
+                            <input type="text" name="size" id="" class="form-control">
+                            <button type="submit" class="btn btn-primary" name="sz">Submit</button>
                         </div>
                     </form>
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width:10px;">No</th>
+                                <th scope="col">Size</th>
+                                <th scope="col" style="width:100px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($size)): ?>
+                                <tr>
+                                <tr>
+                                    <td colspan="7" style="color:red;">Belum ada size</td>
+                                </tr>
+                            <?php else: ?>
+                                <?php $i = 1; ?>
+                                <?php foreach ($size as $sz): ?>
+                                    <td>
+                                        <?= $i++; ?>
+                                    </td>
+                                    <td>
+                                    <?= $sz["size"]; ?>
+                                    </td>
+                                    <td>
+                                        <a href="editsz.php?id=<?= $sz["id"]; ?>" class="btn-circle btn-success btn-sm"><i
+                                                class="fas fa-pen"></i></a>
+                                        <a onclick="return confirm('Apakah kamu yakin ingin mengapus ini?')"
+                                            href="deletesz.php?id=<?= $sz["id"]; ?>" class="btn-circle btn-danger btn-sm"><i
+                                                class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+
+                        </tbody>
+                    </table>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -458,19 +459,7 @@ if (isset($_POST["editprd"])) {
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-            mergetags_list: [
-                { value: 'First.Name', title: 'First Name' },
-                { value: 'Email', title: 'Email' },
-            ]
-        });
-    </script>
+    
 </body>
 
 </html>

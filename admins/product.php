@@ -10,6 +10,7 @@ require 'functions.php';
 
 $category = query("SELECT * FROM `category` ");
 $color = query("SELECT * FROM `color` ");
+$size = query("SELECT * FROM `size` ");
 
 if (isset($_POST["prd"])) {
     if (plusprd($_POST)) {
@@ -370,10 +371,12 @@ if (isset($_POST["prd"])) {
                             <?php endforeach; ?>
                             <br>
                             Size <br>
+                            <?php foreach ($size as $sz):?>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="size" id="size" value="size">
-                                <label class="form-check-label" for="size">size</label>
-                            </div><br>
+                                <input class="form-check-input" type="checkbox" name="size[]" id="<?= $sz["size"]; ?>" value="<?= $sz["size"]; ?>">
+                                <label class="form-check-label" for="<?= $sz["size"]; ?>"><?= $sz["size"]; ?></label>
+                            </div>
+                            <?php endforeach; ?><br>
                             <button type="submit" class="btn btn-primary" name="prd">Submit</button>
                         </div>
                     </form>

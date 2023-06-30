@@ -297,7 +297,17 @@ function plusprd($data)
     }
 }
 
-    $query = "INSERT INTO `product` VALUES (NULL,'$gambar','$nama','$short','$about','$price','$category','$fixcolor','$size');";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["size"])) {
+        $selectedSizes = $_POST["size"];
+
+        // Mengencode array "size" menjadi JSON
+        $fixsize = json_encode($selectedSizes);
+
+}
+}
+
+    $query = "INSERT INTO `product` VALUES (NULL,'$gambar','$nama','$short','$about','$price','$category','$fixcolor','$fixsize');";
     mysqli_query($conn,$query);
     return mysqli_affected_rows($conn);
 }
@@ -325,6 +335,16 @@ function editprd($data)
     }
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["size"])) {
+        $selectedSizes = $_POST["size"];
+
+        // Mengencode array "size" menjadi JSON
+        $fixsize = json_encode($selectedSizes);
+
+}
+}
+
     // Menghapus tanda titik pada angka yang masuk
     $price = str_replace('.', '', $price);
 
@@ -337,7 +357,7 @@ function editprd($data)
         $gambar = $gambarlama;
     }
 
-    $query = "UPDATE `product` SET `gambar`='$gambar',`name`='$nama',`short`='$short',`about`='$about',`price`='$price',`category`='$category',`color`='$fixcolor',`size`='$size' WHERE `id` = $id";
+    $query = "UPDATE `product` SET `gambar`='$gambar',`name`='$nama',`short`='$short',`about`='$about',`price`='$price',`category`='$category',`color`='$fixcolor',`size`='$fixsize' WHERE `id` = $id";
     mysqli_query($conn,$query);
 
     if ($gambarlama && $gambarlama != $gambar) {
@@ -398,6 +418,26 @@ function deleteclr($id)
 
     $query = "DELETE FROM `color` WHERE `id`=$id;";
     mysqli_query($conn,$query);
+    return mysqli_affected_rows($conn);
+}
+
+function plussize($data)
+{
+    global $conn;
+
+    $size = htmlspecialchars($data["size"]);
+
+    $query = "INSERT INTO `size` VALUES (NULL,'$size')";
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function deletesz($id)
+{
+    global $conn;
+
+    $query ="DELETE FROM `size` WHERE `id`=$id";
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 ?>
