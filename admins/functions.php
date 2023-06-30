@@ -440,4 +440,16 @@ function deletesz($id)
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
+
+function editsize($data)
+{
+    global $conn;
+
+    $id = $data["id"];
+    $size = htmlspecialchars($data["size"]);
+
+    $query = "UPDATE `size` SET `size`='$size' WHERE `id`=$id";
+    mysqli_query($conn,$query);
+    return mysqli_affected_rows($conn);
+}
 ?>
