@@ -8,18 +8,18 @@ if (!isset($_SESSION["login"])) {
 
 require 'functions.php';
 
-$size = query("SELECT * FROM `size` ");
+$ads = query("SELECT * FROM `ads` WHERE `id`=1");
 
-if (isset($_POST["sz"])) {
-    if (plussize($_POST)) {
+if (isset($_POST["ads"])) {
+    if (editads($_POST)) {
         echo "<script>
-        alert('data berhasil ditambahkan');
-        document.location.href = 'size.php';
+        alert('data berhasil diedit');
+        document.location.href = 'ads.php';
         </script>";
     } else {
         echo "<script>
-        alert('data gagal ditambahkan');
-        document.location.href = 'size.php';
+        alert('data gagal diedit');
+        document.location.href = 'ads.php';
         </script>";
     }
 }
@@ -46,18 +46,8 @@ if (isset($_POST["sz"])) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- colorpicker -->
-    
-    <link rel="stylesheet" type="text/css" href="spectrum/dist/spectrum.css">
-    <link rel="stylesheet" type="text/css" href="spectrum/docs/docs.css">
-    <link rel="stylesheet" type="text/css" href="spectrum/docs/highlight/styles/default.css">
-    <link rel="stylesheet" type="text/css" href="spectrum/docs/highlight/styles/monokai-sublime.css">
-    <script type="text/javascript" src="spectrum/docs/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="spectrum/dist/spectrum.js"></script>
-    <script type='text/javascript' src='spectrum/docs/toc.js'></script>
-    <script type='text/javascript' src='spectrum/docs/docs.js'></script>
-    <script type='text/javascript' src='spectrum/docs/highlight/highlight.pack.js'></script>
+    <script src="https://cdn.tiny.cloud/1/oqlwijnpf68ywo2qvmh366eagscvjp81hp37x99y45f0h92z/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
 </head>
 
 <body id="page-top">
@@ -97,38 +87,37 @@ if (isset($_POST["sz"])) {
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Homepage</span>
                 </a>
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="header.php">Header</a>
                         <a class="collapse-item" href="benefit.php">Benefit</a>
                         <a class="collapse-item" href="several.php">Several Products</a>
-                        <a class="collapse-item" href="ads.php">Ads</a>
+                        <a class="collapse-item active" href="ads.php">Ads</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
+             <!-- Nav Item - Pages Collapse Menu -->
+             <li class="nav-item active">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                     aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-shopping-bag"></i>
                     <span>Product</span>
                 </a>
-                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="listprd.php">List Product</a>
                         <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
-                        <a class="collapse-item" href="color.php">Color</a>
-                        <a class="collapse-item active" href="size.php">Size</a>
-
+                        <a class="collapse-item" href="color.php">Color</a> 
                     </div>
                 </div>
             </li>
-
+           
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -351,52 +340,33 @@ if (isset($_POST["sz"])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Size</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Product</h1>
                     </div>
-                    <h5>Plus Size</h5>
+                    <h5>Edit Ads</h5>
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <input type="text" name="size" id="" class="form-control">
-                            <button type="submit" class="btn btn-primary" name="sz">Submit</button>
+                            <?php foreach ($ads as $ad):?>
+                            Image <br>
+                            <img src="../images/<?= $ad["gambar"]; ?>" alt="" srcset="">
+                            <input type="file" name="gambar" id=""> <br>
+                            Header
+                            <input type="text" name="header" id="" class="form-control" value="<?= $ad["header"]; ?>">
+                            Teks
+                            <textarea name="teks" id="" cols="30" rows="10" class="form-control"><?= $ad["teks"]; ?></textarea> <br>
+                            Link 
+                            <input type="text" name="link" id="" class="form-control" value="<?= $ad["link"]; ?>">
+                            Show
+                            <select name="show" id="showSelect" class="form-control">
+    <option value="show" <?php if ($ad["status"] == 'show') { echo "selected"; } ?>>Show</option>
+    <option value="not" <?php if ($ad["status"] == 'not') { echo "selected"; } ?>>Not Show</option>
+</select><br>
+
+                            </select><br>
+                            <?php endforeach; ?>
+                            <button type="submit" class="btn btn-primary" name="ads">Submit</button>
                         </div>
                     </form>
 
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="width:10px;">No</th>
-                                <th scope="col">Size</th>
-                                <th scope="col" style="width:100px;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (empty($size)): ?>
-                                <tr>
-                                <tr>
-                                    <td colspan="7" style="color:red;">Belum ada size</td>
-                                </tr>
-                            <?php else: ?>
-                                <?php $i = 1; ?>
-                                <?php foreach ($size as $sz): ?>
-                                    <td>
-                                        <?= $i++; ?>
-                                    </td>
-                                    <td>
-                                    <?= $sz["size"]; ?>
-                                    </td>
-                                    <td>
-                                        <a href="editsz.php?id=<?= $sz["id"]; ?>" class="btn-circle btn-success btn-sm"><i
-                                                class="fas fa-pen"></i></a>
-                                        <a onclick="return confirm('Apakah kamu yakin ingin mengapus ini?')"
-                                            href="deletesz.php?id=<?= $sz["id"]; ?>" class="btn-circle btn-danger btn-sm"><i
-                                                class="fas fa-trash-alt"></i></a>
-                                    </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-
-                        </tbody>
-                    </table>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -461,7 +431,19 @@ if (isset($_POST["sz"])) {
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ]
+        });
+    </script>
 </body>
 
 </html>

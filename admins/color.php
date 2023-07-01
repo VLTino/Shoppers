@@ -102,6 +102,8 @@ if (isset($_POST["clr"])) {
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="header.php">Header</a>
                         <a class="collapse-item" href="benefit.php">Benefit</a>
+                        <a class="collapse-item" href="several.php">Several Products</a>
+                        <a class="collapse-item" href="ads.php">Ads</a>
                     </div>
                 </div>
             </li>

@@ -276,7 +276,7 @@ function plusprd($data)
     $about = $data["about"];
     $price = htmlspecialchars($data["price"]);
     $category = htmlspecialchars($data["category"]);
-    $size = $data["size"];
+     
 
 
     // Menghapus tanda titik pada angka yang masuk
@@ -323,7 +323,7 @@ function editprd($data)
     $about = $data["about"];
     $price = htmlspecialchars($data["price"]);
     $category = htmlspecialchars($data["category"]);
-    $size = $data["size"];
+    
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST["color"])) {
@@ -451,5 +451,37 @@ function editsize($data)
     $query = "UPDATE `size` SET `size`='$size' WHERE `id`=$id";
     mysqli_query($conn,$query);
     return mysqli_affected_rows($conn);
+}
+
+function editads($data)
+{
+    global $conn;
+
+    $header = htmlspecialchars($data["header"]);
+    $teks = $data["teks"];
+    $link = $data["link"];
+    $show = $data["show"];
+
+    $result = mysqli_query($conn, "SELECT `gambar` FROM `ads` WHERE `id`= 1");
+    $row = mysqli_fetch_assoc($result);
+    $gambarlama = $row['gambar'];
+
+    $gambar = imgedit();
+    if (!$gambar) {
+        $gambar = $gambarlama;
+    }
+
+    $query = "UPDATE `ads` SET `gambar`='$gambar',`header`='$header',`teks`='$teks',`link`='$link',`status`='$show' WHERE `id`=1";
+    mysqli_query($conn,$query);
+
+    if ($gambarlama && $gambarlama != $gambar) {
+        $old_file = "../images/$gambarlama";
+        if (file_exists($old_file)) {
+            unlink($old_file);
+        }
+    }
+
+    return mysqli_affected_rows($conn);
+
 }
 ?>

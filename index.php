@@ -6,6 +6,8 @@ $header = query("SELECT * FROM `header` WHERE `id`=1");
 $benefit = query("SELECT * FROM `benefit`");
 $category = query("SELECT * FROM `category`");
 $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
+$ads = query("SELECT * FROM `ads` WHERE `id`=1");
+
 ?>
 
 <!DOCTYPE html>
@@ -218,36 +220,38 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
                   </div>
                 </div>
               <?php endforeach; ?>
-              
-              
+
+
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="site-section block-8">
-      <div class="container">
-        <div class="row justify-content-center  mb-5">
-          <div class="col-md-7 site-section-heading text-center pt-4">
-            <h2>Big Sale!</h2>
+    <?php foreach ($ads as $ad): ?>
+      <?php if ($ad["status"] == 'show'): ?>
+        <div class="site-section block-8">
+          <div class="container">
+            <div class="row justify-content-center  mb-5">
+              <div class="col-md-7 site-section-heading text-center pt-4">
+                <h2>
+                  <?= $ad["header"]; ?>
+                </h2>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-md-12 col-lg-7 mb-5">
+                <img src="images/<?= $ad["gambar"]; ?>" alt="Image placeholder" class="img-fluid rounded">
+              </div>
+              <div class="col-md-12 col-lg-5 text-center pl-md-5">
+                <?= $ad["teks"]; ?>
+                <p><a href="<?= $ad["link"]; ?>" class="btn btn-primary btn-sm">Shop Now</a></p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="row align-items-center">
-          <div class="col-md-12 col-lg-7 mb-5">
-            <a href="#"><img src="images/blog_1.jpg" alt="Image placeholder" class="img-fluid rounded"></a>
-          </div>
-          <div class="col-md-12 col-lg-5 text-center pl-md-5">
-            <h2><a href="#">50% less in all items</a></h2>
-            <p class="post-meta mb-4">By <a href="#">Carl Smith</a> <span class="block-8-sep">&bullet;</span> September
-              3, 2018</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam iste dolor accusantium facere corporis
-              ipsum animi deleniti fugiat. Ex, veniam?</p>
-            <p><a href="#" class="btn btn-primary btn-sm">Shop Now</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
+      <?php endif; ?>
+    <?php endforeach; ?>
 
     <footer class="site-footer border-top">
       <div class="container">
