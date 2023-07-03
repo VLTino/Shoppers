@@ -1,3 +1,6 @@
+<?php 
+  require ('admins/functions.php')
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>

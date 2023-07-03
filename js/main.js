@@ -148,20 +148,43 @@ jQuery(document).ready(function($) {
 	sitePlusMinus();
 
 
-	var siteSliderRange = function() {
+	// File: script.js
+
+// Fungsi AJAX untuk mengambil data dari skrip PHP
+function getMaxPriceFromDatabase() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var maxPrice = JSON.parse(xhr.responseText);
+            // Gunakan nilai maksimum harga dalam logika JavaScript di sini
+            console.log(maxPrice);
+            // ...
+            
+            // Panggil fungsi siteSliderRange dengan nilai maksimum harga
+            siteSliderRange(maxPrice);
+        }
+    };
+    xhr.open("GET", "../admins/maxprice.php", true);
+    xhr.send();
+}
+
+// Fungsi siteSliderRange dengan parameter nilai maksimum harga
+var siteSliderRange = function(maxPrice) {
     $( "#slider-range" ).slider({
       range: true,
       min: 0,
-      max: 500,
-      values: [ 75, 300 ],
+      max: maxPrice,
+      values: [ 75, maxPrice ],
       slide: function( event, ui ) {
         $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
       }
     });
     $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
       " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-	};
-	siteSliderRange();
+};
+
+// Panggil fungsi untuk mengambil data maksimum harga dari database
+getMaxPriceFromDatabase();
 
 
 	var siteMagnificPopup = function() {
