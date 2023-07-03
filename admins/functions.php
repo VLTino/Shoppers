@@ -293,7 +293,9 @@ function plusprd($data)
     
             // Mengencode array "color" menjadi JSON
             $fixcolor = json_encode($selectedColors);
-
+            $fixcolor= str_replace('[', '', $fixcolor);
+            $fixcolor= str_replace(']', '', $fixcolor);
+            $fixcolor= str_replace('"', '', $fixcolor);
     }
 }
 
@@ -303,6 +305,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Mengencode array "size" menjadi JSON
         $fixsize = json_encode($selectedSizes);
+        $fixsize= str_replace('[', '', $fixsize);
+        $fixsize= str_replace(']', '', $fixsize);
+        $fixsize= str_replace('"', '', $fixsize);
 
 }
 }
@@ -331,7 +336,9 @@ function editprd($data)
     
             // Mengencode array "color" menjadi JSON
             $fixcolor = json_encode($selectedColors);
-
+            $fixcolor= str_replace('[', '', $fixcolor);
+            $fixcolor= str_replace(']', '', $fixcolor);
+            $fixcolor= str_replace('"', '', $fixcolor);
     }
 }
 
@@ -341,6 +348,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Mengencode array "size" menjadi JSON
         $fixsize = json_encode($selectedSizes);
+        $fixsize= str_replace('[', '', $fixsize);
+        $fixsize= str_replace(']', '', $fixsize);
+        $fixsize= str_replace('"', '', $fixsize);
 
 }
 }

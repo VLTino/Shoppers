@@ -8,7 +8,10 @@ if (!isset($_SESSION["login"])) {
 
 require 'functions.php';
 
-$product = query("SELECT * FROM `product` ");
+
+$category = query("SELECT * FROM `category`");
+$size = query("SELECT * FROM `size`");
+$color = query("SELECT * FROM `color`");
 
 if (isset($_POST["prd"])) {
     if (plusctg($_POST)) {
@@ -339,6 +342,82 @@ if (isset($_POST["prd"])) {
                     </div>
                     <h5>List Product</h5>
 
+                    <form action="" method="post">
+                        Category 
+                        <select class="form-control" aria-label="Default select example" name="category">
+                                <option selected>none</option>
+                                <?php foreach ($category as $ctg):?>
+                                <option value="<?= $ctg["category"]; ?>"><?= $ctg["category"]; ?></option>
+                                <?php endforeach; ?>
+                            </select><br>
+                            Color <br>
+                            <?php foreach ($color as $clr):?>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="color[]" id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>">
+                                <label class="form-check-label" for="<?= $clr["color"]; ?>"><?= $clr["color"]; ?></label>
+                            </div>
+                            <?php endforeach; ?>
+                            <br>
+                            Size <br>
+                            <?php foreach ($size as $sz):?>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="size[]" id="<?= $sz["size"]; ?>" value="<?= $sz["size"]; ?>">
+                                <label class="form-check-label" for="<?= $sz["size"]; ?>"><?= $sz["size"]; ?></label>
+                            </div>
+                            <?php endforeach; ?><br>
+                            <button type="submit" name="filter" class="btn btn-primary">Filter</button>
+                    </form>
+                    <?php
+// Periksa apakah form dikirimkan
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filter'])) {
+    // Ambil nilai dari form
+    $selectedCategory = $_POST['category'];
+    $selectedColors = isset($_POST['color']) ? $_POST['color'] : array();
+    $selectedSizes = isset($_POST['size']) ? $_POST['size'] : array();
+
+    // Buat klausa WHERE berdasarkan filter yang dipilih
+    $whereClause = '1 = 1'; // Kondisi awal untuk memastikan query tetap valid
+    if ($selectedCategory !== 'none') {
+        $whereClause .= " AND category = '$selectedCategory'";
+    }
+
+    if (!empty($selectedColors)) {
+        $colorConditions = array();
+        foreach ($selectedColors as $color) {
+            $colorConditions[] = "FIND_IN_SET('$color', color) > 0";
+        }
+        $colorClause = implode(' OR ', $colorConditions);
+        $whereClause .= " AND ($colorClause)";
+    }
+
+    if (!empty($selectedSizes)) {
+        $sizeConditions = array();
+        foreach ($selectedSizes as $size) {
+            $sizeConditions[] = "FIND_IN_SET('$size', size) > 0";
+        }
+        $sizeClause = implode(' OR ', $sizeConditions);
+        $whereClause .= " AND ($sizeClause)";
+    }
+
+    // Query SQL dengan filter
+    $query = "SELECT * FROM `product` WHERE $whereClause";
+    $result = mysqli_query($conn, $query);
+    $product = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    // Eksekusi query dan lakukan pengolahan data
+    
+    // ...
+}
+
+if (!isset($_POST['filter'])) {
+    $query = "SELECT * FROM `product` WHERE 1=1";
+    $result = mysqli_query($conn, $query);
+    $product = mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+?>
+
+
+
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -381,12 +460,7 @@ if (isset($_POST["prd"])) {
                                         <?= $prd["category"]; ?>
                                     </td>
                                     <td>
-                                        <?php 
-                                        $color = $prd["color"];
-                                        $color= str_replace('[', '', $color);
-                                        $color= str_replace(']', '', $color);
-                                        $color= str_replace('"', '', $color);
-                                        echo $color; ?>
+                                        <?= $prd["color"]; ?>
                                     </td>
                                     <td>
                                         <?= $prd["size"]; ?>
