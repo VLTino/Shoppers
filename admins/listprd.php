@@ -365,6 +365,8 @@ if (isset($_POST["prd"])) {
                                 <label class="form-check-label" for="<?= $sz["size"]; ?>"><?= $sz["size"]; ?></label>
                             </div>
                             <?php endforeach; ?><br>
+                            Search <br>
+    <input type="text" name="search" class="form-control"><br>
                             <button type="submit" name="filter" class="btn btn-primary">Filter</button>
                     </form>
                     <?php
@@ -374,6 +376,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filter'])) {
     $selectedCategory = $_POST['category'];
     $selectedColors = isset($_POST['color']) ? $_POST['color'] : array();
     $selectedSizes = isset($_POST['size']) ? $_POST['size'] : array();
+    $searchTerm = $_POST['search'];
 
     // Buat klausa WHERE berdasarkan filter yang dipilih
     $whereClause = '1 = 1'; // Kondisi awal untuk memastikan query tetap valid
@@ -398,6 +401,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filter'])) {
         $sizeClause = implode(' OR ', $sizeConditions);
         $whereClause .= " AND ($sizeClause)";
     }
+
+    if (!empty($searchTerm)) {
+        $whereClause .= " AND (name LIKE '%$searchTerm%')";
+    }    
 
     // Query SQL dengan filter
     $query = "SELECT * FROM `product` WHERE $whereClause";
