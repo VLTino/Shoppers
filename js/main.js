@@ -186,19 +186,29 @@ jQuery(document).ready(function($) {
 	}
 	
 	// Fungsi siteSliderRange dengan parameter nilai minimum dan maksimum harga
-	var siteSliderRange = function(minPrice, maxPrice) { // Menambahkan parameter minPrice dan maxPrice di fungsi siteSliderRange
-		$( "#slider-range" ).slider({
-		  range: true,
-		  min: 0,
-		  max: maxPrice,
-		  values: [ minPrice, maxPrice ],
-		  slide: function( event, ui ) {
-			$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-		  }
-		});
-		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-		  " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-	};
+var siteSliderRange = function(minPrice, maxPrice) {
+	$("#slider-range").slider({
+	  range: true,
+	  min: 0,
+	  max: maxPrice,
+	  values: [minPrice, maxPrice],
+	  slide: function(event, ui) {
+		$("#amount").val(
+		  "Rp" +
+			ui.values[0].toLocaleString() +
+			" - Rp" +
+			ui.values[1].toLocaleString()
+		);
+	  }
+	});
+	$("#amount").val(
+	  "Rp" +
+		$("#slider-range").slider("values", 0).toLocaleString() +
+		" - Rp" +
+		$("#slider-range").slider("values", 1).toLocaleString()
+	);
+  };
+  
 	
 	// Panggil fungsi untuk mengambil data maksimum harga dari database
 	getMaxPriceFromDatabase();

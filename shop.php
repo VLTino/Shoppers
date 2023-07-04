@@ -1,5 +1,19 @@
 <?php 
-  require ('admins/functions.php')
+  require ('admins/functions.php');
+
+  if (isset($_POST["pricesb"])) {
+    if (price($_POST)) {
+        echo "<script>
+        alert('data berhasil ditambah');
+        document.location.href = 'color.php';
+        </script>";
+    } else {
+        echo "<script>
+        alert('data gagal ditambah');
+        document.location.href = 'color.php';
+        </script>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -314,19 +328,23 @@
             <div class="border p-4 rounded mb-4">
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
               <ul class="list-unstyled mb-0">
-                <li class="mb-1"><a href="#" class="d-flex"><span>Men</span> <span class="text-black ml-auto">(2,220)</span></a></li>
+                <form action="" method="post">
+                <input type="checkbox" name="" id="men"> 
+                <label for="men"><li class="mb-1"><span style="color:#7971ea;">Men</span> <span class="text-black ml-auto">(2,220)</span></li></label> 
                 <li class="mb-1"><a href="#" class="d-flex"><span>Women</span> <span class="text-black ml-auto">(2,550)</span></a></li>
                 <li class="mb-1"><a href="#" class="d-flex"><span>Children</span> <span class="text-black ml-auto">(2,124)</span></a></li>
+                </form>
               </ul>
             </div>
-
+<form action="" method="post">
             <div class="border p-4 rounded mb-4">
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
                 <div id="slider-range" class="border-primary"></div>
-                <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="" />
+                <input type="text" name="price" id="amount" class="form-control border-0 pl-0 bg-white" readonly />
               </div>
-
+              <button type="submit" name="pricesb">submit</button>
+              </form>
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Size</h3>
                 <label for="s_sm" class="d-flex">

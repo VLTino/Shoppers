@@ -346,15 +346,15 @@ if (isset($_POST["prd"])) {
                     <form action="" method="post">
                         Category 
                         <select class="form-control" aria-label="Default select example" name="category">
-                                <option selected>none</option>
-                                <?php foreach ($category as $ctg):?>
-                                <option value="<?= $ctg["category"]; ?>"><?= $ctg["category"]; ?></option>
-                                <?php endforeach; ?>
-                            </select><br>
+        <option value="none" <?= (isset($_POST['category']) && $_POST['category'] === 'none') ? 'selected' : ''; ?>>none</option>
+        <?php foreach ($category as $ctg):?>
+            <option value="<?= $ctg["category"]; ?>" <?= (isset($_POST['category']) && $_POST['category'] === $ctg["category"]) ? 'selected' : ''; ?>><?= $ctg["category"]; ?></option>
+        <?php endforeach; ?>
+    </select><br>
                             Color <br>
                             <?php foreach ($color as $clr):?>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="color[]" id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>">
+                                <input class="form-check-input" type="checkbox" name="color[]" id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>" <?= isset($_POST['color']) && in_array($clr["color"],$_POST['color']) ? 'checked' : '';?>>
                                 <label class="form-check-label" for="<?= $clr["color"]; ?>"><?= $clr["color"]; ?></label>
                             </div>
                             <?php endforeach; ?>
@@ -362,7 +362,8 @@ if (isset($_POST["prd"])) {
                             Size <br>
                             <?php foreach ($size as $sz):?>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="size[]" id="<?= $sz["size"]; ?>" value="<?= $sz["size"]; ?>">
+                                <input class="form-check-input" type="checkbox" name="size[]" id="<?= $sz["size"]; ?>" value="<?= $sz["size"]; ?>"
+                                <?= isset($_POST['size']) && in_array($sz["size"],$_POST['size']) ? 'checked' : '';?>>
                                 <label class="form-check-label" for="<?= $sz["size"]; ?>"><?= $sz["size"]; ?></label>
                             </div>
                             <?php endforeach; ?><br>

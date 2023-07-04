@@ -494,4 +494,15 @@ function editads($data)
     return mysqli_affected_rows($conn);
 
 }
+
+function price($data)
+{
+    global $conn;
+
+    $price=htmlspecialchars($data["price"]);
+
+    $query = "INSERT INTO `price` VALUES (NULL,'$price')";
+    mysqli_query($conn,$query);
+    return mysqli_affected_rows($conn);
+}
 ?>
