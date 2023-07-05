@@ -54,10 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filter'])) {
     }    
 
      // Peroleh harga minimal dan maksimal dari string
-     $priceRange = str_replace(array('Rp', ' '), '', $priceRange);
-     $prices = explode('-', $priceRange);
-     $minPrice = (int) $prices[0];
-     $maxPrice = (int) $prices[1];
+$priceRange = str_replace(array('Rp', ','), '', $priceRange);
+$prices = explode('-', $priceRange);
+$minPrice = (int) $prices[0];
+$maxPrice = (int) $prices[1];
+
  
      // Tambahkan klausa WHERE untuk filter harga minimal dan maksimal
      if (!empty($minPrice)) {
@@ -74,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filter'])) {
     $product = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     // Eksekusi query dan lakukan pengolahan data
-    echo $query;
+
     // ...
 }
 
