@@ -2,19 +2,7 @@
   require ('admins/functions.php');
 
 
-  if (isset($_POST["pricesb"])) {
-    if (price($_POST)) {
-        echo "<script>
-        alert('data berhasil ditambah');
-        document.location.href = 'color.php';
-        </script>";
-    } else {
-        echo "<script>
-        alert('data gagal ditambah');
-        document.location.href = 'color.php';
-        </script>";
-    }
-}
+error_reporting(0);
 
 // Periksa apakah form dikirimkan
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filter'])) {
@@ -233,20 +221,31 @@ $color = query("SELECT * FROM `color`");
               </div>
             </div>
             <div class="row mb-5">
-          <?php foreach ($product as $prd):?>
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
+            <?php if (empty($product)): ?>
+    <p style="color:red;text-decoration: underline;" class="ml-5">Product yang anda Cari Tidak Ada</p>
+<?php else: ?>
+    <?php foreach ($product as $prd):?>
+        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+            <div class="block-4 text-center border">
+                <figure class="block-4-image">
                     <a href="shop-single.html"><img src="images/<?= $prd["gambar"]; ?>" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
+                </figure>
+                <div class="block-4-text p-4">
                     <h3><a href="shop-single.html"><?= $prd["name"]; ?></a></h3>
                     <p class="mb-0"><?= $prd["short"]; ?></p>
-                    <p class="text-primary font-weight-bold"><?= $prd["price"]; ?></p>
-                  </div>
+                    <p class="text-primary font-weight-bold">
+                        <?php
+                            $priceFromDatabase = $prd["price"];
+                            $formattedPrice = "Rp " . number_format($priceFromDatabase, 0, ',', '.');
+                            echo $formattedPrice;
+                        ?>
+                    </p>
                 </div>
-              </div>
-            <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
+
           
 
             </div>
