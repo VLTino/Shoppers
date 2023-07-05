@@ -1,9 +1,6 @@
 <?php 
   require ('admins/functions.php');
 
-$category = query("SELECT * FROM `category`");
-$size = query("SELECT * FROM `size`");
-$color = query("SELECT * FROM `color`");
 
   if (isset($_POST["pricesb"])) {
     if (price($_POST)) {
@@ -26,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filter'])) {
     $selectedColors = isset($_POST['color']) ? $_POST['color'] : array();
     $selectedSizes = isset($_POST['size']) ? $_POST['size'] : array();
     $searchTerm = $_POST['search'];
+    $priceRange = $_POST['price_range'];
 
     // Buat klausa WHERE berdasarkan filter yang dipilih
     $whereClause = '1 = 1'; // Kondisi awal untuk memastikan query tetap valid
@@ -55,13 +53,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filter'])) {
         $whereClause .= " AND (name LIKE '%$searchTerm%')";
     }    
 
+     // Peroleh harga minimal dan maksimal dari string
+     $priceRange = str_replace(array('Rp', ' '), '', $priceRange);
+     $prices = explode('-', $priceRange);
+     $minPrice = (int) $prices[0];
+     $maxPrice = (int) $prices[1];
+ 
+     // Tambahkan klausa WHERE untuk filter harga minimal dan maksimal
+     if (!empty($minPrice)) {
+         $whereClause .= " AND price >= $minPrice";
+     }
+ 
+     if (!empty($maxPrice)) {
+         $whereClause .= " AND price <= $maxPrice";
+     }
+
     // Query SQL dengan filter
     $query = "SELECT * FROM `product` WHERE $whereClause";
     $result = mysqli_query($conn, $query);
     $product = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     // Eksekusi query dan lakukan pengolahan data
-    
+    echo $query;
     // ...
 }
 
@@ -70,6 +83,10 @@ if (!isset($_POST['filter'])) {
     $result = mysqli_query($conn, $query);
     $product = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
+
+$category = query("SELECT * FROM `category`");
+$size = query("SELECT * FROM `size`");
+$color = query("SELECT * FROM `color`");
 
 ?>
 <!DOCTYPE html>
@@ -107,7 +124,7 @@ if (!isset($_POST['filter'])) {
                 <button type="submit" name="filter" hidden></button>
                 <span class="icon icon-search2"></span>
 
-                <input type="text" name="search"class="form-control border-0" placeholder="Search">
+                <input type="text" name="search"class="form-control border-0" value="<?= isset($_POST['search']) ? $_POST['search'] : ''; ?>" placeholder="Search">
               </form>
             </div>
 
@@ -224,7 +241,7 @@ if (!isset($_POST['filter'])) {
                   <div class="block-4-text p-4">
                     <h3><a href="shop-single.html"><?= $prd["name"]; ?></a></h3>
                     <p class="mb-0"><?= $prd["short"]; ?></p>
-                    <p class="text-primary font-weight-bold"><?= $prd["gambar"]; ?></p>
+                    <p class="text-primary font-weight-bold"><?= $prd["price"]; ?></p>
                   </div>
                 </div>
               </div>
@@ -254,6 +271,10 @@ if (!isset($_POST['filter'])) {
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
               <ul class="list-unstyled mb-0">
                 <form action="" method="post">
+                  <li class="mb-1">
+                    <input type="radio" name="category" id="all" value="" <?= empty($_POST['category']) ? 'checked' : ''; ?>>
+                    <label for="all"><span style="color:#7971ea;">All Category</span> </label>
+                  </li>
                   <?php foreach ($category as $ctg):?>
                     <li class="mb-1">
                 <input type="radio" name="category" id="<?= $ctg["category"] ;?>" value="<?= $ctg["category"] ;?>" <?= (isset($_POST['category']) && $_POST['category'] === $ctg["category"]) ? 'checked' : ''; ?>> 
@@ -272,7 +293,7 @@ if (!isset($_POST['filter'])) {
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
                 <div id="slider-range" class="border-primary"></div>
-                <input type="text" name="price" id="amount" class="form-control border-0 pl-0 bg-white" readonly />
+                <input type="text" name="price_range" id="amount" class="form-control border-0 pl-0 bg-white" readonly />
               </div>
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Size</h3>
@@ -288,7 +309,7 @@ if (!isset($_POST['filter'])) {
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
                 <?php foreach ($color as $clr): ?>
   <div class="d-flex align-items-center">
-    <input type="checkbox" name="color[]" id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>">
+    <input type="checkbox" name="color[]" id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>" <?= isset($_POST['color']) && in_array($clr["color"],$_POST['color']) ? 'checked' : '';?>>
     <label for="<?= $clr["color"]; ?>" >
       <a class="d-flex color-item align-items-center mt-2 ml-2">
         <span class="color d-inline-block rounded-circle mr-2" style="background-color: <?= $clr["codeclr"]; ?>"></span>
@@ -298,6 +319,7 @@ if (!isset($_POST['filter'])) {
   </div>
 <?php endforeach; ?>
 <br>
+<input type="hidden" name="search" id="" value="<?= isset($_POST['search']) ? $_POST['search'] : ''; ?>">
 <button type="submit" name="filter" class="btn btn-primary">Filter</button>
                 </form>
               </div>
