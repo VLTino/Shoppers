@@ -1,6 +1,10 @@
 <?php 
   require ('admins/functions.php');
 
+$category = query("SELECT * FROM `category`");
+$size = query("SELECT * FROM `size`");
+$color = query("SELECT * FROM `color`");
+
   if (isset($_POST["pricesb"])) {
     if (price($_POST)) {
         echo "<script>
@@ -14,6 +18,59 @@
         </script>";
     }
 }
+
+// Periksa apakah form dikirimkan
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filter'])) {
+    // Ambil nilai dari form
+    $selectedCategory = isset($_POST['category']) ? $_POST['category'] : '';
+    $selectedColors = isset($_POST['color']) ? $_POST['color'] : array();
+    $selectedSizes = isset($_POST['size']) ? $_POST['size'] : array();
+    $searchTerm = $_POST['search'];
+
+    // Buat klausa WHERE berdasarkan filter yang dipilih
+    $whereClause = '1 = 1'; // Kondisi awal untuk memastikan query tetap valid
+    if (!empty($selectedCategory)) {
+      $whereClause .= " AND category = '$selectedCategory'";
+  }
+
+    if (!empty($selectedColors)) {
+        $colorConditions = array();
+        foreach ($selectedColors as $color) {
+            $colorConditions[] = "FIND_IN_SET('$color', color) > 0";
+        }
+        $colorClause = implode(' OR ', $colorConditions);
+        $whereClause .= " AND ($colorClause)";
+    }
+
+    if (!empty($selectedSizes)) {
+        $sizeConditions = array();
+        foreach ($selectedSizes as $size) {
+            $sizeConditions[] = "FIND_IN_SET('$size', size) > 0";
+        }
+        $sizeClause = implode(' OR ', $sizeConditions);
+        $whereClause .= " AND ($sizeClause)";
+    }
+
+    if (!empty($searchTerm)) {
+        $whereClause .= " AND (name LIKE '%$searchTerm%')";
+    }    
+
+    // Query SQL dengan filter
+    $query = "SELECT * FROM `product` WHERE $whereClause";
+    $result = mysqli_query($conn, $query);
+    $product = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    // Eksekusi query dan lakukan pengolahan data
+    
+    // ...
+}
+
+if (!isset($_POST['filter'])) {
+    $query = "SELECT * FROM `product` WHERE 1=1";
+    $result = mysqli_query($conn, $query);
+    $product = mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,9 +103,11 @@
           <div class="row align-items-center">
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-              <form action="" class="site-block-top-search">
+              <form action="" class="site-block-top-search" method="post">
+                <button type="submit" name="filter" hidden></button>
                 <span class="icon icon-search2"></span>
-                <input type="text" class="form-control border-0" placeholder="Search">
+
+                <input type="text" name="search"class="form-control border-0" placeholder="Search">
               </form>
             </div>
 
@@ -156,155 +215,21 @@
               </div>
             </div>
             <div class="row mb-5">
-
+          <?php foreach ($product as $prd):?>
               <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
                 <div class="block-4 text-center border">
                   <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid"></a>
+                    <a href="shop-single.html"><img src="images/<?= $prd["gambar"]; ?>" alt="Image placeholder" class="img-fluid"></a>
                   </figure>
                   <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">Tank Top</a></h3>
-                    <p class="mb-0">Finding perfect t-shirt</p>
-                    <p class="text-primary font-weight-bold">$50</p>
+                    <h3><a href="shop-single.html"><?= $prd["name"]; ?></a></h3>
+                    <p class="mb-0"><?= $prd["short"]; ?></p>
+                    <p class="text-primary font-weight-bold"><?= $prd["gambar"]; ?></p>
                   </div>
                 </div>
               </div>
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">Corater</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">Polo Shirt</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">T-Shirt Mockup</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">Corater</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">Tank Top</a></h3>
-                    <p class="mb-0">Finding perfect t-shirt</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">Corater</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">Polo Shirt</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">T-Shirt Mockup</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">Corater</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">Tank Top</a></h3>
-                    <p class="mb-0">Finding perfect t-shirt</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">Polo Shirt</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-
+            <?php endforeach; ?>
+          
 
             </div>
             <div class="row" data-aos="fade-up">
@@ -329,49 +254,52 @@
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
               <ul class="list-unstyled mb-0">
                 <form action="" method="post">
-                <input type="checkbox" name="" id="men"> 
-                <label for="men"><li class="mb-1"><span style="color:#7971ea;">Men</span> <span class="text-black ml-auto">(2,220)</span></li></label> 
-                <li class="mb-1"><a href="#" class="d-flex"><span>Women</span> <span class="text-black ml-auto">(2,550)</span></a></li>
-                <li class="mb-1"><a href="#" class="d-flex"><span>Children</span> <span class="text-black ml-auto">(2,124)</span></a></li>
-                </form>
+                  <?php foreach ($category as $ctg):?>
+                    <li class="mb-1">
+                <input type="radio" name="category" id="<?= $ctg["category"] ;?>" value="<?= $ctg["category"] ;?>" <?= (isset($_POST['category']) && $_POST['category'] === $ctg["category"]) ? 'checked' : ''; ?>> 
+                <label for="<?= $ctg["category"] ;?>"><span style="color:#7971ea;"><?= $ctg["category"] ;?></span> <span class="text-black ml-auto"> (<?php
+          $categoryCount = query("SELECT COUNT(category) AS jumlah FROM product WHERE category = '" . $ctg["category"] . "'");
+          if ($categoryCount && !empty($categoryCount)) {
+            echo $categoryCount[0]["jumlah"];
+          } else {
+            echo "0";
+          }
+          ?>)</span></label> </li>
+                <?php endforeach; ?>
               </ul>
             </div>
-<form action="" method="post">
             <div class="border p-4 rounded mb-4">
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
                 <div id="slider-range" class="border-primary"></div>
                 <input type="text" name="price" id="amount" class="form-control border-0 pl-0 bg-white" readonly />
               </div>
-              <button type="submit" name="pricesb">submit</button>
-              </form>
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Size</h3>
-                <label for="s_sm" class="d-flex">
-                  <input type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">Small (2,319)</span>
+                <?php foreach ($size as $sz): ?>
+                <label for="<?= $sz["size"]; ?>" class="d-flex">
+                  <input type="checkbox" id="<?= $sz["size"]; ?>" class="mr-2 mt-1" name="size[]" value="<?= $sz["size"]; ?>"
+                  <?= isset($_POST['size']) && in_array($sz["size"],$_POST['size']) ? 'checked' : '';?>> <span class="text-black mt-1"><?= $sz["size"]; ?></span>
                 </label>
-                <label for="s_md" class="d-flex">
-                  <input type="checkbox" id="s_md" class="mr-2 mt-1"> <span class="text-black">Medium (1,282)</span>
-                </label>
-                <label for="s_lg" class="d-flex">
-                  <input type="checkbox" id="s_lg" class="mr-2 mt-1"> <span class="text-black">Large (1,392)</span>
-                </label>
+                <?php endforeach; ?>
               </div>
 
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
-                <a href="#" class="d-flex color-item align-items-center" >
-                  <span class="color d-inline-block rounded-circle mr-2" style="background-color: Red;"></span> <span class="text-black">Red (2,429)</span>
-                </a>
-                <a href="#" class="d-flex color-item align-items-center" >
-                  <span class="bg-success color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Green (2,298)</span>
-                </a>
-                <a href="#" class="d-flex color-item align-items-center" >
-                  <span class="bg-info color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Blue (1,075)</span>
-                </a>
-                <a href="#" class="d-flex color-item align-items-center" >
-                  <span class="bg-primary color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Purple (1,075)</span>
-                </a>
+                <?php foreach ($color as $clr): ?>
+  <div class="d-flex align-items-center">
+    <input type="checkbox" name="color[]" id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>">
+    <label for="<?= $clr["color"]; ?>" >
+      <a class="d-flex color-item align-items-center mt-2 ml-2">
+        <span class="color d-inline-block rounded-circle mr-2" style="background-color: <?= $clr["codeclr"]; ?>"></span>
+        <span class="text-black"><?= $clr["color"]; ?></span>
+      </a>
+    </label>
+  </div>
+<?php endforeach; ?>
+<br>
+<button type="submit" name="filter" class="btn btn-primary">Filter</button>
+                </form>
               </div>
 
             </div>
