@@ -1,13 +1,9 @@
 <?php
-require 'admins/functions.php';
+require('admins/functions.php');
 
-$imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
-$header = query("SELECT * FROM `header` WHERE `id`=1");
-$benefit = query("SELECT * FROM `benefit`");
-$category = query("SELECT * FROM `category`");
-$newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
-$ads = query("SELECT * FROM `ads` WHERE `id`=1");
-
+$id = $_GET["id"];
+$product = query("SELECT * FROM `product` WHERE `id`=$id");
+$clr = query("SELECT * FROM `color`");
 ?>
 
 <!DOCTYPE html>
@@ -17,12 +13,6 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
   <title>Shoppers &mdash; Colorlib e-Commerce Template</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
   <link rel="stylesheet" href="fonts/icomoon/style.css">
@@ -49,11 +39,9 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
           <div class="row align-items-center">
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-            <form action="shop.php" class="site-block-top-search" method="post">
-                <button type="submit" name="filter" hidden></button>
+              <form action="" class="site-block-top-search">
                 <span class="icon icon-search2"></span>
-
-                <input type="text" name="search"class="form-control border-0" placeholder="Search">
+                <input type="text" class="form-control border-0" placeholder="Search">
               </form>
             </div>
 
@@ -86,7 +74,7 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
       <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
           <ul class="site-menu js-clone-nav d-none d-md-block">
-            <li class="has-children active">
+            <li class="has-children">
               <a href="index.php">Home</a>
               <ul class="dropdown">
                 <li><a href="#">Menu One</a></li>
@@ -110,7 +98,7 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
                 <li><a href="#">Menu Three</a></li>
               </ul>
             </li>
-            <li><a href="shop.php">Shop</a></li>
+            <li class="active"><a href="shop.php">Shop</a></li>
             <li><a href="#">Catalogue</a></li>
             <li><a href="#">New Arrivals</a></li>
             <li><a href="contact.php">Contact</a></li>
@@ -119,73 +107,87 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
       </nav>
     </header>
 
-    <?php foreach ($imgh as $img): ?>
-      <div class="site-blocks-cover" style="background-image: url(images/<?= $img["gambar"]; ?>);" data-aos="fade">
-      <?php endforeach; ?>
+    <div class="bg-light py-3">
       <div class="container">
-        <div class="row align-items-start align-items-md-center justify-content-end">
-          <div class="col-md-5 text-center text-md-left pt-5 pt-md-0">
-            <?php foreach ($header as $hdr): ?>
-              <h1 class="mb-2">
-                <?= $hdr["header"]; ?>
-              </h1>
-              <div class="intro-text text-center text-md-left">
-                <p class="mb-4">
-                  <?= $hdr["teks"]; ?>
-                </p>
-                <p>
-                <?php endforeach; ?>
-                <a href="#" class="btn btn-sm btn-primary">Shop Now</a>
-              </p>
-            </div>
-          </div>
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <strong
+              class="text-black">Tank Top T-Shirt</strong></div>
         </div>
       </div>
     </div>
 
-    <div class="site-section site-section-sm site-blocks-1">
-      <div class="container">
-        <div class="row">
-          <?php foreach ($benefit as $bnf): ?>
-            <div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="">
-              <div class="icon mr-4 align-self-start">
-                <span class="<?= $bnf["icon"]; ?>"></span>
-              </div>
-              <div class="text">
-                <h2 class="text-uppercase">
-                  <?= $bnf["header"]; ?>
-                </h2>
-                <p>
-                  <?= $bnf["teks"]; ?>
-                </p>
-              </div>
+    <?php foreach ($product as $prd): ?>
+      <div class="site-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <img src="images/<?= $prd["gambar"]; ?>" alt="Image" class="img-fluid">
             </div>
-          <?php endforeach; ?>
-        </div>
-      </div>
-    </div>
+            <div class="col-md-6">
+              <?= $prd["about"]; ?>
+              <p><strong class="text-primary h4">
+                  <?php
+                  $priceFromDatabase = $prd["price"];
+                  $formattedPrice = "Rp " . number_format($priceFromDatabase, 0, ',', '.');
+                  echo $formattedPrice;
+                  ?>
+                </strong></p>
+              <?php
+              // Ambil nilai ukuran dari kolom 'size' pada tabel produk
+              $sizeValues = $prd["size"];
 
-    <div class="site-section site-blocks-2">
-      <div class="container">
-        <div class="row">
-          <?php foreach ($category as $ctg): ?>
-            <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-              <a class="block-2-item" href="<?= $ctg["link"]; ?>">
-                <figure class="image">
-                  <img src="images/<?= $ctg["gambar"]; ?>" alt="" class="img-fluid">
-                </figure>
-                <div class="text">
-                  <span class="text-uppercase">
-                    <?= $ctg["teks"]; ?>
-                  </span>
-                  <h3>
-                    <?= $ctg["category"]; ?>
-                  </h3>
+              // Pecah nilai ukuran menjadi array
+              $sizeArray = explode(',', $sizeValues);
+              ?>
+              <div class="mb-1 d-flex">
+              <?php foreach ($sizeArray as $size): ?>
+                <label for="<?= $size; ?>" class="d-flex mr-3 mb-3">
+                  <span class="d-inline-block mr-2" style="top:2px; position: relative;"><input type="radio"
+                      id="<?= $size; ?>" name="size"></span> <span class="d-inline-block text-black"><?= $size; ?></span>
+                    </label>
+                    <?php endforeach; ?>
+              </div>
+              <?php
+              // Ambil nilai ukuran dari kolom 'size' pada tabel produk
+              $colorValues = $prd["color"];
+
+              // Pecah nilai ukuran menjadi array
+              $colorArray = explode(',', $colorValues);
+              ?>
+              <div class="mb-1 d-flex">
+  <?php foreach ($colorArray as $color): ?>
+    <?php foreach ($clr as $clrColor): ?>
+      <?php if ($color === $clrColor["color"]): ?>
+        <label for="<?= $color; ?>" class="d-flex mr-3 mb-3">
+          <span class="d-inline-block mr-2" style="top:2px; position: relative;">
+            <input type="radio" id="<?= $color; ?>" name="color">
+          </span>
+          <a class="d-flex color-item align-items-center">
+          <span class="color d-inline-block rounded-circle mr-2" style="background-color: <?= $clrColor["codeclr"]; ?>"></span>
+          <span class="d-inline-block text-black"><?= $color; ?></span>
+      </a>
+        </label>
+      <?php endif; ?>
+    <?php endforeach; ?>
+  <?php endforeach; ?>
+</div>
+
+              <div class="mb-5">
+                <div class="input-group mb-3" style="max-width: 120px;">
+                  <div class="input-group-prepend">
+                    <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                  </div>
+                  <input type="text" class="form-control text-center" value="1" placeholder=""
+                    aria-label="Example text with button addon" aria-describedby="button-addon1">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                  </div>
                 </div>
-              </a>
-            </div>
-          <?php endforeach; ?>
 
+              </div>
+              <p><a href="cart.php" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+            <?php endforeach; ?>
+          </div>
         </div>
       </div>
     </div>
@@ -200,60 +202,71 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
         <div class="row">
           <div class="col-md-12">
             <div class="nonloop-block-3 owl-carousel">
-              <?php foreach ($newprd as $prd): ?>
-                <div class="item">
-                  <div class="block-4 text-center">
-                    <figure class="block-4-image">
-                      <img src="images/<?= $prd["gambar"]; ?>" alt="<?= $prd["name"]; ?>" class="img-fluid">
-                    </figure>
-                    <div class="block-4-text p-4">
-                      <h3><a href="#">
-                          <?= $prd["name"]; ?>
-                        </a></h3>
-                      <p class="mb-0">
-                        <?= $prd["short"]; ?>
-                      </p>
-                      <p class="text-primary font-weight-bold">
-                        <?php $priceFromDatabase = $prd["price"];
-                        $formattedPrice = "Rp " . number_format($priceFromDatabase, 0, ',', '.');
-                        echo $formattedPrice; ?>
-                      </p>
-                    </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Tank Top</a></h3>
+                    <p class="mb-0">Finding perfect t-shirt</p>
+                    <p class="text-primary font-weight-bold">$50</p>
                   </div>
                 </div>
-              <?php endforeach; ?>
-
-
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Corater</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Polo Shirt</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">T-Shirt Mockup</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Corater</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <?php foreach ($ads as $ad): ?>
-      <?php if ($ad["status"] == 'show'): ?>
-        <div class="site-section block-8">
-          <div class="container">
-            <div class="row justify-content-center  mb-5">
-              <div class="col-md-7 site-section-heading text-center pt-4">
-                <h2>
-                  <?= $ad["header"]; ?>
-                </h2>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <div class="col-md-12 col-lg-7 mb-5">
-                <img src="images/<?= $ad["gambar"]; ?>" alt="Image placeholder" class="img-fluid rounded">
-              </div>
-              <div class="col-md-12 col-lg-5 text-center pl-md-5">
-                <?= $ad["teks"]; ?>
-                <p><a href="<?= $ad["link"]; ?>" class="btn btn-primary btn-sm">Shop Now</a></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      <?php endif; ?>
-    <?php endforeach; ?>
 
     <footer class="site-footer border-top">
       <div class="container">
