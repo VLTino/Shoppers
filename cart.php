@@ -131,18 +131,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
         <div class="row mb-5">
           <form class="col-md-12" method="post">
             <div class="site-blocks-table">
-            <?php
-        // Tampilkan produk dalam keranjang belanja
-        if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) :
-            foreach ($_SESSION['cart'] as $product) :
-                $product_id = $product['product_id'];
-                $color = $product['color'];
-                $size = $product['size'];
-                $jumlah = $product['jumlah'];
-                $price = $product['price'];
-                
-                $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
-                ?>
+            <?php // Tampilkan produk dalam keranjang belanja
+        if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) : ?>
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -158,7 +148,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
                 </thead>
                 <tbody>
           
+                <?php
+        
+            foreach ($_SESSION['cart'] as $product) :
+                $product_id = $product['product_id'];
+                $color = $product['color'];
+                $size = $product['size'];
+                $jumlah = $product['jumlah'];
+                $price = $product['price'];
                 
+                $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
+                ?>
                 <tr>
                   <?php foreach ($prd as $pr):?>
                     <td class="product-thumbnail">
