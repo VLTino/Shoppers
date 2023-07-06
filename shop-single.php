@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('admins/functions.php');
 
 $id = $_GET["id"];
@@ -132,6 +133,7 @@ $clr = query("SELECT * FROM `color`");
                   echo $formattedPrice;
                   ?>
                 </strong></p>
+              <form action="cart+.php" method="post">
               <?php
               // Ambil nilai ukuran dari kolom 'size' pada tabel produk
               $sizeValues = $prd["size"];
@@ -140,12 +142,14 @@ $clr = query("SELECT * FROM `color`");
               $sizeArray = explode(',', $sizeValues);
               ?>
               <div class="mb-1 d-flex">
-              <?php foreach ($sizeArray as $size): ?>
-                <label for="<?= $size; ?>" class="d-flex mr-3 mb-3">
-                  <span class="d-inline-block mr-2" style="top:2px; position: relative;"><input type="radio"
-                      id="<?= $size; ?>" name="size"></span> <span class="d-inline-block text-black"><?= $size; ?></span>
-                    </label>
-                    <?php endforeach; ?>
+                <?php foreach ($sizeArray as $size): ?>
+                  <label for="<?= $size; ?>" class="d-flex mr-3 mb-3">
+                    <span class="d-inline-block mr-2" style="top:2px; position: relative;"><input type="radio"
+                        id="<?= $size; ?>" name="size" value="<?= $size; ?>"></span> <span class="d-inline-block text-black">
+                      <?= $size; ?>
+                    </span>
+                  </label>
+                <?php endforeach; ?>
               </div>
               <?php
               // Ambil nilai ukuran dari kolom 'size' pada tabel produk
@@ -155,29 +159,32 @@ $clr = query("SELECT * FROM `color`");
               $colorArray = explode(',', $colorValues);
               ?>
               <div class="mb-1 d-flex">
-  <?php foreach ($colorArray as $color): ?>
-    <?php foreach ($clr as $clrColor): ?>
-      <?php if ($color === $clrColor["color"]): ?>
-        <label for="<?= $color; ?>" class="d-flex mr-3 mb-3">
-          <span class="d-inline-block mr-2" style="top:2px; position: relative;">
-            <input type="radio" id="<?= $color; ?>" name="color">
-          </span>
-          <a class="d-flex color-item align-items-center">
-          <span class="color d-inline-block rounded-circle mr-2" style="background-color: <?= $clrColor["codeclr"]; ?>"></span>
-          <span class="d-inline-block text-black"><?= $color; ?></span>
-      </a>
-        </label>
-      <?php endif; ?>
-    <?php endforeach; ?>
-  <?php endforeach; ?>
-</div>
+                <?php foreach ($colorArray as $color): ?>
+                  <?php foreach ($clr as $clrColor): ?>
+                    <?php if ($color === $clrColor["color"]): ?>
+                      <label for="<?= $color; ?>" class="d-flex mr-3 mb-3">
+                        <span class="d-inline-block mr-2" style="top:2px; position: relative;">
+                          <input type="radio" id="<?= $color; ?>" name="color" value="<?= $color; ?>">
+                        </span>
+                        <a class="d-flex color-item align-items-center">
+                          <span class="color d-inline-block rounded-circle mr-2"
+                            style="background-color: <?= $clrColor["codeclr"]; ?>"></span>
+                          <span class="d-inline-block text-black">
+                            <?= $color; ?>
+                          </span>
+                        </a>
+                      </label>
+                    <?php endif; ?>
+                  <?php endforeach; ?>
+                <?php endforeach; ?>
+              </div>
 
               <div class="mb-5">
                 <div class="input-group mb-3" style="max-width: 120px;">
                   <div class="input-group-prepend">
                     <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
                   </div>
-                  <input type="text" class="form-control text-center" value="1" placeholder=""
+                  <input type="text" name="jumlah" class="form-control text-center" value="1" placeholder=""
                     aria-label="Example text with button addon" aria-describedby="button-addon1">
                   <div class="input-group-append">
                     <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
@@ -185,7 +192,10 @@ $clr = query("SELECT * FROM `color`");
                 </div>
 
               </div>
-              <p><a href="cart.php" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+              <input type="hidden" name="product_id" id="" value="<?= $prd["id"]; ?>">
+              <input type="hidden" name="price" id="" value="<?= $prd["price"]; ?>">
+              <p><button type="submit" class="buy-now btn btn-sm btn-primary" name="product">Add To Cart</button></p>
+              </form>
             <?php endforeach; ?>
           </div>
         </div>

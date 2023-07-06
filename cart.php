@@ -1,3 +1,25 @@
+<?php
+session_start();
+require('admins/functions.php');
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array();
+}
+
+// Memeriksa jika ada product_id yang dikirimkan melalui POST untuk penghapusan produk
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id'])) {
+    $remove_product_id = $_POST['remove_product_id'];
+
+    // Hapus produk dengan product_id yang sesuai dari keranjang belanja
+    foreach ($_SESSION['cart'] as $key => $product) {
+        if ($product['product_id'] === $remove_product_id) {
+            unset($_SESSION['cart'][$key]);
+            break;
+        }
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -109,65 +131,69 @@
         <div class="row mb-5">
           <form class="col-md-12" method="post">
             <div class="site-blocks-table">
+            <?php
+        // Tampilkan produk dalam keranjang belanja
+        if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) :
+            foreach ($_SESSION['cart'] as $product) :
+                $product_id = $product['product_id'];
+                $color = $product['color'];
+                $size = $product['size'];
+                $jumlah = $product['jumlah'];
+                $price = $product['price'];
+                
+                $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
+                ?>
               <table class="table table-bordered">
                 <thead>
                   <tr>
                     <th class="product-thumbnail">Image</th>
                     <th class="product-name">Product</th>
                     <th class="product-price">Price</th>
+                    <th class="color">Color</th>
+                    <th class="size">Size</th>
                     <th class="product-quantity">Quantity</th>
                     <th class="product-total">Total</th>
                     <th class="product-remove">Remove</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+          
+                
+                <tr>
+                  <?php foreach ($prd as $pr):?>
                     <td class="product-thumbnail">
-                      <img src="images/cloth_1.jpg" alt="Image" class="img-fluid">
+                      <img src="images/<?= $pr["gambar"];?>" alt="Image" class="img-fluid">
                     </td>
                     <td class="product-name">
-                      <h2 class="h5 text-black">Top Up T-Shirt</h2>
+                      <h2 class="h5 text-black"><?= $pr["name"];?></h2>
                     </td>
-                    <td>$49.00</td>
+                    <td><?= $pr["price"];?></td>
+                    <td>
+                      <?= $color; ?>
+                    </td>
+                    <td>
+                      <?= $size; ?>
+                    </td>
                     <td>
                       <div class="input-group mb-3" style="max-width: 120px;">
                         <div class="input-group-prepend">
                           <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
                         </div>
-                        <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <input type="text" class="form-control text-center" value="<?= $jumlah;?>" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
                         <div class="input-group-append">
                           <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
                         </div>
                       </div>
 
                     </td>
-                    <td>$49.00</td>
-                    <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
+                    <td><?= $price*$jumlah; ?></td>
+                    <td><form action="cart.php" method="post"><input type="hidden" name="remove_product_id" value="<?= $product_id ?>"><input type="submit" value="X" class="btn btn-primary btn-sm"></form></td>
+                    <?php endforeach; ?>
                   </tr>
-
-                  <tr>
-                    <td class="product-thumbnail">
-                      <img src="images/cloth_2.jpg" alt="Image" class="img-fluid">
-                    </td>
-                    <td class="product-name">
-                      <h2 class="h5 text-black">Polo Shirt</h2>
-                    </td>
-                    <td>$49.00</td>
-                    <td>
-                      <div class="input-group mb-3" style="max-width: 120px;">
-                        <div class="input-group-prepend">
-                          <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                        </div>
-                        <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                        </div>
-                      </div>
-
-                    </td>
-                    <td>$49.00</td>
-                    <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
-                  </tr>
+<?php endforeach; ?>
+<?php else: ?>
+                  <h3 style="color:red;text-align:center;">Tidak ada produk dalam keranjang belanja.</h3>
+            <?php endif; ?>
                 </tbody>
               </table>
             </div>
