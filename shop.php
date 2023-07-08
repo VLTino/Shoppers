@@ -119,7 +119,7 @@ $color = query("SELECT * FROM `color`");
                 <button type="submit" name="filter" hidden></button>
                 <span class="icon icon-search2"></span>
 
-                <input type="text" name="search" class="form-control border-0"
+                <input type="text" name="search" class="filter-input form-control border-0"
                   value="<?= isset($_POST['search']) ? $_POST['search'] : ''; ?>" placeholder="Search">
               </form>
             </div>
@@ -315,7 +315,7 @@ $color = query("SELECT * FROM `color`");
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
                 <div id="slider-range" class="border-primary"></div>
-                <input type="text" name="Price" id="amount" class="form-control border-0 pl-0 bg-white filter-input"
+                <input type="text" name="Price" id="amount" class="filter-input form-control border-0 pl-0 bg-white"
                   readonly />
               </div>
               <div class="mb-4">
