@@ -36,12 +36,13 @@ if (!empty($searchTerm)) {
   $whereClause .= " AND (name LIKE '%$searchTerm%')";
 }
 
+if (!empty($priceRange)) {
 // Peroleh harga minimal dan maksimal dari string
 $priceRange = str_replace(array('Rp', ','), '', $priceRange);
 $prices = explode('-', $priceRange);
 $minPrice = (int) $prices[0];
 $maxPrice = (int) $prices[1];
-
+}
 
 // Tambahkan klausa WHERE untuk filter harga minimal dan maksimal
 if (!empty($minPrice)) {

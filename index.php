@@ -49,8 +49,8 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
           <div class="row align-items-center">
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-            <form action="shop.php" class="site-block-top-search" method="post">
-                <button type="submit" name="filter" hidden></button>
+            <form action="shop.php" class="site-block-top-search" method="post" class="filterForm">
+                
                 <span class="icon icon-search2"></span>
 
                 <input type="text" name="search"class="form-control border-0" placeholder="Search">

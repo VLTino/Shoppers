@@ -115,12 +115,13 @@ $color = query("SELECT * FROM `color`");
           <div class="row align-items-center">
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-              <form action="" class="site-block-top-search" method="post">
-                <button type="submit" name="filter" hidden></button>
+              <form action="" class="site-block-top-search" method="post" class="filter-input">
+
                 <span class="icon icon-search2"></span>
 
                 <input type="text" name="search" class="filter-input form-control border-0"
                   value="<?= isset($_POST['search']) ? $_POST['search'] : ''; ?>" placeholder="Search">
+
               </form>
             </div>
 
@@ -261,10 +262,10 @@ $color = query("SELECT * FROM `color`");
                   </div>
                 <?php endforeach; ?>
               <?php endif; ?>
-
-
-
             </div>
+
+
+
             <div class="row" data-aos="fade-up">
               <div class="col-md-12 text-center">
                 <div class="site-block-27">
@@ -286,29 +287,30 @@ $color = query("SELECT * FROM `color`");
             <div class="border p-4 rounded mb-4">
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
               <ul class="list-unstyled mb-0">
-                <form action="" method="post" id="filterForm" name="filter">
+
+                <li class="mb-1">
+                  <input type="radio" name="category" id="all" value="" <?= empty($_POST['category']) ? 'checked' : ''; ?> class="filter-input">
+                  <label for="all"><span style="color:#7971ea;">All Category</span> </label>
+                </li>
+                <?php foreach ($category as $ctg): ?>
                   <li class="mb-1">
-                    <input type="radio" name="category" id="all" value=""  <?= empty($_POST['category']) ? 'checked' : ''; ?>>
-                    <label for="all"><span style="color:#7971ea;">All Category</span> </label>
+                    <input type="radio" name="category" id="<?= $ctg["category"]; ?>" value="<?= $ctg["category"]; ?>"
+                      <?= (isset($_POST['category']) && $_POST['category'] === $ctg["category"]) ? 'checked' : ''; ?>
+                      class="filter-input">
+                    <label for="<?= $ctg["category"]; ?>"><span style="color:#7971ea;">
+                        <?= $ctg["category"]; ?>
+                      </span> <span class="text-black ml-auto"> (
+                        <?php
+                        $categoryCount = query("SELECT COUNT(category) AS jumlah FROM product WHERE category = '" . $ctg["category"] . "'");
+                        if ($categoryCount && !empty($categoryCount)) {
+                          echo $categoryCount[0]["jumlah"];
+                        } else {
+                          echo "0";
+                        }
+                        ?>)
+                      </span></label>
                   </li>
-                  <?php foreach ($category as $ctg): ?>
-                    <li class="mb-1">
-                      <input type="radio" name="category" id="<?= $ctg["category"]; ?>" value="<?= $ctg["category"]; ?>"
-                        <?= (isset($_POST['category']) && $_POST['category'] === $ctg["category"]) ? 'checked' : ''; ?>>
-                      <label for="<?= $ctg["category"]; ?>"><span style="color:#7971ea;">
-                          <?= $ctg["category"]; ?>
-                        </span> <span class="text-black ml-auto"> (
-                          <?php
-                          $categoryCount = query("SELECT COUNT(category) AS jumlah FROM product WHERE category = '" . $ctg["category"] . "'");
-                          if ($categoryCount && !empty($categoryCount)) {
-                            echo $categoryCount[0]["jumlah"];
-                          } else {
-                            echo "0";
-                          }
-                          ?>)
-                        </span></label>
-                    </li>
-                  <?php endforeach; ?>
+                <?php endforeach; ?>
               </ul>
             </div>
             <div class="border p-4 rounded mb-4">
@@ -334,8 +336,9 @@ $color = query("SELECT * FROM `color`");
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
                 <?php foreach ($color as $clr): ?>
                   <div class="d-flex align-items-center">
-                    <input type="checkbox" name="color[]" id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>"class="filter-input"
-                      <?= isset($_POST['color']) && in_array($clr["color"], $_POST['color']) ? 'checked' : ''; ?>>
+                    <input type="checkbox" name="color[]" id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>"
+                      class="filter-input" <?= isset($_POST['color']) && in_array($clr["color"], $_POST['color']) ? 'checked' : ''; ?>>
+
                     <label for="<?= $clr["color"]; ?>">
                       <a class="d-flex color-item align-items-center mt-2 ml-2">
                         <span class="color d-inline-block rounded-circle mr-2"
@@ -348,70 +351,69 @@ $color = query("SELECT * FROM `color`");
                   </div>
                 <?php endforeach; ?>
                 <br>
-                <input type="hidden" name="search" id=""
-                  value="<?= isset($_POST['search']) ? $_POST['search'] : ''; ?>">
+                
 
-                </form>
+
 
                 <script>
-   $(document).ready(function() {
-  // Fungsi untuk mengirim permintaan filter ke server
-  function filterProducts() {
-    var formData = $('#filterForm').serialize(); // Mendapatkan nilai filter dari form
-    $.ajax({
-      url: 'filter.php', // Ganti dengan URL endpoint untuk pemrosesan filter di sisi server
-      type: 'POST',
-      data: formData,
-      beforeSend: function() {
-        // Tampilkan loader atau animasi loading
-        $('#productList').html('<div class="loader">Loading...</div>');
-      },
-      success: function(response) {
-        // Update daftar produk dengan hasil filter dari server
-        $('#productList').html(response);
-      }
-    });
-  }
+                  //    $(document).ready(function() {
+                  //   // Fungsi untuk mengirim permintaan filter ke server
+                  //   function filterProducts() {
+                  //     var formData = $('.filterForm').serialize(); // Mendapatkan nilai filter dari form
+                  //     $.ajax({
+                  //       url: 'filter.php', // Ganti dengan URL endpoint untuk pemrosesan filter di sisi server
+                  //       type: 'POST',
+                  //       data: formData,
+                  //       beforeSend: function() {
+                  //         // Tampilkan loader atau animasi loading
+                  //         $('#productList').html('<div class="loader">Loading...</div>');
+                  //       },
+                  //       success: function(response) {
+                  //         // Update daftar produk dengan hasil filter dari server
+                  //         $('#productList').html(response);
+                  //       }
+                  //     });
+                  //   }
 
-  // Tangkap perubahan pada elemen filter dan panggil fungsi filterProducts
-  $('#filterForm input').change(function() {
-    filterProducts();
-  });
+                  //   // Tangkap perubahan pada elemen filter dan panggil fungsi filterProducts
+                  //   $('.filterForm input').change(function() {
+                  //     filterProducts();
+                  //   });
 
-  $('#filterForm select').change(function() {
-    filterProducts();
-  });
-});
-$(document).ready(function() {
-  // Fungsi untuk mengirim permintaan filter ke server
-  function filterProducts() {
-    var formData = $('#filterForm').serialize(); // Mendapatkan nilai filter dari form
-    $.ajax({
-      url: 'filter.php', // Ganti dengan URL endpoint untuk pemrosesan filter di sisi server
-      type: 'POST',
-      data: formData,
-      beforeSend: function() {
-        // Tampilkan loader atau animasi loading
-        $('#productList').html('<div class="loader">Loading...</div>');
-      },
-      success: function(response) {
-        // Update daftar produk dengan hasil filter dari server
-        $('#productList').html(response);
-      }
-    });
-  }
+                  //   $('.filterForm select').change(function() {
+                  //     filterProducts();
+                  //   });
+                  // });
+                  $(document).ready(function () {
+                    // Fungsi untuk mengirim permintaan filter ke server
+                    function filterProducts() {
+                      var formData = $('.filter-input').serialize(); // Mendapatkan nilai filter dari form
+                      $.ajax({
+                        url: 'filter.php', // Ganti dengan URL endpoint untuk pemrosesan filter di sisi server
+                        type: 'POST',
+                        data: formData,
+                        beforeSend: function () {
+                          // Tampilkan loader atau animasi loading
+                          $('#productList').html('<div class="loader">Loading...</div>');
+                        },
+                        success: function (response) {
+                          // Update daftar produk dengan hasil filter dari server
+                          $('#productList').html(response);
+                        }
+                      });
+                    }
 
-  // Tangkap perubahan pada elemen filter dan panggil fungsi filterProducts
-  $('.filter-input').change(function() {
-    filterProducts();
-  });
+                    // Tangkap perubahan pada elemen filter dan panggil fungsi filterProducts
+                    $('.filter-input').change(function () {
+                      filterProducts();
+                    });
 
-  $('#filterForm select').change(function() {
-    filterProducts();
-  });
-});
+                    $('.filter-input select').change(function () {
+                      filterProducts();
+                    });
+                  });
 
-  </script>
+                </script>
               </div>
 
             </div>
