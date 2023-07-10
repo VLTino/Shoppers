@@ -1,9 +1,10 @@
 <?php
 
+$provinsi_terpilih = $_POST["id_provinsi"];
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "https://api.rajaongkir.com/starter/city?id=39&province=5",
+  CURLOPT_URL => "https://api.rajaongkir.com/starter/city?&province=".$provinsi_terpilih,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -23,5 +24,15 @@ curl_close($curl);
 if ($err) {
   echo "cURL Error #:" . $err;
 } else {
-  echo $response;
+  $array_response = json_decode($response,TRUE);
+  $datakota = $array_response["rajaongkir"]["results"];
+  
+  echo "<option> Pilih Kabupaten/Kota </option>";
+
+  foreach ($datakota as $key => $kota) {
+    echo "<option value='' city_id='".$kota["city_id"]."' nama_provinsi='".$kota["province"]."' nama_kota='".$kota["city_name"]."' tipe='".$kota["type"]."' codepost='".$kota["postal_code"]."'>";
+    echo $kota["type"]." ";
+    echo $kota["city_name"];
+    echo "</option>";
+  }
 }

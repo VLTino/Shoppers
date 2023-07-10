@@ -125,7 +125,7 @@
               </div>
               <div class="form-group">
                 <label for="kab" class="text-black">Kota/Kabupaten<span class="text-danger">*</span></label>
-                <select id="kab" class="form-control" name="nama_kab/kota">
+                <select id="kab" class="form-control" name="nama_kota">
                     
                 </select>
               </div>
@@ -457,8 +457,23 @@
           $("select[name=nama_provinsi]").html(provinsi);
         }
 
-      })
-    })
+      });
+
+      $("select[name=nama_provinsi]").on("change",function(){
+        var provinsi_terpilih = $("option:selected",this).attr("id_provinsi");
+        $.ajax({
+        type:'POST',
+        url:'admins/datakota.php',
+        data:'id_provinsi='+provinsi_terpilih,  
+        success:function(kota)  
+        {
+           $("select[name=nama_kota]").html(kota);
+        }
+
+      });
+      });
+      
+    });
   </script>
     
   </body>
