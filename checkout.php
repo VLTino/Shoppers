@@ -118,17 +118,15 @@
             <h2 class="h3 mb-3 text-black">Billing Details</h2>
             <div class="p-3 p-lg-5 border">
               <div class="form-group">
-                <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
-                <select id="c_country" class="form-control">
-                  <option value="1">Select a country</option>    
-                  <option value="2">bangladesh</option>    
-                  <option value="3">Algeria</option>    
-                  <option value="4">Afghanistan</option>    
-                  <option value="5">Ghana</option>    
-                  <option value="6">Albania</option>    
-                  <option value="7">Bahrain</option>    
-                  <option value="8">Colombia</option>    
-                  <option value="9">Dominican Republic</option>    
+                <label for="prov" class="text-black">Provinsi<span class="text-danger">*</span></label>
+                <select id="prov" class="form-control" name="nama_provinsi">
+                    
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="kab" class="text-black">Kota/Kabupaten<span class="text-danger">*</span></label>
+                <select id="kab" class="form-control" name="nama_kab/kota">
+                    
                 </select>
               </div>
               <div class="form-group row">
@@ -203,16 +201,8 @@
 
                     <div class="form-group">
                       <label for="c_diff_country" class="text-black">Country <span class="text-danger">*</span></label>
-                      <select id="c_diff_country" class="form-control">
-                        <option value="1">Select a country</option>    
-                        <option value="2">bangladesh</option>    
-                        <option value="3">Algeria</option>    
-                        <option value="4">Afghanistan</option>    
-                        <option value="5">Ghana</option>    
-                        <option value="6">Albania</option>    
-                        <option value="7">Bahrain</option>    
-                        <option value="8">Colombia</option>    
-                        <option value="9">Dominican Republic</option>    
+                      <select id="c_diff_country" class="form-control" name="nama_provinsi">
+                           
                       </select>
                     </div>
 
@@ -456,6 +446,20 @@
   <script src="js/aos.js"></script>
 
   <script src="js/main.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      $.ajax({
+        type:'POST',
+        url:'admins/dataprovinsi.php',
+        success:function(provinsi)  
+        {
+          $("select[name=nama_provinsi]").html(provinsi);
+        }
+
+      })
+    })
+  </script>
     
   </body>
 </html>

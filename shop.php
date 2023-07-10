@@ -1,9 +1,7 @@
 <?php
 require('admins/functions.php');
 
-$query = "SELECT * FROM `product`";
-$result = mysqli_query($conn, $query);
-$product = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
 
 
 // // Periksa apakah form dikirimkan
@@ -115,7 +113,7 @@ $color = query("SELECT * FROM `color`");
           <div class="row align-items-center">
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-              <form action="" class="site-block-top-search" method="post" class="filter-input">
+              <form action="" class="site-block-top-search" method="post" >
 
                 <span class="icon icon-search2"></span>
 
@@ -235,7 +233,11 @@ $color = query("SELECT * FROM `color`");
               </div>
             </div>
             <div class="row mb-5" id="productList">
-              <?php if (empty($product)): ?>
+              <?php 
+              $query = "SELECT * FROM `product`";
+              $result = mysqli_query($conn, $query);
+              $product = mysqli_fetch_all($result, MYSQLI_ASSOC);
+              if (empty($product)): ?>
                 <p style="color:red;text-decoration: underline;" class="ml-5">Product yang anda Cari Tidak Ada</p>
               <?php else: ?>
                 <?php foreach ($product as $prd): ?>
