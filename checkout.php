@@ -1,3 +1,12 @@
+<?php
+session_start();
+require('admins/functions.php');
+
+if (!isset($_SESSION['cart'])) {
+  $_SESSION['cart'] = array();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -345,17 +354,38 @@
                       <th>Total</th>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Top Up T-Shirt <strong class="mx-2">x</strong> 1</td>
-                        <td>$250.00</td>
-                      </tr>
-                      <tr>
-                        <td>Polo Shirt <strong class="mx-2">x</strong> 1</td>
-                        <td>$100.00</td>
-                      </tr>
+                      <?php
+                      $product_total = 0; // variabel untuk menghitung total harga produk
+                      
+                      foreach ($_SESSION['cart'] as $product):
+                        $product_id = $product['product_id'];
+                        $color = $product['color'];
+                        $size = $product['size'];
+                        $jumlah = $product['jumlah'];
+                        $price = $product['price'];
+
+                        $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
+                        ?>
+                        <?php foreach ($prd as $pr): ?>
+                          <tr>
+                            <td>
+                              <?= $pr["name"]; ?> <strong class="mx-2">x</strong>
+                              <?= $jumlah; ?>
+                            </td>
+                            <td>
+                            <?php
+                          $formattedPrice = "Rp " . number_format($price, 0, ',', '.');
+                          echo $formattedPrice; ?>
+                            </td>
+                          </tr>
+                          <?php $product_total += $price * $jumlah; // tambahkan harga produk ke total
+                          endforeach; ?>
+                      <?php endforeach; ?>
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-                        <td class="text-black">$350.00</td>
+                        <td class="text-black"><?php
+                          $formattedPrice = "Rp " . number_format($product_total, 0, ',', '.');
+                          echo $formattedPrice; ?></td>
                       </tr>
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
