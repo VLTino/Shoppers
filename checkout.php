@@ -373,9 +373,8 @@ if (!isset($_SESSION['cart'])) {
                               <?= $jumlah; ?>
                             </td>
                             <td>
-                            <?php
-                          $formattedPrice = "Rp " . number_format($price, 0, ',', '.');
-                          echo $formattedPrice; ?>
+                            <?php $subtotal=$price*$jumlah; $sub = "Rp " . number_format($subtotal, 0, ',', '.');
+                          echo $sub;?>
                             </td>
                           </tr>
                           <?php $product_total += $price * $jumlah; // tambahkan harga produk ke total
