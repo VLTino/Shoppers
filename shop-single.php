@@ -108,16 +108,16 @@ $clr = query("SELECT * FROM `color`");
       </nav>
     </header>
 
+    <?php foreach ($product as $prd): ?>
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
           <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <strong
-              class="text-black">Tank Top T-Shirt</strong></div>
+              class="text-black"><?= $prd["name"]; ?></strong></div>
         </div>
       </div>
     </div>
 
-    <?php foreach ($product as $prd): ?>
       <div class="site-section">
         <div class="container">
           <div class="row">
@@ -145,7 +145,7 @@ $clr = query("SELECT * FROM `color`");
                 <?php foreach ($sizeArray as $size): ?>
                   <label for="<?= $size; ?>" class="d-flex mr-3 mb-3">
                     <span class="d-inline-block mr-2" style="top:2px; position: relative;"><input type="radio"
-                        id="<?= $size; ?>" name="size" value="<?= $size; ?>"></span> <span class="d-inline-block text-black">
+                        id="<?= $size; ?>" name="size" value="<?= $size; ?>"></span> <span class="d-inline-block text-black" required>
                       <?= $size; ?>
                     </span>
                   </label>
@@ -164,7 +164,7 @@ $clr = query("SELECT * FROM `color`");
                     <?php if ($color === $clrColor["color"]): ?>
                       <label for="<?= $color; ?>" class="d-flex mr-3 mb-3">
                         <span class="d-inline-block mr-2" style="top:2px; position: relative;">
-                          <input type="radio" id="<?= $color; ?>" name="color" value="<?= $color; ?>">
+                          <input type="radio" id="<?= $color; ?>" name="color" value="<?= $color; ?>" required>
                         </span>
                         <a class="d-flex color-item align-items-center">
                           <span class="color d-inline-block rounded-circle mr-2"
