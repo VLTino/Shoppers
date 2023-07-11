@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Shoppers &mdash; Colorlib e-Commerce Template</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+<head>
+  <title>Shoppers &mdash; Colorlib e-Commerce Template</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
 
 
-    <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/aos.css">
 
-    <link rel="stylesheet" href="css/style.css">
-    
-  </head>
-  <body>
-  
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
   <div class="site-wrap">
     <header class="site-navbar" role="banner">
       <div class="site-navbar-top">
@@ -51,15 +53,16 @@
                       <span class="icon icon-shopping_cart"></span>
                       <span class="count">2</span>
                     </a>
-                  </li> 
-                  <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+                  </li>
+                  <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span
+                        class="icon-menu"></span></a></li>
                 </ul>
-              </div> 
+              </div>
             </div>
 
           </div>
         </div>
-      </div> 
+      </div>
       <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
           <ul class="site-menu js-clone-nav d-none d-md-block">
@@ -99,7 +102,9 @@
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <a href="cart.php">Cart</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Checkout</strong></div>
+          <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <a
+              href="cart.php">Cart</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Checkout</strong>
+          </div>
         </div>
       </div>
     </div>
@@ -118,17 +123,44 @@
             <h2 class="h3 mb-3 text-black">Billing Details</h2>
             <div class="p-3 p-lg-5 border">
               <div class="form-group">
-                <label for="prov" class="text-black">Provinsi<span class="text-danger">*</span></label>
+                <input type="text" name="total_berat" id="" value="1200">
+                <label for="prov" class="text-black">Provinsi <span class="text-danger">*</span></label>
                 <select id="prov" class="form-control" name="nama_provinsi">
-                    
+
                 </select>
               </div>
               <div class="form-group">
-                <label for="kab" class="text-black">Kota/Kabupaten<span class="text-danger">*</span></label>
+                <label for="kab" class="text-black">Kota/Kabupaten <span class="text-danger">*</span></label>
                 <select id="kab" class="form-control" name="nama_kota">
-                    
+                  <option value="">Pilih Kabupaten/Kota</option>
                 </select>
               </div>
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="c_address" class="text-black">Alamat Lengkap <span class="text-danger">*</span></label>
+                  <textarea name="" id="c_address" cols="30" rows="10" class="form-control"
+                    placeholder="Alamat Lengkap"></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="kurir" class="text-black">Kurir Ekspedisi<span class="text-danger">*</span></label>
+                <select id="kurir" class="form-control" name="nama_ekspedisi">
+                  <option value="">Pilih Kurir</option>
+                  <option value="jne">JNE</option>
+                  <option value="tiki">Tiki</option>
+                  <option value="pos">POS</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="paket" class="text-black">Paket <span class="text-danger">*</span></label>
+                <select id="paket" class="form-control" name="nama_paket">
+                  <option value="">Pilih Paket</option>
+                </select>
+              </div>
+
               <div class="form-group row">
                 <div class="col-md-6">
                   <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
@@ -147,12 +179,7 @@
                 </div>
               </div>
 
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address">
-                </div>
-              </div>
+
 
               <div class="form-group">
                 <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
@@ -160,7 +187,8 @@
 
               <div class="form-group row">
                 <div class="col-md-6">
-                  <label for="c_state_country" class="text-black">State / Country <span class="text-danger">*</span></label>
+                  <label for="c_state_country" class="text-black">State / Country <span
+                      class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="c_state_country" name="c_state_country">
                 </div>
                 <div class="col-md-6">
@@ -171,7 +199,8 @@
 
               <div class="form-group row mb-5">
                 <div class="col-md-6">
-                  <label for="c_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
+                  <label for="c_email_address" class="text-black">Email Address <span
+                      class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="c_email_address" name="c_email_address">
                 </div>
                 <div class="col-md-6">
@@ -181,13 +210,17 @@
               </div>
 
               <div class="form-group">
-                <label for="c_create_account" class="text-black" data-toggle="collapse" href="#create_an_account" role="button" aria-expanded="false" aria-controls="create_an_account"><input type="checkbox" value="1" id="c_create_account"> Create an account?</label>
+                <label for="c_create_account" class="text-black" data-toggle="collapse" href="#create_an_account"
+                  role="button" aria-expanded="false" aria-controls="create_an_account"><input type="checkbox" value="1"
+                    id="c_create_account"> Create an account?</label>
                 <div class="collapse" id="create_an_account">
                   <div class="py-2">
-                    <p class="mb-3">Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
+                    <p class="mb-3">Create an account by entering the information below. If you are a returning customer
+                      please login at the top of the page.</p>
                     <div class="form-group">
                       <label for="c_account_password" class="text-black">Account Password</label>
-                      <input type="email" class="form-control" id="c_account_password" name="c_account_password" placeholder="">
+                      <input type="email" class="form-control" id="c_account_password" name="c_account_password"
+                        placeholder="">
                     </div>
                   </div>
                 </div>
@@ -195,25 +228,30 @@
 
 
               <div class="form-group">
-                <label for="c_ship_different_address" class="text-black" data-toggle="collapse" href="#ship_different_address" role="button" aria-expanded="false" aria-controls="ship_different_address"><input type="checkbox" value="1" id="c_ship_different_address"> Ship To A Different Address?</label>
+                <label for="c_ship_different_address" class="text-black" data-toggle="collapse"
+                  href="#ship_different_address" role="button" aria-expanded="false"
+                  aria-controls="ship_different_address"><input type="checkbox" value="1" id="c_ship_different_address">
+                  Ship To A Different Address?</label>
                 <div class="collapse" id="ship_different_address">
                   <div class="py-2">
 
                     <div class="form-group">
                       <label for="c_diff_country" class="text-black">Country <span class="text-danger">*</span></label>
                       <select id="c_diff_country" class="form-control" name="nama_provinsi">
-                           
+
                       </select>
                     </div>
 
 
                     <div class="form-group row">
                       <div class="col-md-6">
-                        <label for="c_diff_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                        <label for="c_diff_fname" class="text-black">First Name <span
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="c_diff_fname" name="c_diff_fname">
                       </div>
                       <div class="col-md-6">
-                        <label for="c_diff_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                        <label for="c_diff_lname" class="text-black">Last Name <span
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="c_diff_lname" name="c_diff_lname">
                       </div>
                     </div>
@@ -227,8 +265,10 @@
 
                     <div class="form-group row">
                       <div class="col-md-12">
-                        <label for="c_diff_address" class="text-black">Address <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_address" name="c_diff_address" placeholder="Street address">
+                        <label for="c_diff_address" class="text-black">Address <span
+                            class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="c_diff_address" name="c_diff_address"
+                          placeholder="Street address">
                       </div>
                     </div>
 
@@ -238,23 +278,27 @@
 
                     <div class="form-group row">
                       <div class="col-md-6">
-                        <label for="c_diff_state_country" class="text-black">State / Country <span class="text-danger">*</span></label>
+                        <label for="c_diff_state_country" class="text-black">State / Country <span
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="c_diff_state_country" name="c_diff_state_country">
                       </div>
                       <div class="col-md-6">
-                        <label for="c_diff_postal_zip" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
+                        <label for="c_diff_postal_zip" class="text-black">Posta / Zip <span
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="c_diff_postal_zip" name="c_diff_postal_zip">
                       </div>
                     </div>
 
                     <div class="form-group row mb-5">
                       <div class="col-md-6">
-                        <label for="c_diff_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
+                        <label for="c_diff_email_address" class="text-black">Email Address <span
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="c_diff_email_address" name="c_diff_email_address">
                       </div>
                       <div class="col-md-6">
                         <label for="c_diff_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_phone" name="c_diff_phone" placeholder="Phone Number">
+                        <input type="text" class="form-control" id="c_diff_phone" name="c_diff_phone"
+                          placeholder="Phone Number">
                       </div>
                     </div>
 
@@ -265,7 +309,8 @@
 
               <div class="form-group">
                 <label for="c_order_notes" class="text-black">Order Notes</label>
-                <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea>
+                <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control"
+                  placeholder="Write your notes here..."></textarea>
               </div>
 
             </div>
@@ -276,10 +321,11 @@
               <div class="col-md-12">
                 <h2 class="h3 mb-3 text-black">Coupon Code</h2>
                 <div class="p-3 p-lg-5 border">
-                  
+
                   <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
                   <div class="input-group w-75">
-                    <input type="text" class="form-control" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
+                    <input type="text" class="form-control" id="c_code" placeholder="Coupon Code"
+                      aria-label="Coupon Code" aria-describedby="button-addon2">
                     <div class="input-group-append">
                       <button class="btn btn-primary btn-sm" type="button" id="button-addon2">Apply</button>
                     </div>
@@ -288,7 +334,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="row mb-5">
               <div class="col-md-12">
                 <h2 class="h3 mb-3 text-black">Your Order</h2>
@@ -304,7 +350,7 @@
                         <td>$250.00</td>
                       </tr>
                       <tr>
-                        <td>Polo Shirt <strong class="mx-2">x</strong>   1</td>
+                        <td>Polo Shirt <strong class="mx-2">x</strong> 1</td>
                         <td>$100.00</td>
                       </tr>
                       <tr>
@@ -319,37 +365,47 @@
                   </table>
 
                   <div class="border p-3 mb-3">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">Direct Bank Transfer</a></h3>
+                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsebank" role="button"
+                        aria-expanded="false" aria-controls="collapsebank">Direct Bank Transfer</a></h3>
 
                     <div class="collapse" id="collapsebank">
                       <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as
+                          the payment reference. Your order won’t be shipped until the funds have cleared in our
+                          account.</p>
                       </div>
                     </div>
                   </div>
 
                   <div class="border p-3 mb-3">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsecheque" role="button" aria-expanded="false" aria-controls="collapsecheque">Cheque Payment</a></h3>
+                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsecheque" role="button"
+                        aria-expanded="false" aria-controls="collapsecheque">Cheque Payment</a></h3>
 
                     <div class="collapse" id="collapsecheque">
                       <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as
+                          the payment reference. Your order won’t be shipped until the funds have cleared in our
+                          account.</p>
                       </div>
                     </div>
                   </div>
 
                   <div class="border p-3 mb-5">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsepaypal" role="button" aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
+                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsepaypal" role="button"
+                        aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
 
                     <div class="collapse" id="collapsepaypal">
                       <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as
+                          the payment reference. Your order won’t be shipped until the funds have cleared in our
+                          account.</p>
                       </div>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='thankyou.php'">Place Order</button>
+                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='thankyou.php'">Place
+                      Order</button>
                   </div>
 
                 </div>
@@ -399,7 +455,7 @@
             <a href="#" class="block-6">
               <img src="images/hero_1.jpg" alt="Image placeholder" class="img-fluid rounded mb-4">
               <h3 class="font-weight-light  mb-0">Finding Your Perfect Shoes</h3>
-              <p>Promo from  nuary 15 &mdash; 25, 2019</p>
+              <p>Promo from nuary 15 &mdash; 25, 2019</p>
             </a>
           </div>
           <div class="col-md-6 col-lg-3">
@@ -426,12 +482,17 @@
         <div class="row pt-5 mt-5 text-center">
           <div class="col-md-12">
             <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;
+              <script data-cfasync="false"
+                src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+              <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
+              with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank"
+                class="text-primary">Colorlib</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
-          
+
         </div>
       </div>
     </footer>
@@ -448,33 +509,46 @@
   <script src="js/main.js"></script>
 
   <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
       $.ajax({
-        type:'POST',
-        url:'admins/dataprovinsi.php',
-        success:function(provinsi)  
-        {
+        type: 'POST',
+        url: 'admins/dataprovinsi.php',
+        success: function (provinsi) {
           $("select[name=nama_provinsi]").html(provinsi);
         }
-
       });
 
-      $("select[name=nama_provinsi]").on("change",function(){
-        var provinsi_terpilih = $("option:selected",this).attr("id_provinsi");
+      $("select[name=nama_provinsi]").on("change", function () {
+        var provinsi_terpilih = $("option:selected", this).attr("id_provinsi");
         $.ajax({
-        type:'POST',
-        url:'admins/datakota.php',
-        data:'id_provinsi='+provinsi_terpilih,  
-        success:function(kota)  
-        {
-           $("select[name=nama_kota]").html(kota);
-        }
+          type: 'POST',
+          url: 'admins/datakota.php',
+          data: { id_provinsi: provinsi_terpilih },
+          success: function (kota) {
+            $("select[name=nama_kota]").html(kota);
+          }
+        });
+      });
 
+      $("select[name=nama_ekspedisi]").on("change", function () {
+        var ekspedisi_terpilih = $("select[name=nama_ekspedisi]").val();
+        var kota_terpilih = $("option:selected", "select[name=nama_kota]").attr("city_id");
+        var total_berat = $("input[name=total_berat]").val();
+
+        $.ajax({
+          type: 'POST',
+          url: 'admins/datapaket.php',
+          data: 'ekspedisi=' + ekspedisi_terpilih + '&kota=' + kota_terpilih + '&berat=' + total_berat,
+          success: function (paket) {
+            $("select[name=nama_paket]").html(paket);
+          }
+        });
       });
-      });
-      
+
     });
+
   </script>
-    
-  </body>
+
+</body>
+
 </html>
