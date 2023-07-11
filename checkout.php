@@ -149,7 +149,7 @@ if (!isset($_SESSION['cart'])) {
                 <div class="col-md-12">
                   <label for="c_address" class="text-black">Alamat Lengkap <span class="text-danger">*</span></label>
                   <textarea name="" id="c_address" cols="30" rows="10" class="form-control"
-                    placeholder="Alamat Lengkap"></textarea>
+                    placeholder="Alamat Lengkap" required></textarea>
                 </div>
               </div>
 
