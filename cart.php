@@ -149,51 +149,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
                 <tbody>
           
                 <?php
-        
-            foreach ($_SESSION['cart'] as $product) :
-                $product_id = $product['product_id'];
-                $color = $product['color'];
-                $size = $product['size'];
-                $jumlah = $product['jumlah'];
-                $price = $product['price'];
-                
-                $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
-                ?>
-                <tr>
-                  <?php foreach ($prd as $pr):?>
-                    <td class="product-thumbnail">
-                      <img src="images/<?= $pr["gambar"];?>" alt="Image" class="img-fluid">
-                    </td>
-                    <td class="product-name">
-                      <h2 class="h5 text-black"><?= $pr["name"];?></h2>
-                    </td>
-                    <td><?= $pr["price"];?></td>
-                    <td>
-                      <?= $color; ?>
-                    </td>
-                    <td>
-                      <?= $size; ?>
-                    </td>
-                    <td>
-                      <div class="input-group mb-3" style="max-width: 120px;">
-                        <div class="input-group-prepend">
-                          <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                        </div>
-                        <input type="text" class="form-control text-center" value="<?= $jumlah;?>" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                        </div>
-                      </div>
+                $product_total = 0; // variabel untuk menghitung total harga produk
 
-                    </td>
-                    <td><?= $price*$jumlah; ?></td>
-                    <td><form action="cart.php" method="post"><input type="hidden" name="remove_product_id" value="<?= $product_id ?>"><input type="submit" value="X" class="btn btn-primary btn-sm"></form></td>
-                    <?php endforeach; ?>
-                  </tr>
-<?php endforeach; ?>
-<?php else: ?>
-                  <h3 style="color:red;text-align:center;">Tidak ada produk dalam keranjang belanja.</h3>
-            <?php endif; ?>
+                foreach ($_SESSION['cart'] as $product) :
+                    $product_id = $product['product_id'];
+                    $color = $product['color'];
+                    $size = $product['size'];
+                    $jumlah = $product['jumlah'];
+                    $price = $product['price'];
+                    
+                    $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
+                    ?>
+                    <tr>
+                      <?php foreach ($prd as $pr):?>
+                        <td class="product-thumbnail">
+                          <img src="images/<?= $pr["gambar"];?>" alt="Image" class="img-fluid">
+                        </td>
+                        <td class="product-name">
+                          <h2 class="h5 text-black"><?= $pr["name"];?></h2>
+                        </td>
+                        <td><?= $pr["price"];?></td>
+                        <td>
+                          <?= $color; ?>
+                        </td>
+                        <td>
+                          <?= $size; ?>
+                        </td>
+                        <td>
+                          <div class="input-group mb-3" style="max-width: 120px;">
+                            <div class="input-group-prepend">
+                              <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                            </div>
+                            <input type="text" class="form-control text-center" value="<?= $jumlah;?>" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                            </div>
+                          </div>
+
+                        </td>
+                        <td><?= $price*$jumlah; ?></td>
+                        <td><form action="cart.php" method="post"><input type="hidden" name="remove_product_id" value="<?= $product_id ?>"><input type="submit" value="X" class="btn btn-primary btn-sm"></form></td>
+                        <?php 
+                        $product_total += $price * $jumlah; // tambahkan harga produk ke total
+                        endforeach; ?>
+                      </tr>
+    <?php endforeach; ?>
+    <?php else: ?>
+                      <h3 style="color:red;text-align:center;">Tidak ada produk dalam keranjang belanja.</h3>
+                <?php endif; ?>
                 </tbody>
               </table>
             </div>
@@ -236,7 +239,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
                     <span class="text-black">Subtotal</span>
                   </div>
                   <div class="col-md-6 text-right">
-                    <strong class="text-black">$230.00</strong>
+                    <?php
+                     foreach ($_SESSION['cart'] as $product) :
+                      $jumlah = $product['jumlah'];
+                      $price = $product['price'];
+                      
+                      $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
+                      ?> 
+                    <strong class="text-black"><?php $subtotal=$price*$jumlah; $sub = "Rp " . number_format($subtotal, 0, ',', '.');
+                          echo $sub;?></strong><br>
+                  <?php endforeach ?>
                   </div>
                 </div>
                 <div class="row mb-5">
@@ -244,7 +256,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
                     <span class="text-black">Total</span>
                   </div>
                   <div class="col-md-6 text-right">
-                    <strong class="text-black">$230.00</strong>
+                    <strong class="text-black"><?php
+                          $formattedPrice = "Rp " . number_format($product_total, 0, ',', '.');
+                          echo $formattedPrice; ?></strong>
                   </div>
                 </div>
 
