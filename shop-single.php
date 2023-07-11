@@ -145,7 +145,7 @@ $clr = query("SELECT * FROM `color`");
                 <?php foreach ($sizeArray as $size): ?>
                   <label for="<?= $size; ?>" class="d-flex mr-3 mb-3">
                     <span class="d-inline-block mr-2" style="top:2px; position: relative;"><input type="radio"
-                        id="<?= $size; ?>" name="size" value="<?= $size; ?>"></span> <span class="d-inline-block text-black" required>
+                        id="<?= $size; ?>" name="size" value="<?= $size; ?>" required></span> <span class="d-inline-block text-black">
                       <?= $size; ?>
                     </span>
                   </label>
