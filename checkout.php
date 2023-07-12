@@ -587,12 +587,10 @@ if (!isset($_SESSION['cart'])) {
 
       $("select[name=nama_kota]").on("change", function(){
         var prov = $("option:selected",this).attr("nama_provinsi");
-        var tipe = $("option:selected",this).attr("tipe");
         var kota = $("option:selected",this).attr("nama_kota");
         var codepost = $("option:selected",this).attr("codepost");
 
         $("input[name=provinsi]").val(prov);
-        $("input[name=tipe]").val(tipe);
         $("input[name=kota]").val(kota);
         $("input[name=kodepos]").val(codepost);
 
