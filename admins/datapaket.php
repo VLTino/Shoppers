@@ -35,7 +35,10 @@ if ($err) {
 
  echo "<option value=''>Pilih Paket</option>";
  foreach ($paket as $key => $tiap_paket) {
-    echo "<option>";
+    echo "<option value='' 
+    paket='".$tiap_paket["service"]."'
+    ongkir='".$tiap_paket["cost"]["0"]["value"]."'
+    etd='".$tiap_paket["cost"]["0"]["etd"]."'>";
     echo $tiap_paket["service"]." ";
     echo number_format($tiap_paket["cost"]["0"]["value"])." ";
     echo $tiap_paket["cost"]["0"]["etd"];

@@ -579,6 +579,8 @@ if (!isset($_SESSION['cart'])) {
           data: 'ekspedisi=' + ekspedisi_terpilih + '&kota=' + kota_terpilih + '&berat=' + total_berat,
           success: function (paket) {
             $("select[name=nama_paket]").html(paket);
+
+            $("input[name=ekspedisi]").val(ekspedisi_terpilih);
           }
         });
       });
@@ -594,7 +596,17 @@ if (!isset($_SESSION['cart'])) {
         $("input[name=kota]").val(kota);
         $("input[name=kodepos]").val(codepost);
 
-      })
+      });
+      
+      $("select[name=nama_paket]").on("change", function(){
+        var paket = $("option:selected",this).attr("paket");
+        var ongkir = $("option:selected",this).attr("ongkir");
+        var etd = $("option:selected",this).attr("etd");
+
+        $("input[name=paket]").val(paket);
+        $("input[name=ongkir]").val(ongkir);
+        $("input[name=estimasi]").val(etd);
+      });
 
     });
 
