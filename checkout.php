@@ -145,6 +145,13 @@ if (!isset($_SESSION['cart'])) {
                 </select>
               </div>
 
+              <div class="form-group">
+                <label for="kec" class="text-black">Kecamatan <span class="text-danger">*</span></label>
+                <select id="kec" class="form-control" name="nama_kecamatan">
+                  <option value="">Pilih Kecamatan</option>
+                </select>
+              </div>
+
               <div class="form-group row">
                 <div class="col-md-12">
                   <label for="c_address" class="text-black">Alamat Lengkap <span class="text-danger">*</span></label>
@@ -217,15 +224,31 @@ if (!isset($_SESSION['cart'])) {
                   <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="Phone Number">
                 </div>
               </div>
+
+
+
+
+
+
+
+
               <input type="text" name="total_berat" id="" value="1200">
               <input type="text" name="provinsi" id="" value="">
-              <input type="text" name="tipe" id="" value="">
               <input type="text" name="kota" id="" value="">
+              <input type="text" name="kecamatan" id="" value="">
               <input type="text" name="kodepos" id="" value="">
               <input type="text" name="ekspedisi" id="" value="">
               <input type="text" name="paket" id="" value="">
               <input type="text" name="ongkir" id="" value="">
               <input type="text" name="estimasi" id="" value="">
+
+
+
+
+
+
+
+              
 
               <div class="form-group">
                 <label for="c_create_account" class="text-black" data-toggle="collapse" href="#create_an_account"
@@ -568,6 +591,18 @@ if (!isset($_SESSION['cart'])) {
         });
       });
 
+      $("select[name=nama_kota]").on("change", function () {
+        var kota_terpilih = $("option:selected", this).attr("city_id");
+        $.ajax({
+          type: 'POST',
+          url: 'admins/datakecamatan.php',
+          data: { id_kota: kota_terpilih },
+          success: function (kecamatan) {
+            $("select[name=nama_kecamatan]").html(kecamatan);
+          }
+        });
+      });
+
       $("select[name=nama_ekspedisi]").on("change", function () {
         var ekspedisi_terpilih = $("select[name=nama_ekspedisi]").val();
         var kota_terpilih = $("option:selected", "select[name=nama_kota]").attr("city_id");
@@ -604,6 +639,14 @@ if (!isset($_SESSION['cart'])) {
         $("input[name=paket]").val(paket);
         $("input[name=ongkir]").val(ongkir);
         $("input[name=estimasi]").val(etd);
+      });
+
+      $("select[name=nama_kecamatan]").on("change", function(){
+        var kec = $("option:selected",this).attr("nama_kecamatan");
+        
+        $("input[name=kecamatan]").val(kec);
+       
+
       });
 
     });
