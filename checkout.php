@@ -132,7 +132,7 @@ if (!isset($_SESSION['cart'])) {
             <h2 class="h3 mb-3 text-black">Billing Details</h2>
             <div class="p-3 p-lg-5 border">
               <div class="form-group">
-                <input type="text" name="total_berat" id="" value="1200">
+               
                 <label for="prov" class="text-black">Provinsi <span class="text-danger">*</span></label>
                 <select id="prov" class="form-control" name="nama_provinsi">
 
@@ -217,6 +217,15 @@ if (!isset($_SESSION['cart'])) {
                   <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="Phone Number">
                 </div>
               </div>
+              <input type="text" name="total_berat" id="" value="1200">
+              <input type="text" name="provinsi" id="" value="">
+              <input type="text" name="tipe" id="" value="">
+              <input type="text" name="kota" id="" value="">
+              <input type="text" name="kodepos" id="" value="">
+              <input type="text" name="ekspedisi" id="" value="">
+              <input type="text" name="paket" id="" value="">
+              <input type="text" name="ongkir" id="" value="">
+              <input type="text" name="estimasi" id="" value="">
 
               <div class="form-group">
                 <label for="c_create_account" class="text-black" data-toggle="collapse" href="#create_an_account"
@@ -573,6 +582,19 @@ if (!isset($_SESSION['cart'])) {
           }
         });
       });
+
+      $("select[name=nama_kota]").on("change", function(){
+        var prov = $("option:selected",this).attr("nama_provinsi");
+        var tipe = $("option:selected",this).attr("tipe");
+        var kota = $("option:selected",this).attr("nama_kota");
+        var codepost = $("option:selected",this).attr("codepost");
+
+        $("input[name=provinsi]").val(prov);
+        $("input[name=tipe]").val(tipe);
+        $("input[name=kota]").val(kota);
+        $("input[name=kodepos]").val(codepost);
+
+      })
 
     });
 
