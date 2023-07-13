@@ -420,7 +420,14 @@ if (!isset($_SESSION['cart'])) {
                       </tr>
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                        <td class="text-black font-weight-bold"><strong>$350.00</strong></td>
+                        <td class="text-black font-weight-bold order-total"><strong>Rp <?php
+                        if (!empty($order_total)) {
+                          echo number_format($order_total, 0, ',', '.'); 
+                        }else {
+                          echo number_format($product_total, 0, ',', '.');
+                        }
+                        ?></strong></td>
+
                       </tr>
                     </tbody>
                   </table>
@@ -465,7 +472,7 @@ if (!isset($_SESSION['cart'])) {
                   </div>
 
                   <div class="form-group">
-                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='thankyou.php'">Place
+                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='invoice.php'">Place
                       Order</button>
                   </div>
 
@@ -652,6 +659,34 @@ if (!isset($_SESSION['cart'])) {
     });
 
   </script>
+  <script>
+  $(document).ready(function () {
+    // ...
+    
+    $("select[name=nama_paket]").on("change", function(){
+      var paket = $("option:selected",this).attr("paket");
+      var ongkir = parseFloat($("option:selected",this).attr("ongkir"));
+      var etd = $("option:selected",this).attr("etd");
+
+      $("input[name=paket]").val(paket);
+      $("input[name=ongkir]").val(ongkir);
+      $("input[name=estimasi]").val(etd);
+
+      // Mengambil nilai product_total
+      var product_total = parseFloat(<?php echo $product_total; ?>);
+      
+      // Menghitung order total
+      var order_total = product_total + ongkir;
+      $("td.order-total").text("Rp " + order_total.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+
+      // Mengupdate nilai input hidden dengan order_total
+      $("input[name=order_total]").val(order_total);
+    });
+    
+    // ...
+  });
+</script>
+
 
 </body>
 

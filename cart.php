@@ -210,7 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
                 <button class="btn btn-primary btn-sm btn-block">Update Cart</button>
               </div>
               <div class="col-md-6">
-                <button class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</button>
+                <button class="btn btn-outline-primary btn-sm btn-block" onclick="window.location='shop.php'">Continue Shopping</button>
               </div>
             </div>
             <div class="row">
@@ -239,6 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
                     <span class="text-black">Subtotal</span>
                   </div>
                   <div class="col-md-6 text-right">
+                    <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) : ?>
                     <?php
                      foreach ($_SESSION['cart'] as $product) :
                       $jumlah = $product['jumlah'];
@@ -249,6 +250,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
                     <strong class="text-black"><?php $subtotal=$price*$jumlah; $sub = "Rp " . number_format($subtotal, 0, ',', '.');
                           echo $sub;?></strong><br>
                   <?php endforeach ?>
+                  <?php else: ?>
+                    <strong class="text-black">Rp0</strong><br>
+                    <?php endif; ?>
                   </div>
                 </div>
                 <div class="row mb-5">
@@ -256,9 +260,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
                     <span class="text-black">Total</span>
                   </div>
                   <div class="col-md-6 text-right">
+                  <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) : ?>
                     <strong class="text-black"><?php
                           $formattedPrice = "Rp " . number_format($product_total, 0, ',', '.');
                           echo $formattedPrice; ?></strong>
+                   <?php else: ?>   
+                    <strong class="text-black">Rp0</strong>    
+                    <?php endif; ?>
                   </div>
                 </div>
 
