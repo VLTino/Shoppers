@@ -383,7 +383,6 @@ if (!isset($_SESSION['cart'])) {
                   <table class="table site-block-order-table mb-5">
                     <thead>
                       <th>Product</th>
-                      <th>Ongkir</th>
                       <th>Total</th>
                     </thead>
                     <tbody>
@@ -410,11 +409,6 @@ if (!isset($_SESSION['cart'])) {
                           echo $sub;?>
                             </td>
                           </tr>
-                          <tr>
-                            <td class="text-black" name="hargaongkir">
-
-                            </td>
-                          </tr>
                           <?php $product_total += $price * $jumlah; // tambahkan harga produk ke total
                           endforeach; ?>
                       <?php endforeach; ?>
@@ -423,6 +417,17 @@ if (!isset($_SESSION['cart'])) {
                         <td class="text-black"><?php
                           $formattedPrice = "Rp" . number_format($product_total, 0, ',', '.');
                           echo $formattedPrice; ?></td>
+                      </tr>
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Ongkir</strong></td>
+                        <td class="text-black hargaongkir" ><?php
+                        if (!empty($ongkir)) {
+                          $formattedPrice = "Rp" . number_format($ongkir, 0, ',', '.');
+                          echo $formattedPrice; 
+                        }else {
+                          echo "Belum Dipilih";
+                        }
+                        ?></td>
                       </tr>
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
@@ -653,12 +658,18 @@ if (!isset($_SESSION['cart'])) {
       $("input[name=ongkir]").val(ongkir);
       $("input[name=estimasi]").val(etd);
 
+
+      $("td.hargaongkir").text("Rp" + ongkir.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+
+      // Mengupdate nilai input hidden dengan order_total
+      $("input[name=harga_ongkir]").val(ongkir);
+
       // Mengambil nilai product_total
       var product_total = parseFloat(<?php echo $product_total; ?>);
       
       // Menghitung order total
       var order_total = product_total + ongkir;
-      $("td.order-total").text("Rp " + order_total.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+      $("td.order-total").text("Rp" + order_total.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
 
       // Mengupdate nilai input hidden dengan order_total
       $("input[name=order_total]").val(order_total);
