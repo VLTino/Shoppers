@@ -113,11 +113,11 @@ $color = query("SELECT * FROM `color`");
           <div class="row align-items-center">
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-              <form action="" class="site-block-top-search" method="post" >
+              <form action="" class="site-block-top-search" method="post">
 
                 <span class="icon icon-search2"></span>
 
-                <input type="text" name="search" class="filter-input form-control border-0"
+                <input id="searchInput" type="text" name="search" class="filter-input form-control border-0"
                   value="<?= isset($_POST['search']) ? $_POST['search'] : ''; ?>" placeholder="Search">
 
               </form>
@@ -233,7 +233,7 @@ $color = query("SELECT * FROM `color`");
               </div>
             </div>
             <div class="row mb-5" id="productList">
-              <?php 
+              <?php
               $query = "SELECT * FROM `product`";
               $result = mysqli_query($conn, $query);
               $product = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -353,7 +353,7 @@ $color = query("SELECT * FROM `color`");
                   </div>
                 <?php endforeach; ?>
                 <br>
-                
+
 
 
 
@@ -386,6 +386,48 @@ $color = query("SELECT * FROM `color`");
                   //     filterProducts();
                   //   });
                   // });
+
+
+
+
+                  
+                  document.addEventListener('DOMContentLoaded', function () {
+                    var filterForm = document.querySelector('#searchInput');
+
+                    filterForm.addEventListener('keypress', function (event) {
+                      if (event.keyCode === 13) {
+                        event.preventDefault();
+                      }
+                    });
+                  });
+
+
+                  $(document).ready(function () {
+                    $('#searchInput').on('input', function () {
+                      var searchTerm = $(this).val();
+
+                      // Kirim permintaan filter ke server menggunakan Ajax
+                      $.ajax({
+                        url: 'filter.php', // Ganti dengan URL endpoint untuk pemrosesan filter di sisi server
+                        type: 'POST',
+                        data: { search: searchTerm },
+                        beforeSend: function () {
+                          // Tampilkan loader atau animasi loading
+                          $('#productList').html('<div class="loader">Loading...</div>');
+                        },
+                        success: function (response) {
+                          // Update daftar produk dengan hasil filter dari server
+                          $('#productList').html(response);
+                        }
+                      });
+                    });
+                  });
+
+                 
+
+
+
+
                   $(document).ready(function () {
                     // Fungsi untuk mengirim permintaan filter ke server
                     function filterProducts() {
