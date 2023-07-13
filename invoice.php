@@ -5,6 +5,27 @@ require('admins/functions.php');
 if (!isset($_SESSION['cart'])) {
   $_SESSION['cart'] = array();
 }
+
+
+// Memeriksa apakah ada data yang dikirimkan dari halaman pertama
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // Mengambil data dari formulir
+  $fname = $_POST['fname'];
+  $lname = $_POST['lname'];
+  $provinsi = $_POST['provinsi'];
+  $kota = $_POST['kota'];
+  $kecamatan = $_POST['kecamatan'];
+  $alamat = $_POST['alamat'];
+  $ekspedisi = $_POST['ekspedisi'];
+  $ongkir = $_POST['ongkir'];
+  $order_total = $_POST['order_total'];
+  $estimasi = $_POST['estimasi'];
+  $email = $_POST['email_address'];
+  $phone = $_POST['phone'];
+  $order_notes = $_POST['order_notes'];
+  
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -127,19 +148,32 @@ if (!isset($_SESSION['cart'])) {
             <div class="p-3 p-lg-5 border">
 
             <h5 class="text-black">Nama</h5>
-            <p class="text-black">asdadwasdad</p>
+            <p class="text-black"><?= $fname." ".$lname?></p>
+            <h5 class="text-black">Provinsi</h5>
+            <p class="text-black"><?= $provinsi?></p>
+            <h5 class="text-black">Kabupaten/Kota</h5>
+            <p class="text-black"><?= $kota?></p>
+            <h5 class="text-black">Kecamatan</h5>
+            <p class="text-black"><?= $kecamatan?></p>
             <h5 class="text-black">Alamat</h5>
-            <p class="text-black">asdadawdasd</p>
-            <h5 class="text-black">Kurir</h5>
-            <p class="text-black">asdadadasd</p>
-            <h5 class="text-black">Estimasi</h5>
-            <p class="text-black">asdadwadaw</p>
+            <p class="text-black" style="word-break:break-word"><?= $alamat ?></p>
+            <div class="row"><div class="col-md-6"><h5 class="text-black">Email</h5>
+            <p class="text-black"><?= $email ?></p></div>
+<div class="col-md-6"> <h5 class="text-black">Phone</h5>
+            <p class="text-black"><?= $phone ?></p></div></div>
+            <div class="row"><div class="col-md-6"><h5 class="text-black">Kurir</h5>
+            <p class="text-black"><?= $ekspedisi ?></p></div>
+           <div class="col-md-6"><h5 class="text-black">Estimasi</h5>
+            <p class="text-black"><?= $estimasi.' Hari' ?></p></div></div>
+           
+            
+            
              
 
               <div class="form-group">
                 <label for="c_order_notes" class="text-black">Order Notes</label>
-                <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control"
-                  disabled></textarea>
+                <textarea name="order_notes" id="c_order_notes" cols="30" rows="5" class="form-control"
+                  disabled><?= $order_notes?></textarea>
               </div>
 
             </div>
@@ -177,7 +211,7 @@ if (!isset($_SESSION['cart'])) {
                               <?= $jumlah; ?>
                             </td>
                             <td>
-                            <?php $subtotal=$price*$jumlah; $sub = "Rp " . number_format($subtotal, 0, ',', '.');
+                            <?php $subtotal=$price*$jumlah; $sub = "Rp" . number_format($subtotal, 0, ',', '.');
                           echo $sub;?>
                             </td>
                           </tr>
@@ -187,12 +221,20 @@ if (!isset($_SESSION['cart'])) {
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
                         <td class="text-black"><?php
-                          $formattedPrice = "Rp " . number_format($product_total, 0, ',', '.');
+                          $formattedPrice = "Rp" . number_format($product_total, 0, ',', '.');
+                          echo $formattedPrice; ?></td>
+                      </tr>
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
+                        <td class="text-black"><?php
+                          $formattedPrice = "Rp" . number_format($ongkir, 0, ',', '.');
                           echo $formattedPrice; ?></td>
                       </tr>
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                        <td class="text-black font-weight-bold"><strong>$350.00</strong></td>
+                        <td class="text-black font-weight-bold"><strong><?php
+                          $formattedPrice = "Rp" . number_format($order_total, 0, ',', '.');
+                          echo $formattedPrice; ?></strong></td>
                       </tr>
                     </tbody>
                   </table>

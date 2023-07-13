@@ -131,23 +131,35 @@ if (!isset($_SESSION['cart'])) {
           <div class="col-md-6 mb-5 mb-md-0">
             <h2 class="h3 mb-3 text-black">Billing Details</h2>
             <div class="p-3 p-lg-5 border">
+            <form action="invoice.php" method="post">
+            <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_fname" name="fname" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_lname" name="lname" required>
+                </div>
+              </div>
+
               <div class="form-group">
                
                 <label for="prov" class="text-black">Provinsi <span class="text-danger">*</span></label>
-                <select id="prov" class="form-control" name="nama_provinsi">
+                <select id="prov" class="form-control" name="nama_provinsi" required>
 
                 </select>
               </div>
               <div class="form-group">
                 <label for="kab" class="text-black">Kota/Kabupaten <span class="text-danger">*</span></label>
-                <select id="kab" class="form-control" name="nama_kota">
+                <select id="kab" class="form-control" name="nama_kota" required>
                   <option value="">Pilih Kabupaten/Kota</option>
                 </select>
               </div>
 
               <div class="form-group">
                 <label for="kec" class="text-black">Kecamatan <span class="text-danger">*</span></label>
-                <select id="kec" class="form-control" name="nama_kecamatan">
+                <select id="kec" class="form-control" name="nama_kecamatan" required>
                   <option value="">Pilih Kecamatan</option>
                 </select>
               </div>
@@ -155,14 +167,14 @@ if (!isset($_SESSION['cart'])) {
               <div class="form-group row">
                 <div class="col-md-12">
                   <label for="c_address" class="text-black">Alamat Lengkap <span class="text-danger">*</span></label>
-                  <textarea name="" id="c_address" cols="30" rows="10" class="form-control"
-                    placeholder="Alamat Lengkap" required></textarea>
+                  <textarea name="alamat" id="c_address" cols="30" rows="10" class="form-control"
+                    placeholder="Nama Jalan, Gedung, No. Rumah , Kodepos" required></textarea>
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="kurir" class="text-black">Kurir Ekspedisi<span class="text-danger">*</span></label>
-                <select id="kurir" class="form-control" name="nama_ekspedisi">
+                <select id="kurir" class="form-control" name="nama_ekspedisi" required>
                   <option value="">Pilih Kurir</option>
                   <option value="jne">JNE</option>
                   <option value="tiki">Tiki</option>
@@ -172,56 +184,21 @@ if (!isset($_SESSION['cart'])) {
 
               <div class="form-group">
                 <label for="paket" class="text-black">Paket <span class="text-danger">*</span></label>
-                <select id="paket" class="form-control" name="nama_paket">
+                <select id="paket" class="form-control" name="nama_paket" required>
                   <option value="">Pilih Paket</option>
                 </select>
               </div>
 
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_fname" name="c_fname">
-                </div>
-                <div class="col-md-6">
-                  <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_lname" name="c_lname">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <label for="c_companyname" class="text-black">Company Name </label>
-                  <input type="text" class="form-control" id="c_companyname" name="c_companyname">
-                </div>
-              </div>
-
-
-
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
-              </div>
-
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="c_state_country" class="text-black">State / Country <span
-                      class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_state_country" name="c_state_country">
-                </div>
-                <div class="col-md-6">
-                  <label for="c_postal_zip" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
-                </div>
-              </div>
 
               <div class="form-group row mb-5">
                 <div class="col-md-6">
                   <label for="c_email_address" class="text-black">Email Address <span
                       class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_email_address" name="c_email_address">
+                  <input type="email" class="form-control" id="c_email_address" name="email_address" required>
                 </div>
                 <div class="col-md-6">
                   <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="Phone Number">
+                  <input type="text" class="form-control" id="c_phone" name="phone" placeholder="Phone Number" required>
                 </div>
               </div>
 
@@ -232,15 +209,6 @@ if (!isset($_SESSION['cart'])) {
 
 
 
-              <input type="text" name="total_berat" id="" value="1200">
-              <input type="text" name="provinsi" id="" value="">
-              <input type="text" name="kota" id="" value="">
-              <input type="text" name="kecamatan" id="" value="">
-              <input type="text" name="kodepos" id="" value="">
-              <input type="text" name="ekspedisi" id="" value="">
-              <input type="text" name="paket" id="" value="">
-              <input type="text" name="ongkir" id="" value="">
-              <input type="text" name="estimasi" id="" value="">
 
 
 
@@ -350,7 +318,7 @@ if (!isset($_SESSION['cart'])) {
 
               <div class="form-group">
                 <label for="c_order_notes" class="text-black">Order Notes</label>
-                <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control"
+                <textarea name="order_notes" id="c_order_notes" cols="30" rows="5" class="form-control"
                   placeholder="Write your notes here..."></textarea>
               </div>
 
@@ -482,10 +450,24 @@ if (!isset($_SESSION['cart'])) {
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='invoice.php'">Place
+  
+<input type="text" name="total_berat" id="" value="1200">
+              <input type="text" name="provinsi" id="" value="" required>
+              <input type="text" name="kota" id="" value="" required>
+              <input type="text" name="kecamatan" id="" value="" required>
+              <input type="text" name="kodepos" id="" value="" required>
+              <input type="text" name="ekspedisi" id="" value="" required>
+              <input type="text" name="paket" id="" value="" required>
+              <input type="text" name="ongkir" id="" value="" required>
+              <input type="text" name="estimasi" id="" value="" required>
+              <input type="text" name="order_total" id="" required>
+              
+              <div class="form-group">
+                    <button class="btn btn-primary btn-lg py-3 btn-block" type="submit">Place
                       Order</button>
                   </div>
+</form>
+                  
 
                 </div>
               </div>
@@ -661,8 +643,7 @@ if (!isset($_SESSION['cart'])) {
 
       $("td.hargaongkir").text("Rp" + ongkir.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
 
-      // Mengupdate nilai input hidden dengan order_total
-      $("input[name=harga_ongkir]").val(ongkir);
+
 
       // Mengambil nilai product_total
       var product_total = parseFloat(<?php echo $product_total; ?>);
