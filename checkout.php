@@ -383,6 +383,7 @@ if (!isset($_SESSION['cart'])) {
                   <table class="table site-block-order-table mb-5">
                     <thead>
                       <th>Product</th>
+                      <th>Ongkir</th>
                       <th>Total</th>
                     </thead>
                     <tbody>
@@ -405,8 +406,13 @@ if (!isset($_SESSION['cart'])) {
                               <?= $jumlah; ?>
                             </td>
                             <td>
-                            <?php $subtotal=$price*$jumlah; $sub = "Rp " . number_format($subtotal, 0, ',', '.');
+                            <?php $subtotal=$price*$jumlah; $sub = "Rp" . number_format($subtotal, 0, ',', '.');
                           echo $sub;?>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="text-black" name="hargaongkir">
+
                             </td>
                           </tr>
                           <?php $product_total += $price * $jumlah; // tambahkan harga produk ke total
@@ -415,12 +421,12 @@ if (!isset($_SESSION['cart'])) {
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
                         <td class="text-black"><?php
-                          $formattedPrice = "Rp " . number_format($product_total, 0, ',', '.');
+                          $formattedPrice = "Rp" . number_format($product_total, 0, ',', '.');
                           echo $formattedPrice; ?></td>
                       </tr>
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                        <td class="text-black font-weight-bold order-total"><strong>Rp <?php
+                        <td class="text-black font-weight-bold order-total"><strong>Rp<?php
                         if (!empty($order_total)) {
                           echo number_format($order_total, 0, ',', '.'); 
                         }else {
@@ -639,31 +645,6 @@ if (!isset($_SESSION['cart'])) {
       });
       
       $("select[name=nama_paket]").on("change", function(){
-        var paket = $("option:selected",this).attr("paket");
-        var ongkir = $("option:selected",this).attr("ongkir");
-        var etd = $("option:selected",this).attr("etd");
-
-        $("input[name=paket]").val(paket);
-        $("input[name=ongkir]").val(ongkir);
-        $("input[name=estimasi]").val(etd);
-      });
-
-      $("select[name=nama_kecamatan]").on("change", function(){
-        var kec = $("option:selected",this).attr("nama_kecamatan");
-        
-        $("input[name=kecamatan]").val(kec);
-       
-
-      });
-
-    });
-
-  </script>
-  <script>
-  $(document).ready(function () {
-    // ...
-    
-    $("select[name=nama_paket]").on("change", function(){
       var paket = $("option:selected",this).attr("paket");
       var ongkir = parseFloat($("option:selected",this).attr("ongkir"));
       var etd = $("option:selected",this).attr("etd");
@@ -682,10 +663,19 @@ if (!isset($_SESSION['cart'])) {
       // Mengupdate nilai input hidden dengan order_total
       $("input[name=order_total]").val(order_total);
     });
-    
-    // ...
-  });
-</script>
+
+      $("select[name=nama_kecamatan]").on("change", function(){
+        var kec = $("option:selected",this).attr("nama_kecamatan");
+        
+        $("input[name=kecamatan]").val(kec);
+       
+
+      });
+
+    });
+
+  </script>
+  
 
 
 </body>
