@@ -225,7 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                           echo $formattedPrice; ?></td>
                       </tr>
                       <tr>
-                        <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
+                        <td class="text-black font-weight-bold"><strong>Ongkir</strong></td>
                         <td class="text-black"><?php
                           $formattedPrice = "Rp" . number_format($ongkir, 0, ',', '.');
                           echo $formattedPrice; ?></td>
