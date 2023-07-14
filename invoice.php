@@ -2,8 +2,19 @@
 session_start();
 require('admins/functions.php');
 
-if (!isset($_SESSION['cart'])) {
-  $_SESSION['cart'] = array();
+// Periksa apakah pengguna telah login
+if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
+  // Mendapatkan username dari session
+  $email = $_SESSION["email"];
+  $password = $_SESSION["password"];
+
+  // Gunakan nilai email sesuai kebutuhan
+  $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
+
+  
+} else {
+  // Pengguna belum login, lakukan tindakan yang sesuai
+  echo "Anda belum login.";
 }
 
 
@@ -192,19 +203,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                       <th>Total</th>
                     </thead>
                     <tbody>
-                      <?php
-                      $product_total = 0; // variabel untuk menghitung total harga produk
-                      
-                      foreach ($_SESSION['cart'] as $product):
-                        $product_id = $product['product_id'];
-                        $color = $product['color'];
-                        $size = $product['size'];
-                        $jumlah = $product['jumlah'];
-                        $price = $product['price'];
+                    <?php
+                $product_total = 0; // variabel untuk menghitung total harga produk
 
-                        $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
-                        ?>
-                        <?php foreach ($prd as $pr): ?>
+                foreach ($user as $us) :
+                    $user = $us['id'];
+
+                    $cart = query("SELECT * FROM `cart` WHERE `id_customer`=$user");
+                    
+
+                    foreach ($cart as $cr) :
+                      $product_id = $cr["product_id"];
+                      $cart_id = $cr["id"];
+                      $color = $cr["color"];
+                      $size = $cr["size"];
+                      $jumlah = $cr["jumlah"];
+
+                      $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
+
+                    
+                    
+                    
+                    foreach ($prd as $pr) {
+                      $price = $pr["price"];
+                      $gambar = $pr["gambar"];
+                      $name = $pr["name"];
+                    }
+
+                    ?>
                           <tr>
                             <td>
                               <?= $pr["name"]; ?> <strong class="mx-2">x</strong>

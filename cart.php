@@ -203,7 +203,8 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                         </td>
                         <td><?= $price*$jumlah; ?></td>
                         <td><form action="cart.php" method="post"><input type="hidden" name="remove_product_id" value="<?= $cart_id ?>"><input type="submit" value="X" class="btn btn-primary btn-sm"></form></td>
-                        <?php endforeach; ?>
+                        <?php $product_total = $price*$jumlah;
+                       endforeach; ?>
                       </tr>
     <?php endforeach; ?>
     <?php else: ?>
@@ -251,16 +252,32 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     <span class="text-black">Subtotal</span>
                   </div>
                   <div class="col-md-6 text-right">
-                    <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) : ?>
+                    <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true) : ?>
                     <?php
-                     foreach ($_SESSION['cart'] as $product) :
-                      $jumlah = $product['jumlah'];
-                      $price = $product['price'];
-                      
+                     foreach ($cart as $cr) :
+                      $product_id = $cr["product_id"];
+                      $cart_id = $cr["id"];
+                      $color = $cr["color"];
+                      $size = $cr["size"];
+                      $jumlah = $cr["jumlah"];
+
                       $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
+
+                    
+                    
+                    
+                    foreach ($prd as $pr) {
+                      $price = $pr["price"];
+                      $gambar = $pr["gambar"];
+                      $name = $pr["name"];
+                    }
+                      
+                      
                       ?> 
                     <strong class="text-black"><?php $subtotal=$price*$jumlah; $sub = "Rp " . number_format($subtotal, 0, ',', '.');
-                          echo $sub;?></strong><br>
+                          echo $sub;
+                          $product_total += $price*$jumlah;
+                          ?></strong><br>
                   <?php endforeach ?>
                   <?php else: ?>
                     <strong class="text-black">Rp0</strong><br>
@@ -272,7 +289,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     <span class="text-black">Total</span>
                   </div>
                   <div class="col-md-6 text-right">
-                  <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) : ?>
+                  <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true) : ?>
                     <strong class="text-black"><?php
                           $formattedPrice = "Rp " . number_format($product_total, 0, ',', '.');
                           echo $formattedPrice; ?></strong>
