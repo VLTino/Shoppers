@@ -10,11 +10,11 @@
 
 require '../admins/functions.php';
 
-if (isset($_POST["registercostumer"])) {
+if (isset($_POST["registercustomer"])) {
     if (registerco($_POST) > 0) {
         echo "<script>
         alert('user baru berhasil ditambahkan')
-        document.location.href = 'adminvlt.php';
+        document.location.href = 'index.php';
         </script>";
     } else {
         echo mysqli_error($conn);
@@ -55,30 +55,30 @@ if (isset($_POST["registercostumer"])) {
         <div class="row align-items-center justify-content-center">
           <div class="col-md-7">
             <div class="mb-4">
-              <h3>Sign In</h3>
+              <h3>Register</h3>
               <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
             </div>
             <form action="#" method="post">
               <div class="form-group first">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username">
+                <label for="username">Email</label>
+                <input type="email" class="form-control" id="username" name="email">
 
               </div>
               <div class="form-group last mb-3">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password">
+                <input type="password" class="form-control" id="password" name="password">
                 
               </div>
               <div class="form-group last mb-3">
                 <label for="password">Confirm Password</label>
-                <input type="password" class="form-control" id="password">
+                <input type="password" class="form-control" id="password" name="password2">
                 
               </div>
               
 
               
               
-              <input type="submit" value="Register" class="btn btn-block btn-primary">
+              <input type="submit" value="Register" class="btn btn-block btn-primary" name="registercustomer">
               <input type="button" value="Back" class="btn btn-block btn-danger" onclick="window.location='index.php'">
               
             </form>

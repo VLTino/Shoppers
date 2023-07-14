@@ -2,6 +2,31 @@
 session_start();
 require('admins/functions.php');
 
+// Periksa apakah pengguna telah login
+if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
+  // Mendapatkan username dari session
+  $email = $_SESSION["email"];
+  $password = $_SESSION["password"];
+
+  // Gunakan nilai email sesuai kebutuhan
+  $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
+
+  
+} else {
+  // Pengguna belum login, lakukan tindakan yang sesuai
+  echo "Anda belum login.";
+}
+
+if (isset($_POST["cart"])) {
+  if (cartplus($_POST) > 0) {
+      
+  } else {
+      echo mysqli_error($conn);
+  }
+ 
+}
+
+
 $id = $_GET["id"];
 $product = query("SELECT * FROM `product` WHERE `id`=$id");
 $clr = query("SELECT * FROM `color`");
@@ -133,7 +158,7 @@ $clr = query("SELECT * FROM `color`");
                   echo $formattedPrice;
                   ?>
                 </strong></p>
-              <form action="cart+.php" method="post">
+              <form action="" method="post">
               <?php
               // Ambil nilai ukuran dari kolom 'size' pada tabel produk
               $sizeValues = $prd["size"];
@@ -192,9 +217,12 @@ $clr = query("SELECT * FROM `color`");
                 </div>
 
               </div>
+              <?php foreach ($user as $us): ?>
+              <input type="hidden" name="id_customer" id="" value="<?= $us["id"]; ?>">
+              <?php endforeach; ?>
               <input type="hidden" name="product_id" id="" value="<?= $prd["id"]; ?>">
               <input type="hidden" name="price" id="" value="<?= $prd["price"]; ?>">
-              <p><button type="submit" class="buy-now btn btn-sm btn-primary" name="product">Add To Cart</button></p>
+              <p><button type="submit" class="buy-now btn btn-sm btn-primary" name="cart">Add To Cart</button></p>
               </form>
             <?php endforeach; ?>
           </div>

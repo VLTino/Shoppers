@@ -505,4 +505,53 @@ function price($data)
     mysqli_query($conn,$query);
     return mysqli_affected_rows($conn);
 }
+
+
+function registerco($data)
+{
+
+    global $conn;
+
+    $email = stripslashes($data["email"]);
+    $password = mysqli_real_escape_string($conn, $data["password"]);
+    $password2 = mysqli_real_escape_string($conn, $data["password2"]);
+
+    //cek email
+
+    //cek confirm password
+    if ($password !== $password2) {
+        echo "<script> 
+            alert('Konfirmasi password salah')
+            </script>";
+        return false;
+    }
+
+
+
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    mysqli_query($conn, "INSERT INTO `customer` VALUES (NULL,'$email','$password')");
+
+    return mysqli_affected_rows($conn);
+}
+
+
+
+function cartplus($data)
+{
+
+    global $conn;
+
+    $idcos= $data["id_customer"];
+    $idprd= $data["product_id"];
+    $jumlah= $data["jumlah"];
+    $size = $data['size'];
+    $color = $data['color'];
+
+
+    $query = "INSERT INTO `cart` VALUES (NULL,$idcos,$idprd,$jumlah,'$color','$size')";
+    mysqli_query($conn,$query);
+
+    return mysqli_affected_rows($conn);
+}
+
 ?>

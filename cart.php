@@ -2,21 +2,19 @@
 session_start();
 require('admins/functions.php');
 
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = array();
-}
+// Periksa apakah pengguna telah login
+if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
+  // Mendapatkan username dari session
+  $email = $_SESSION["email"];
+  $password = $_SESSION["password"];
 
-// Memeriksa jika ada product_id yang dikirimkan melalui POST untuk penghapusan produk
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id'])) {
-    $remove_product_id = $_POST['remove_product_id'];
+  // Gunakan nilai email sesuai kebutuhan
+  $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
 
-    // Hapus produk dengan product_id yang sesuai dari keranjang belanja
-    foreach ($_SESSION['cart'] as $key => $product) {
-        if ($product['product_id'] === $remove_product_id) {
-            unset($_SESSION['cart'][$key]);
-            break;
-        }
-    }
+  
+} else {
+  // Pengguna belum login, lakukan tindakan yang sesuai
+  echo "Anda belum login.";
 }
 
 ?>
@@ -132,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
           <form class="col-md-12" method="post">
             <div class="site-blocks-table">
             <?php // Tampilkan produk dalam keranjang belanja
-        if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) : ?>
+        if (isset($_SESSION["login"]) && $_SESSION["login"] === true) : ?>
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -151,24 +149,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
                 <?php
                 $product_total = 0; // variabel untuk menghitung total harga produk
 
-                foreach ($_SESSION['cart'] as $product) :
-                    $product_id = $product['product_id'];
-                    $color = $product['color'];
-                    $size = $product['size'];
-                    $jumlah = $product['jumlah'];
-                    $price = $product['price'];
+                foreach ($user as $us) :
+                    $user = $us['id'];
+
+                    $cart = query("SELECT * FROM `cart` WHERE `id_customer`=$user");
                     
-                    $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
+
+                    foreach ($cart as $cr) :
+                      $product_id = $cr["product_id"];
+                      $cart_id = $cr["id"];
+                      $color = $cr["color"];
+                      $size = $cr["size"];
+                      $jumlah = $cr["jumlah"];
+
+                      $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
+
+                    
+                    
+                    
+                    foreach ($prd as $pr) {
+                      $price = $pr["price"];
+                      $gambar = $pr["gambar"];
+                      $name = $pr["name"];
+                    }
+
                     ?>
                     <tr>
-                      <?php foreach ($prd as $pr):?>
+                    
                         <td class="product-thumbnail">
-                          <img src="images/<?= $pr["gambar"];?>" alt="Image" class="img-fluid">
+                          <img src="images/<?=$gambar?>" alt="Image" class="img-fluid">
                         </td>
                         <td class="product-name">
-                          <h2 class="h5 text-black"><?= $pr["name"];?></h2>
+                          <h2 class="h5 text-black"><?=$name?></h2>
                         </td>
-                        <td><?= $pr["price"];?></td>
+                        <td><?=$price?></td>
                         <td>
                           <?= $color; ?>
                         </td>
@@ -188,10 +202,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_product_id']))
 
                         </td>
                         <td><?= $price*$jumlah; ?></td>
-                        <td><form action="cart.php" method="post"><input type="hidden" name="remove_product_id" value="<?= $product_id ?>"><input type="submit" value="X" class="btn btn-primary btn-sm"></form></td>
-                        <?php 
-                        $product_total += $price * $jumlah; // tambahkan harga produk ke total
-                        endforeach; ?>
+                        <td><form action="cart.php" method="post"><input type="hidden" name="remove_product_id" value="<?= $cart_id ?>"><input type="submit" value="X" class="btn btn-primary btn-sm"></form></td>
+                        <?php endforeach; ?>
                       </tr>
     <?php endforeach; ?>
     <?php else: ?>

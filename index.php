@@ -1,4 +1,20 @@
 <?php
+session_start();
+
+// Periksa apakah pengguna telah login
+if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
+  // Mendapatkan username dari session
+  $email = $_SESSION["email"];
+  $password = $_SESSION["password"];
+
+  // Gunakan nilai email sesuai kebutuhan
+  echo "email: " . $email;
+  echo "<br>";
+  echo "password: " . $password;
+} else {
+  // Pengguna belum login, lakukan tindakan yang sesuai
+  echo "Anda belum login.";
+}
 require 'admins/functions.php';
 
 $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
