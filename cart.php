@@ -155,6 +155,10 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     $cart = query("SELECT * FROM `cart` WHERE `id_customer`=$user");
                     
 
+                    if (empty($cart)) {
+                      echo '<tr><td colspan="8" style="text-align:center;color:red;">Tidak Ada Produk Dikeranjang.</td></tr>';
+                  } 
+
                     foreach ($cart as $cr) :
                       $product_id = $cr["product_id"];
                       $cart_id = $cr["id"];
@@ -208,7 +212,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                       </tr>
     <?php endforeach; ?>
     <?php else: ?>
-                      <h3 style="color:red;text-align:center;">Tidak ada produk dalam keranjang belanja.</h3>
+                      <h3 style="color:red;text-align:center;">Anda Belum Login.</h3>
                 <?php endif; ?>
                 </tbody>
               </table>
@@ -301,7 +305,11 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 
                 <div class="row">
                   <div class="col-md-12">
+                  <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true) : ?>
                     <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='checkout.php'">Proceed To Checkout</button>
+                    <?php else: ?>
+                      <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='checkout.php'">Proceed To Checkout</button>
+                      <?php endif; ?>
                   </div>
                 </div>
               </div>
