@@ -17,7 +17,7 @@ $fname = $_POST['fname'];
   $email = $_POST['email_address'];
   $phone = $_POST['phone'];
   $order_notes = $_POST['order_notes'];
-  $product_id = $_POST['product_id'];
+  $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : array();
   $jumlahpr = $_POST['jumlah'];
 
 
@@ -38,7 +38,7 @@ Config::$serverKey = 'SB-Mid-server-a-N7sylbogmzvwFJ7PbqCe2x';
 Config::$clientKey = 'SB-Mid-client-cpj2em5xbS_DUWq1';
 
 // non-relevant function only used for demo/example purpose
-printExampleWarningMessage();
+
 
 // Uncomment for production environment
 // Config::$isProduction = true;
@@ -80,21 +80,29 @@ try {
 catch (\Exception $e) {
     echo $e->getMessage();
 }
-echo "snapToken = ".$snap_token;
+echo "snapToken = ".$snap_token."<br>";
 
-function printExampleWarningMessage() {
-    if (strpos(Config::$serverKey, 'your ') != false ) {
-        echo "<code>";
-        echo "<h4>Please set your server key from sandbox</h4>";
-        echo "In file: " . __FILE__;
-        echo "<br>";
-        echo "<br>";
-        echo htmlspecialchars('Config::$serverKey = \'<your server key>\';');
-        die();
-    } 
+function pluscartorder($data)
+{
+ global $conn;
+
+ $fname = $_POST['fname'];
+ $lname = $_POST['lname'];
+ $provinsi = $_POST['provinsi'];
+ $kota = $_POST['kota'];
+ $kecamatan = $_POST['kecamatan'];
+ $alamat = $_POST['alamat'];
+ $ekspedisi = $_POST['ekspedisi'];
+ $ongkir = $_POST['ongkir'];
+ $order_total = $_POST['order_total'];
+ $estimasi = $_POST['estimasi'];
+ $email = $_POST['email_address'];
+ $phone = $_POST['phone'];
+ $order_notes = $_POST['order_notes'];
+ $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : array();
+ $jumlahpr = isset($_POST['jumlah']) ? $_POST['jumlah'] : array();
+
 }
-
-echo $product_id;
 
 ?>
 

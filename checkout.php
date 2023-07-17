@@ -369,9 +369,9 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                 $product_total = 0; // variabel untuk menghitung total harga produk
 
                 foreach ($user as $us) :
-                    $user = $us['id'];
+                    $userid = $us['id'];
 
-                    $cart = query("SELECT * FROM `cart` WHERE `id_customer`=$user");  
+                    $cart = query("SELECT * FROM `cart` WHERE `id_customer`=$userid");  
                     
 
                     foreach ($cart as $cr) :
@@ -398,8 +398,8 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                             <td>
                               <?= $name; ?> <strong class="mx-2">x</strong>
                               <?= $jumlah; ?>
-                              <input type="hidden" name="product_id" id="" value="<?=$product_id?>">
-                              <input type="hidden" name="jumlah" id="" value="<?=$jumlah?>">
+                              <input type="hidden" name="product_id[]" id="" value="<?=$product_id?>">
+                              <input type="hidden" name="jumlah[]" id="" value="<?=$jumlah?>">
                             </td>
                             <td>
                             <?php $subtotal=$price*$jumlah; $sub = "Rp" . number_format($subtotal, 0, ',', '.');
@@ -490,6 +490,9 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
               <input type="text" name="ongkir" id="" value="" required>
               <input type="text" name="estimasi" id="" value="" required>
               <input type="text" name="order_total" id="" required>
+              <?php foreach ($user as $us) :?>
+              <input type="text" name="user_id" id="" required value="<?= $us["id"]; ?>">
+              <?php endforeach; ?>
               
               
               <div class="form-group">
