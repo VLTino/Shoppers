@@ -138,11 +138,11 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
             </div>
           </div>
         </div>
+        <form action="insinvoice.php" method="post">
         <div class="row">
           <div class="col-md-6 mb-5 mb-md-0">
             <h2 class="h3 mb-3 text-black">Billing Details</h2>
             <div class="p-3 p-lg-5 border">
-            <form action="invoice.php" method="post">
             <div class="form-group row">
                 <div class="col-md-6">
                   <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
@@ -371,7 +371,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                 foreach ($user as $us) :
                     $user = $us['id'];
 
-                    $cart = query("SELECT * FROM `cart` WHERE `id_customer`=$user");
+                    $cart = query("SELECT * FROM `cart` WHERE `id_customer`=$user");  
                     
 
                     foreach ($cart as $cr) :
@@ -390,6 +390,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                       $price = $pr["price"];
                       $gambar = $pr["gambar"];
                       $name = $pr["name"];
+                      $idpr = $pr["id"];
                     }
 
                     ?>
@@ -397,6 +398,8 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                             <td>
                               <?= $name; ?> <strong class="mx-2">x</strong>
                               <?= $jumlah; ?>
+                              <input type="hidden" name="product_id" id="" value="<?=$product_id?>">
+                              <input type="hidden" name="jumlah" id="" value="<?=$jumlah?>">
                             </td>
                             <td>
                             <?php $subtotal=$price*$jumlah; $sub = "Rp" . number_format($subtotal, 0, ',', '.');
@@ -477,7 +480,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                   </div>
 
   
-<input type="text" name="total_berat" id="" value="1200">
+              <input type="text" name="total_berat" id="" value="1200">
               <input type="text" name="provinsi" id="" value="" required>
               <input type="text" name="kota" id="" value="" required>
               <input type="text" name="kecamatan" id="" value="" required>
@@ -488,11 +491,12 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
               <input type="text" name="estimasi" id="" value="" required>
               <input type="text" name="order_total" id="" required>
               
+              
               <div class="form-group">
                     <button class="btn btn-primary btn-lg py-3 btn-block" type="submit">Place
                       Order</button>
                   </div>
-</form>
+
                   
 
                 </div>
@@ -501,7 +505,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 
           </div>
         </div>
-        <!-- </form> -->
+        </form>
       </div>
     </div>
 
