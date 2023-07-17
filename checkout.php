@@ -397,7 +397,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                           <tr>
                             <td>
                               <?= $name; ?> <strong class="mx-2">x</strong>
-                              <?= $jumlah; ?>
+                              <?= $jumlah." ".$color; ?>
                               <input type="hidden" name="product_id[]" id="" value="<?=$product_id?>">
                               <input type="hidden" name="jumlah[]" id="" value="<?=$jumlah?>">
                             </td>
@@ -494,6 +494,10 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
               <?php foreach ($user as $us) :?>
               <input type="text" name="user_id" id="" required value="<?= $us["id"]; ?>">
               <?php endforeach; ?>
+              <?php foreach ($cart as $cr) : ?>
+                <input type="text" name="color[]" id="" required value="<?= $cr["color"]; ?>">
+                <input type="text" name="size[]" id="" required value="<?= $cr["size"]; ?>">
+                <?php endforeach; ?>
               <script>
     // Mendapatkan waktu saat ini
     var now = new Date();
