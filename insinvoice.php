@@ -20,6 +20,12 @@ $fname = $_POST['fname'];
   $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : array();
   $jumlahpr = $_POST['jumlah'];
 
+  date_default_timezone_set('Asia/Jakarta');
+  $created_at = date('Y-m-d H:i:s'); // Ganti dengan nilai yang sesuai
+
+  $due_date = date('Y-m-d H:i:s', strtotime($created_at . ' +1 day'));
+  $data['due_date'] = $due_date;
+
 
 require 'admins/functions.php';
 $result = query("SELECT MAX(id) AS last_id FROM `orders`");
@@ -81,28 +87,19 @@ catch (\Exception $e) {
     echo $e->getMessage();
 }
 echo "snapToken = ".$snap_token."<br>";
+echo "time = ".$created_at."<br>";
+echo "time2 = ".$due_date."<br>";
 
-function pluscartorder($data)
-{
+
  global $conn;
 
- $fname = $_POST['fname'];
- $lname = $_POST['lname'];
- $provinsi = $_POST['provinsi'];
- $kota = $_POST['kota'];
- $kecamatan = $_POST['kecamatan'];
- $alamat = $_POST['alamat'];
- $ekspedisi = $_POST['ekspedisi'];
- $ongkir = $_POST['ongkir'];
- $order_total = $_POST['order_total'];
- $estimasi = $_POST['estimasi'];
- $email = $_POST['email_address'];
- $phone = $_POST['phone'];
- $order_notes = $_POST['order_notes'];
- $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : array();
- $jumlahpr = isset($_POST['jumlah']) ? $_POST['jumlah'] : array();
 
-}
+
+//  $query1 = "INSERT INTO `orders`"
+
+
+
+
 
 ?>
 

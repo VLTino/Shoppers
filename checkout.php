@@ -490,10 +490,20 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
               <input type="text" name="ongkir" id="" value="" required>
               <input type="text" name="estimasi" id="" value="" required>
               <input type="text" name="order_total" id="" required>
+              <input type="datetime-local" name="created_at" id="waktu_kirim" required>
               <?php foreach ($user as $us) :?>
               <input type="text" name="user_id" id="" required value="<?= $us["id"]; ?>">
               <?php endforeach; ?>
-              
+              <script>
+    // Mendapatkan waktu saat ini
+    var now = new Date();
+
+    // Mengubah waktu menjadi string dalam format yang diterima oleh input datetime-local
+    var formattedDateTime = now.toISOString().slice(0, 16);
+
+    // Mengisi nilai default pada input datetime-local
+    document.getElementById('waktu_kirim').value = formattedDateTime;
+  </script>
               
               <div class="form-group">
                     <button class="btn btn-primary btn-lg py-3 btn-block" type="submit">Place
