@@ -207,8 +207,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                         </td>
                         <td><?= $price*$jumlah; ?></td>
                         <td><form action="cart.php" method="post"><input type="hidden" name="remove_product_id" value="<?= $cart_id ?>"><input type="submit" value="X" class="btn btn-primary btn-sm"></form></td>
-                        <?php $product_total = $price*$jumlah;
-                       endforeach; ?>
+                        <?php endforeach; ?>
                       </tr>
     <?php endforeach; ?>
     <?php else: ?>
