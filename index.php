@@ -11,10 +11,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
   echo "email: " . $email;
   echo "<br>";
   echo "password: " . $password;
-} else {
-  // Pengguna belum login, lakukan tindakan yang sesuai
-  echo "Anda belum login.";
-}
+} 
 require 'admins/functions.php';
 
 $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
@@ -82,7 +79,11 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                  <li><a href="#"><span class="icon icon-person"></span></a></li>
+                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true){
+                    echo "<li><a href='profile.php'><span class='icon icon-person'></span></a></li>";
+                  }else {
+                    echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
+                  } ?>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                   <li>
                     <a href="cart.php" class="site-cart">
@@ -102,33 +103,11 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
       <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
           <ul class="site-menu js-clone-nav d-none d-md-block">
-            <li class="has-children active">
-              <a href="index.php">Home</a>
-              <ul class="dropdown">
-                <li><a href="#">Menu One</a></li>
-                <li><a href="#">Menu Two</a></li>
-                <li><a href="#">Menu Three</a></li>
-                <li class="has-children">
-                  <a href="#">Sub Menu</a>
-                  <ul class="dropdown">
-                    <li><a href="#">Menu One</a></li>
-                    <li><a href="#">Menu Two</a></li>
-                    <li><a href="#">Menu Three</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="has-children">
-              <a href="about.php">About</a>
-              <ul class="dropdown">
-                <li><a href="#">Menu One</a></li>
-                <li><a href="#">Menu Two</a></li>
-                <li><a href="#">Menu Three</a></li>
-              </ul>
-            </li>
+            <li class="active"><a href="index.php">Home</a></li>
+            <li><a href="about.php">About</a></li>
             <li><a href="shop.php">Shop</a></li>
-            <li><a href="#">Catalogue</a></li>
-            <li><a href="#">New Arrivals</a></li>
+            <li><a href="catalog.php">Catalogue</a></li>
+            <li><a href="newarrival.php">New Arrivals</a></li>
             <li><a href="contact.php">Contact</a></li>
           </ul>
         </div>

@@ -1,25 +1,8 @@
 <?php
-session_start();
+
 require('admins/functions.php');
 
-// Periksa apakah pengguna telah login
-if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
-    // Mendapatkan username dari session
-    $email = $_SESSION["email"];
-    $password = $_SESSION["password"];
-
-    // Gunakan nilai email sesuai kebutuhan
-    $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
-
-
-} else {
-    // Pengguna belum login, lakukan tindakan yang sesuai
-    echo "Anda belum login.";
-}
-foreach ($user as $us) {
-    $usid = $us["id"];
-    $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid");
-}
+$product = query("SELECT * FROM `product` ORDER BY `id` DESC");
 
 
 
@@ -91,33 +74,11 @@ foreach ($user as $us) {
             <nav class="site-navigation text-right text-md-center" role="navigation">
                 <div class="container">
                     <ul class="site-menu js-clone-nav d-none d-md-block">
-                        <li class="has-children">
-                            <a href="index.php">Home</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Menu One</a></li>
-                                <li><a href="#">Menu Two</a></li>
-                                <li><a href="#">Menu Three</a></li>
-                                <li class="has-children">
-                                    <a href="#">Sub Menu</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Menu One</a></li>
-                                        <li><a href="#">Menu Two</a></li>
-                                        <li><a href="#">Menu Three</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-children">
-                            <a href="about.php">About</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Menu One</a></li>
-                                <li><a href="#">Menu Two</a></li>
-                                <li><a href="#">Menu Three</a></li>
-                            </ul>
-                        </li>
-                        <li class="active"><a href="shop.php">Shop</a></li>
-                        <li><a href="#">Catalogue</a></li>
-                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="about.php">About</a></li>
+                        <li><a href="shop.php">Shop</a></li>
+                        <li><a href="catalog.php">Catalogue</a></li>
+                        <li class="active"><a href="newarrival.php">New Arrivals</a></li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
                 </div>
@@ -135,65 +96,33 @@ foreach ($user as $us) {
 
         <div class="site-section">
             <div class="container">
-
-                <div class="row mb-5">
-
-
-                    <div class="col-md-3 order-1 mb-5 mb-md-0">
-                        <div class="border p-4 rounded mb-4">
-                            <h3 class="mb-3 h6 text-uppercase text-black d-block">Profile</h3>
-                            <ul class="list-unstyled mb-0 site-menu js-clone-nav d-none d-md-block">
-
-                                <li class="active mb-1"><a href="profile.php" style="color:black;">Edit Profile</a></li>
-                                <li class="active mb-1"><a href="transaksi.php">Transaksi</a></li>
-                                <li class="active mb-1"><a href="riwayat.php">Riwayat Transaksi</a></li>
-                                <!-- <li class="active mb-1"><a href="Gantisandi.php">Ganti Sandi</a></li> -->
-
-                            </ul>
-                        </div>
-
+            <div class="row mb-5" id="productList">
+            <?php foreach ($product as $prd): ?>
+                  <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+                    <div class="block-4 text-center border">
+                      <figure class="block-4-image">
+                        <a href="shop-single.php"><img src="images/<?= $prd["gambar"]; ?>" alt="Image placeholder"
+                            class="img-fluid"></a>
+                      </figure>
+                      <div class="block-4-text p-4">
+                        <h3><a href="shop-single.php?id=<?= $prd["id"]; ?>"><?= $prd["name"]; ?></a></h3>
+                        <p class="mb-0">
+                          <?= $prd["short"]; ?>
+                        </p>
+                        <p class="text-primary font-weight-bold">
+                          <?php
+                          $priceFromDatabase = $prd["price"];
+                          $formattedPrice = "Rp " . number_format($priceFromDatabase, 0, ',', '.');
+                          echo $formattedPrice;
+                          ?>
+                        </p>
+                      </div>
                     </div>
-                    <!-- ... (kode sebelumnya) -->
+                  </div>
+                <?php endforeach; ?>
 
 
-
-
-
-                    <div class="col-md-9 order-1 mb-5 mb-md-0">
-                        <table class="table table-hover table-responsive-sm ">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Order Date</th>
-                                    <th scope="col">Due Date</th>
-                                    <th scope="col">Total Payment</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i=1; ?>
-                                <?php foreach ($transaksi as $tr):?>
-                                <tr>
-                                    <th scope="row"><?= $i++; ?></th>
-                                    <td><?= $tr["order_date"]; ?></td>
-                                    <td><?= $tr["due_date"]; ?></td>
-                                    <td><?php $formattedPrice = "Rp " . number_format($tr["orders_total"], 0, ',', '.');
-                          echo $formattedPrice; ?></td>
-                                    <td><?= $tr["status"]; ?></td>
-                                    <td><a href="invoice.php?" class="btn btn-outline-primary">Detail</a></td>
-                                </tr>
-                                <?php endforeach; ?>
-                               
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                </div>
-
-
-
+            </div>
             </div>
         </div>
 

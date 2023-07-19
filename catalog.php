@@ -1,25 +1,8 @@
 <?php
-session_start();
+
 require('admins/functions.php');
 
-// Periksa apakah pengguna telah login
-if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
-    // Mendapatkan username dari session
-    $email = $_SESSION["email"];
-    $password = $_SESSION["password"];
-
-    // Gunakan nilai email sesuai kebutuhan
-    $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
-
-
-} else {
-    // Pengguna belum login, lakukan tindakan yang sesuai
-    echo "Anda belum login.";
-}
-foreach ($user as $us) {
-    $usid = $us["id"];
-    $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid");
-}
+$category = query("SELECT * FROM `category` ORDER BY `id` DESC");
 
 
 
@@ -91,33 +74,11 @@ foreach ($user as $us) {
             <nav class="site-navigation text-right text-md-center" role="navigation">
                 <div class="container">
                     <ul class="site-menu js-clone-nav d-none d-md-block">
-                        <li class="has-children">
-                            <a href="index.php">Home</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Menu One</a></li>
-                                <li><a href="#">Menu Two</a></li>
-                                <li><a href="#">Menu Three</a></li>
-                                <li class="has-children">
-                                    <a href="#">Sub Menu</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Menu One</a></li>
-                                        <li><a href="#">Menu Two</a></li>
-                                        <li><a href="#">Menu Three</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-children">
-                            <a href="about.php">About</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Menu One</a></li>
-                                <li><a href="#">Menu Two</a></li>
-                                <li><a href="#">Menu Three</a></li>
-                            </ul>
-                        </li>
-                        <li class="active"><a href="shop.php">Shop</a></li>
-                        <li><a href="#">Catalogue</a></li>
-                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="about.php">About</a></li>
+                        <li><a href="shop.php">Shop</a></li>
+                        <li class="active"><a href="catalog.php">Catalogue</a></li>
+                        <li><a href="newarrival.php">New Arrivals</a></li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
                 </div>
@@ -135,65 +96,30 @@ foreach ($user as $us) {
 
         <div class="site-section">
             <div class="container">
-
-                <div class="row mb-5">
-
-
-                    <div class="col-md-3 order-1 mb-5 mb-md-0">
-                        <div class="border p-4 rounded mb-4">
-                            <h3 class="mb-3 h6 text-uppercase text-black d-block">Profile</h3>
-                            <ul class="list-unstyled mb-0 site-menu js-clone-nav d-none d-md-block">
-
-                                <li class="active mb-1"><a href="profile.php" style="color:black;">Edit Profile</a></li>
-                                <li class="active mb-1"><a href="transaksi.php">Transaksi</a></li>
-                                <li class="active mb-1"><a href="riwayat.php">Riwayat Transaksi</a></li>
-                                <!-- <li class="active mb-1"><a href="Gantisandi.php">Ganti Sandi</a></li> -->
-
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- ... (kode sebelumnya) -->
-
-
-
-
-
-                    <div class="col-md-9 order-1 mb-5 mb-md-0">
-                        <table class="table table-hover table-responsive-sm ">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Order Date</th>
-                                    <th scope="col">Due Date</th>
-                                    <th scope="col">Total Payment</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i=1; ?>
-                                <?php foreach ($transaksi as $tr):?>
-                                <tr>
-                                    <th scope="row"><?= $i++; ?></th>
-                                    <td><?= $tr["order_date"]; ?></td>
-                                    <td><?= $tr["due_date"]; ?></td>
-                                    <td><?php $formattedPrice = "Rp " . number_format($tr["orders_total"], 0, ',', '.');
-                          echo $formattedPrice; ?></td>
-                                    <td><?= $tr["status"]; ?></td>
-                                    <td><a href="invoice.php?" class="btn btn-outline-primary">Detail</a></td>
-                                </tr>
-                                <?php endforeach; ?>
-                               
-                            </tbody>
-                        </table>
-
-                    </div>
-
+            <div class="site-section site-blocks-2">
+      <div class="container">
+        <div class="row">
+          <?php foreach ($category as $ctg): ?>
+            <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+              <a class="block-2-item" href="<?= $ctg["link"]; ?>">
+                <figure class="image">
+                  <img src="images/<?= $ctg["gambar"]; ?>" alt="" class="img-fluid">
+                </figure>
+                <div class="text">
+                  <span class="text-uppercase">
+                    <?= $ctg["teks"]; ?>
+                  </span>
+                  <h3>
+                    <?= $ctg["category"]; ?>
+                  </h3>
                 </div>
+              </a>
+            </div>
+          <?php endforeach; ?>
 
-
-
+        </div>
+      </div>
+    </div>
             </div>
         </div>
 
