@@ -50,7 +50,12 @@ foreach ($user as $us) {
 </head>
 
 <body>
-
+<style>
+    .dropdown-item a {
+    display: block;
+    padding: 5px 10px; /* Atur jarak yang diinginkan */
+}
+</style>
     <div class="site-wrap">
         <header class="site-navbar" role="banner">
             <div class="site-navbar-top">
@@ -70,7 +75,23 @@ foreach ($user as $us) {
                         <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                             <div class="site-top-icons">
                                 <ul>
-                                    <li><a href="#"><span class="icon icon-person"></span></a></li>
+                                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true){
+                    echo "<li class='dropdown'>
+                    <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+                        <span class='icon icon-person'></span>
+                    </a>
+                    <ul class='dropdown-menu'>
+                        <li class='dropdown-item'><a href='profile.php'> Edit Profile</a></li>
+                        <li class='dropdown-item'><a href='transaksi.php'> Transaksi</a></li>
+                        <li class='dropdown-item'><a href='riwayat.php'> Riwayat Transaksi</a></li>
+                        <li class='dropdown-item'><a href='logoutuser.php'> Logout</a></li>
+                        <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
+                    </ul>
+                </li>";
+                  }else {
+                    echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
+                  } ?>
+                                    
                                     <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                                     <li>
                                         <a href="cart.php" class="site-cart">
@@ -150,19 +171,30 @@ foreach ($user as $us) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i=1; ?>
-                                <?php foreach ($transaksi as $tr):?>
-                                <tr>
-                                    <th scope="row"><?= $i++; ?></th>
-                                    <td><?= $tr["order_date"]; ?></td>
-                                    <td><?= $tr["due_date"]; ?></td>
-                                    <td><?php $formattedPrice = "Rp " . number_format($tr["orders_total"], 0, ',', '.');
-                          echo $formattedPrice; ?></td>
-                                    <td><?= $tr["status"]; ?></td>
-                                    <td><a href="invoice.php?id=<?= $tr["id"]; ?>" class="btn btn-outline-primary">Detail</a></td>
-                                </tr>
+                                <?php $i = 1; ?>
+                                <?php foreach ($transaksi as $tr): ?>
+                                    <tr>
+                                        <th scope="row">
+                                            <?= $i++; ?>
+                                        </th>
+                                        <td>
+                                            <?= $tr["order_date"]; ?>
+                                        </td>
+                                        <td>
+                                            <?= $tr["due_date"]; ?>
+                                        </td>
+                                        <td>
+                                            <?php $formattedPrice = "Rp " . number_format($tr["orders_total"], 0, ',', '.');
+                                            echo $formattedPrice; ?>
+                                        </td>
+                                        <td>
+                                            <?= $tr["status"]; ?>
+                                        </td>
+                                        <td><a href="invoice.php?id=<?= $tr["id"]; ?>"
+                                                class="btn btn-outline-primary">Detail</a></td>
+                                    </tr>
                                 <?php endforeach; ?>
-                               
+
                             </tbody>
                         </table>
 

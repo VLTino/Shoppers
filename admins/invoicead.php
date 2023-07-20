@@ -58,14 +58,14 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
             <div class="p-3 p-lg-5 border">
             <h5 class="text-black">Nama</h5>
             <p class="text-black"><?= $ord["firstname"]." ".$ord["lastname"];?></p>
-            <h5 class="text-black">Provinsi</h5>
-            <p class="text-black"><?= $ord["provinsi"]?></p>
-            <h5 class="text-black">Kabupaten/Kota</h5>
-            <p class="text-black"><?= $ord["kabupaten"]?></p>
-            <h5 class="text-black">Kecamatan</h5>
-            <p class="text-black"><?= $ord["kecamatan"]?></p>
             <h5 class="text-black">Alamat</h5>
             <p class="text-black" style="word-break:break-word"><?= $ord["alamat"] ?></p>
+            <h5 class="text-black">Kecamatan</h5>
+            <p class="text-black"><?= $ord["kecamatan"]?></p>
+            <h5 class="text-black">Kabupaten/Kota</h5>
+            <p class="text-black"><?= $ord["kabupaten"]?></p>
+            <h5 class="text-black">Provinsi</h5>
+            <p class="text-black"><?= $ord["provinsi"]?></p>
             <div class="row"><div class="col-md-6"><h5 class="text-black">Email</h5>
             <p class="text-black"><?= $ord["email"]?></p></div>
 <div class="col-md-6"> <h5 class="text-black">Phone</h5>
