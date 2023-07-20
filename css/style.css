@@ -751,3 +751,8 @@ a {
   width: 120px;
   border-radius: 50%;
   margin-bottom: 20px; }
+
+  .dropdown-item a {
+    display: block;
+    padding: 5px 10px; /* Atur jarak yang diinginkan */
+}

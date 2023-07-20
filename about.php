@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -47,7 +49,18 @@
               <div class="site-top-icons">
                 <ul>
                 <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true){
-                    echo "<li><a href='profile.php'><span class='icon icon-person'></span></a></li>";
+                    echo "<li class='dropdown'>
+                    <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+                        <span class='icon icon-person'></span>
+                    </a>
+                    <ul class='dropdown-menu'>
+                        <li class='dropdown-item'><a href='profile.php'> Edit Profile</a></li>
+                        <li class='dropdown-item'><a href='transaksi.php'> Transaksi</a></li>
+                        <li class='dropdown-item'><a href='riwayat.php'> Riwayat Transaksi</a></li>
+                        <li class='dropdown-item'><a href='logoutuser.php'> Logout</a></li>
+                        <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
+                    </ul>
+                </li>";
                   }else {
                     echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
                   } ?>

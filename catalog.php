@@ -1,5 +1,5 @@
 <?php
-
+session_start(); 
 require('admins/functions.php');
 
 $category = query("SELECT * FROM `category` ORDER BY `id` DESC");
@@ -53,7 +53,22 @@ $category = query("SELECT * FROM `category` ORDER BY `id` DESC");
                         <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                             <div class="site-top-icons">
                                 <ul>
-                                    <li><a href="#"><span class="icon icon-person"></span></a></li>
+                                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true){
+                    echo "<li class='dropdown'>
+                    <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+                        <span class='icon icon-person'></span>
+                    </a>
+                    <ul class='dropdown-menu'>
+                        <li class='dropdown-item'><a href='profile.php'> Edit Profile</a></li>
+                        <li class='dropdown-item'><a href='transaksi.php'> Transaksi</a></li>
+                        <li class='dropdown-item'><a href='riwayat.php'> Riwayat Transaksi</a></li>
+                        <li class='dropdown-item'><a href='logoutuser.php'> Logout</a></li>
+                        <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
+                    </ul>
+                </li>";
+                  }else {
+                    echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
+                  } ?>
                                     <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                                     <li>
                                         <a href="cart.php" class="site-cart">
@@ -89,7 +104,7 @@ $category = query("SELECT * FROM `category` ORDER BY `id` DESC");
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <strong
-                            class="text-black">Shop</strong></div>
+                            class="text-black">Catalogue</strong></div>
                 </div>
             </div>
         </div>

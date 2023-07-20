@@ -50,12 +50,7 @@ foreach ($user as $us) {
 </head>
 
 <body>
-<style>
-    .dropdown-item a {
-    display: block;
-    padding: 5px 10px; /* Atur jarak yang diinginkan */
-}
-</style>
+
     <div class="site-wrap">
         <header class="site-navbar" role="banner">
             <div class="site-navbar-top">
@@ -163,6 +158,7 @@ foreach ($user as $us) {
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
+                                    <th scope="col">Order Id</th>
                                     <th scope="col">Order Date</th>
                                     <th scope="col">Due Date</th>
                                     <th scope="col">Total Payment</th>
@@ -176,6 +172,10 @@ foreach ($user as $us) {
                                     <tr>
                                         <th scope="row">
                                             <?= $i++; ?>
+                                        </th>
+                                        <th>
+                                        <?php $formattedId = "INV" . str_pad($tr["id"], 5, "0", STR_PAD_LEFT);
+                                            echo $formattedId ?>
                                         </th>
                                         <td>
                                             <?= $tr["order_date"]; ?>
