@@ -12,10 +12,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
   $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
 
   
-} else {
-  // Pengguna belum login, lakukan tindakan yang sesuai
-  echo "Anda belum login.";
-}
+} 
 
 if (isset($_POST["cart"])) {
   if (cartplus($_POST) > 0) {
@@ -212,12 +209,18 @@ $clr = query("SELECT * FROM `color`");
                 </div>
 
               </div>
+              <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true):?>
               <?php foreach ($user as $us): ?>
               <input type="hidden" name="id_customer" id="" value="<?= $us["id"]; ?>">
               <?php endforeach; ?>
+              <?php endif;?>
               <input type="hidden" name="product_id" id="" value="<?= $prd["id"]; ?>">
               <input type="hidden" name="price" id="" value="<?= $prd["price"]; ?>">
+              <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true):?>
               <p><button type="submit" class="buy-now btn btn-sm btn-primary" name="cart">Add To Cart</button></p>
+              <?php else: ?>
+                <p><button type="submit" class="buy-now btn btn-sm btn-primary" onclick="window.location='login-form-06'">Add To Cart</button></p>
+                <?php endif; ?>
               </form>
             <?php endforeach; ?>
           </div>

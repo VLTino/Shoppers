@@ -295,7 +295,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                   <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true) : ?>
                     <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='checkout.php'">Proceed To Checkout</button>
                     <?php else: ?>
-                      <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='checkout.php'">Proceed To Checkout</button>
+                      <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='login-form-06'">Proceed To Checkout</button>
                       <?php endif; ?>
                   </div>
                 </div>
