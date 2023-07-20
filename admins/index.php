@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if(isset($_SESSION["login"])){
+if(isset($_SESSION["admin"])){
     header("Location: admins.php");
     exit;
 }
@@ -8,7 +8,7 @@ if(isset($_SESSION["login"])){
 
 require 'functions.php';
 
-if(isset($_POST["login"])){
+if(isset($_POST["admin"])){
     $username = $_POST ["username"];
     $password = $_POST ["password"];
 
@@ -21,7 +21,7 @@ if(isset($_POST["login"])){
         $row = mysqli_fetch_assoc($result);
        if ( password_verify($password,$row["password"])){
         //cek session
-        $_SESSION["login"] = true ; 
+        $_SESSION["admin"] = true ; 
         header("Location: admins.php");
         exit;
        }
@@ -94,7 +94,7 @@ if(isset($_POST["login"])){
                                                 name="password" required>
                                         </div>
                                         
-                                        <button class="btn btn-primary btn-user btn-block" name="login">
+                                        <button class="btn btn-primary btn-user btn-block" name="admin">
                                             Login
                                         
                                         </button>

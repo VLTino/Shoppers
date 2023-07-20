@@ -1,18 +1,18 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["login"])) {
+if (!isset($_SESSION["admin"])) {
     header("Location: index.php");
     exit;
 }
 
-require 'functions.php'; 
+require 'functions.php';
 
 $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
 $header = query("SELECT * FROM `header` WHERE `id`=1");
 
-if (isset($_POST["headerimg"])){
-    if(edithdr($_POST)){
+if (isset($_POST["headerimg"])) {
+    if (edithdr($_POST)) {
         echo "<script>
         alert('data berhasil diedit');
         document.location.href = 'header.php';
@@ -25,8 +25,8 @@ if (isset($_POST["headerimg"])){
     }
 }
 
-if (isset($_POST["tkshdr"])){
-    if(edittkshdr($_POST)){
+if (isset($_POST["tkshdr"])) {
+    if (edittkshdr($_POST)) {
         echo "<script>
         alert('data berhasil diedit');
         document.location.href = 'header.php';
@@ -110,25 +110,42 @@ if (isset($_POST["tkshdr"])){
                 </div>
             </li>
 
-             <!-- Nav Item - Pages Collapse Menu -->
-             <li class="nav-item">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                     aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-shopping-bag"></i>
                     <span>Product</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="listprd.php">List Product</a>
                         <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
-                        <a class="collapse-item" href="color.php">Color</a> 
+                        <a class="collapse-item" href="color.php">Color</a>
+                        <a class="collapse-item" href="size.php">Size</a>
+
                     </div>
                 </div>
             </li>
-           
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+                    aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-coins"></i>
+                    <span>Transaksi</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Section:</h6>
+                        <a class="collapse-item" href="unpaid.php">Belum Dibayar</a>
+                        <a class="collapse-item" href="paid.php">Dibayar</a>
+                        <a class="collapse-item" href="send.php">Dikirim</a>
+                        <a class="collapse-item" href="done.php">Selesai</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -262,8 +279,7 @@ if (isset($_POST["tkshdr"])){
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -274,8 +290,7 @@ if (isset($_POST["tkshdr"])){
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -286,8 +301,7 @@ if (isset($_POST["tkshdr"])){
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -319,8 +333,7 @@ if (isset($_POST["tkshdr"])){
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -357,28 +370,30 @@ if (isset($_POST["tkshdr"])){
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Header</h1>
                     </div>
-                <h6>Background Image</h6>
-                <?php foreach ($imgh as $img) : ?>
-                    <img src="../images/<?= $img["gambar"];  ?>" alt="" srcset="" class="img-fluid" style="width:900px;">
+                    <h6>Background Image</h6>
+                    <?php foreach ($imgh as $img): ?>
+                        <img src="../images/<?= $img["gambar"]; ?>" alt="" srcset="" class="img-fluid"
+                            style="width:900px;">
                     <?php endforeach; ?>
                     <form action="" method="post" enctype="multipart/form-data">
                         <input type="file" name="gambar" id=""> <br><br>
                         <button type="submit" class="btn btn-primary" name="headerimg">Edit</button>
                     </form>
-<br>
+                    <br>
                     <h6>Teks Header</h6>
                     <form action="" method="post">
                         <div class="form-group">
-                        <h6>Header</h6>
-                        <?php foreach ($header as $hdr) : ?>
-                        <input type="text" value="<?= $hdr["header"]; ?>" name="header" id="" class="form-control">
-                        <h6>Teks</h6>
-                        <textarea name="teks" id="" cols="30" rows="10" class="form-control"><?= $hdr["teks"]; ?></textarea><br>
-                        <?php endforeach; ?>
-                        <button type="submit" class="btn btn-primary" name="tkshdr">Edit</button>
+                            <h6>Header</h6>
+                            <?php foreach ($header as $hdr): ?>
+                                <input type="text" value="<?= $hdr["header"]; ?>" name="header" id="" class="form-control">
+                                <h6>Teks</h6>
+                                <textarea name="teks" id="" cols="30" rows="10"
+                                    class="form-control"><?= $hdr["teks"]; ?></textarea><br>
+                            <?php endforeach; ?>
+                            <button type="submit" class="btn btn-primary" name="tkshdr">Edit</button>
                         </div>
                     </form>
-                 
+
 
                 </div>
                 <!-- /.container-fluid -->

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["login"])) {
+if (!isset($_SESSION["admin"])) {
     header("Location: index.php");
     exit;
 }
@@ -87,8 +87,7 @@ if (isset($_POST["ctge"])) {
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Homepage</span>
                 </a>
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                    data-parent="#accordionSidebar">
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="header.php">Header</a>
@@ -111,7 +110,25 @@ if (isset($_POST["ctge"])) {
                         <a class="collapse-item" href="listprd.php">List Product</a>
                         <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item active" href="category.php">Category</a>
-                        <a class="collapse-item" href="color.php">Color</a> 
+                        <a class="collapse-item" href="color.php">Color</a>
+                        <a class="collapse-item" href="size.php">Size</a>
+
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+                    aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-coins"></i>
+                    <span>Transaksi</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Section:</h6>
+                        <a class="collapse-item" href="unpaid.php">Belum Dibayar</a>
+                        <a class="collapse-item" href="paid.php">Dibayar</a>
+                        <a class="collapse-item" href="send.php">Dikirim</a>
+                        <a class="collapse-item" href="done.php">Selesai</a>
                     </div>
                 </div>
             </li>
@@ -349,7 +366,8 @@ if (isset($_POST["ctge"])) {
                                 <img src="../images/<?= $ctg["gambar"]; ?>" alt="" srcset="" style="width:200px;">
                                 <input type="file" name="gambar" id=""> <br>
                                 Name Category
-                                <input type="text" name="category" id="" class="form-control" value="<?= $ctg["category"]; ?>">
+                                <input type="text" name="category" id="" class="form-control"
+                                    value="<?= $ctg["category"]; ?>">
                                 Teks Above Category
                                 <input type="text" name="teks" id="" class="form-control" value="<?= $ctg["teks"]; ?>"> <br>
                                 Page Link

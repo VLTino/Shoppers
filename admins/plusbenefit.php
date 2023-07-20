@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["login"])) {
+if (!isset($_SESSION["admin"])) {
     header("Location: index.php");
     exit;
 }
@@ -100,25 +100,42 @@ if (isset($_POST["sbmc1"])) {
                 </div>
             </li>
 
-             <!-- Nav Item - Pages Collapse Menu -->
-             <li class="nav-item">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                     aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-shopping-bag"></i>
                     <span>Product</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="listprd.php">List Product</a>
                         <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
-                        <a class="collapse-item" href="color.php">Color</a> 
+                        <a class="collapse-item" href="color.php">Color</a>
+                        <a class="collapse-item" href="size.php">Size</a>
+
                     </div>
                 </div>
             </li>
-           
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+                    aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-coins"></i>
+                    <span>Transaksi</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Section:</h6>
+                        <a class="collapse-item" href="unpaid.php">Belum Dibayar</a>
+                        <a class="collapse-item" href="paid.php">Dibayar</a>
+                        <a class="collapse-item" href="send.php">Dikirim</a>
+                        <a class="collapse-item" href="done.php">Selesai</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -194,7 +211,7 @@ if (isset($_POST["sbmc1"])) {
                         <div class="form-group">
                             Icon
                             <div class="row">
-                                <div class="col-12 col-md-6">                                  
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="icon-picker" class="form-label">Choose icon</label>
                                         <div class="input-group">

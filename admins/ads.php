@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["login"])) {
+if (!isset($_SESSION["admin"])) {
     header("Location: index.php");
     exit;
 }
@@ -99,25 +99,42 @@ if (isset($_POST["ads"])) {
                 </div>
             </li>
 
-             <!-- Nav Item - Pages Collapse Menu -->
-             <li class="nav-item active">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item active">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                     aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-shopping-bag"></i>
                     <span>Product</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="listprd.php">List Product</a>
                         <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
-                        <a class="collapse-item" href="color.php">Color</a> 
+                        <a class="collapse-item" href="color.php">Color</a>
+                        <a class="collapse-item" href="size.php">Size</a>
+
                     </div>
                 </div>
             </li>
-           
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+                    aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-coins"></i>
+                    <span>Transaksi</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Section:</h6>
+                        <a class="collapse-item" href="unpaid.php">Belum Dibayar</a>
+                        <a class="collapse-item" href="paid.php">Dibayar</a>
+                        <a class="collapse-item" href="send.php">Dikirim</a>
+                        <a class="collapse-item" href="done.php">Selesai</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -345,23 +362,30 @@ if (isset($_POST["ads"])) {
                     <h5>Edit Ads</h5>
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <?php foreach ($ads as $ad):?>
-                            Image <br>
-                            <img src="../images/<?= $ad["gambar"]; ?>" alt="" srcset="">
-                            <input type="file" name="gambar" id=""> <br>
-                            Header
-                            <input type="text" name="header" id="" class="form-control" value="<?= $ad["header"]; ?>">
-                            Teks
-                            <textarea name="teks" id="" cols="30" rows="10" class="form-control"><?= $ad["teks"]; ?></textarea> <br>
-                            Link 
-                            <input type="text" name="link" id="" class="form-control" value="<?= $ad["link"]; ?>">
-                            Show
-                            <select name="show" id="showSelect" class="form-control">
-    <option value="show" <?php if ($ad["status"] == 'show') { echo "selected"; } ?>>Show</option>
-    <option value="not" <?php if ($ad["status"] == 'not') { echo "selected"; } ?>>Not Show</option>
-</select><br>
+                            <?php foreach ($ads as $ad): ?>
+                                Image <br>
+                                <img src="../images/<?= $ad["gambar"]; ?>" alt="" srcset="">
+                                <input type="file" name="gambar" id=""> <br>
+                                Header
+                                <input type="text" name="header" id="" class="form-control" value="<?= $ad["header"]; ?>">
+                                Teks
+                                <textarea name="teks" id="" cols="30" rows="10"
+                                    class="form-control"><?= $ad["teks"]; ?></textarea> <br>
+                                Link
+                                <input type="text" name="link" id="" class="form-control" value="<?= $ad["link"]; ?>">
+                                Show
+                                <select name="show" id="showSelect" class="form-control">
+                                    <option value="show" <?php if ($ad["status"] == 'show') {
+                                        echo "selected";
+                                    } ?>>Show
+                                    </option>
+                                    <option value="not" <?php if ($ad["status"] == 'not') {
+                                        echo "selected";
+                                    } ?>>Not Show
+                                    </option>
+                                </select><br>
 
-                            </select><br>
+                                </select><br>
                             <?php endforeach; ?>
                             <button type="submit" class="btn btn-primary" name="ads">Submit</button>
                         </div>

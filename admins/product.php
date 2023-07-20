@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["login"])) {
+if (!isset($_SESSION["admin"])) {
     header("Location: index.php");
     exit;
 }
@@ -89,8 +89,7 @@ if (isset($_POST["prd"])) {
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Homepage</span>
                 </a>
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                    data-parent="#accordionSidebar">
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="header.php">Header</a>
@@ -99,8 +98,8 @@ if (isset($_POST["prd"])) {
                 </div>
             </li>
 
-             <!-- Nav Item - Pages Collapse Menu -->
-             <li class="nav-item active">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item active">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                     aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-shopping-bag"></i>
@@ -113,11 +112,29 @@ if (isset($_POST["prd"])) {
                         <a class="collapse-item" href="listprd.php">List Product</a>
                         <a class="collapse-item active" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
-                        <a class="collapse-item" href="color.php">Color</a> 
+                        <a class="collapse-item" href="color.php">Color</a>
+                        <a class="collapse-item" href="size.php">Size</a>
+
                     </div>
                 </div>
             </li>
-           
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+                    aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-coins"></i>
+                    <span>Transaksi</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Section:</h6>
+                        <a class="collapse-item" href="unpaid.php">Belum Dibayar</a>
+                        <a class="collapse-item" href="paid.php">Dibayar</a>
+                        <a class="collapse-item" href="send.php">Dikirim</a>
+                        <a class="collapse-item" href="done.php">Selesai</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -358,24 +375,26 @@ if (isset($_POST["prd"])) {
                             Category <br>
                             <select class="form-control" aria-label="Default select example" name="category">
                                 <option selected>none</option>
-                                <?php foreach ($category as $ctg):?>
-                                <option value="<?= $ctg["category"]; ?>"><?= $ctg["category"]; ?></option>
+                                <?php foreach ($category as $ctg): ?>
+                                    <option value="<?= $ctg["category"]; ?>"><?= $ctg["category"]; ?></option>
                                 <?php endforeach; ?>
                             </select><br>
                             Color <br>
-                            <?php foreach ($color as $clr):?>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="color[]" id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>">
-                                <label class="form-check-label" for="<?= $clr["color"]; ?>"><?= $clr["color"]; ?></label>
-                            </div>
+                            <?php foreach ($color as $clr): ?>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="color[]"
+                                        id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>">
+                                    <label class="form-check-label" for="<?= $clr["color"]; ?>"><?= $clr["color"]; ?></label>
+                                </div>
                             <?php endforeach; ?>
                             <br>
                             Size <br>
-                            <?php foreach ($size as $sz):?>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="size[]" id="<?= $sz["size"]; ?>" value="<?= $sz["size"]; ?>">
-                                <label class="form-check-label" for="<?= $sz["size"]; ?>"><?= $sz["size"]; ?></label>
-                            </div>
+                            <?php foreach ($size as $sz): ?>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="size[]" id="<?= $sz["size"]; ?>"
+                                        value="<?= $sz["size"]; ?>">
+                                    <label class="form-check-label" for="<?= $sz["size"]; ?>"><?= $sz["size"]; ?></label>
+                                </div>
                             <?php endforeach; ?><br>
                             <button type="submit" class="btn btn-primary" name="prd">Submit</button>
                         </div>

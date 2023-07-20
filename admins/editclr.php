@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["login"])) {
+if (!isset($_SESSION["admin"])) {
     header("Location: index.php");
     exit;
 }
@@ -49,7 +49,7 @@ if (isset($_POST["clr"])) {
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- colorpicker -->
-    
+
     <link rel="stylesheet" type="text/css" href="spectrum/dist/spectrum.css">
     <link rel="stylesheet" type="text/css" href="spectrum/docs/docs.css">
     <link rel="stylesheet" type="text/css" href="spectrum/docs/highlight/styles/default.css">
@@ -122,7 +122,24 @@ if (isset($_POST["clr"])) {
                         <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
                         <a class="collapse-item active" href="color.php">Color</a>
+                        <a class="collapse-item" href="size.php">Size</a>
 
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+                    aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-coins"></i>
+                    <span>Transaksi</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Section:</h6>
+                        <a class="collapse-item" href="unpaid.php">Belum Dibayar</a>
+                        <a class="collapse-item" href="paid.php">Dibayar</a>
+                        <a class="collapse-item" href="send.php">Dikirim</a>
+                        <a class="collapse-item" href="done.php">Selesai</a>
                     </div>
                 </div>
             </li>
@@ -352,25 +369,25 @@ if (isset($_POST["clr"])) {
                         <h1 class="h3 mb-0 text-gray-800">Color</h1>
                     </div>
                     <h5>Edit Color</h5>
-                    <?php foreach ($color as $clr):?>
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="id" id="" value="<?= $clr["id"]; ?>">
-                        <div class="form-group">
-                            Name Color
-                            <input type="text" name="name" id="" class="form-control" value="<?= $clr["color"]; ?>">
-                            Color Picker <br>
-                            <input id="colorpicker" name="color" type="text" value="<?= $clr["codeclr"]; ?>"/><br>
-                            <script>
-                                $("#colorpicker").spectrum({
-                                    color: ""
-                                });
-                            </script>
-                            <button type="submit" class="btn btn-primary" name="clr">Submit</button>
-                        </div>
-                    </form>
+                    <?php foreach ($color as $clr): ?>
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="id" id="" value="<?= $clr["id"]; ?>">
+                            <div class="form-group">
+                                Name Color
+                                <input type="text" name="name" id="" class="form-control" value="<?= $clr["color"]; ?>">
+                                Color Picker <br>
+                                <input id="colorpicker" name="color" type="text" value="<?= $clr["codeclr"]; ?>" /><br>
+                                <script>
+                                    $("#colorpicker").spectrum({
+                                        color: ""
+                                    });
+                                </script>
+                                <button type="submit" class="btn btn-primary" name="clr">Submit</button>
+                            </div>
+                        </form>
                     <?php endforeach; ?>
 
-                    
+
 
                 </div>
                 <!-- /.container-fluid -->
@@ -435,7 +452,7 @@ if (isset($_POST["clr"])) {
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    
+
 </body>
 
 </html>

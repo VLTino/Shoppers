@@ -8,27 +8,8 @@ if (!isset($_SESSION["admin"])) {
 
 require 'functions.php';
 
-$category = query("SELECT * FROM `category` ");
-$color = query("SELECT * FROM `color` ");
-$size = query("SELECT * FROM `size` ");
-$id = $_GET["id"];
-$product = query("SELECT * FROM `product` WHERE `id` = $id ");
-
-if (isset($_POST["editprd"])) {
-    if (editprd($_POST)) {
-        echo "<script>
-        alert('data berhasil ditambahkan');
-        document.location.href = 'listprd.php';
-        </script>";
-    } else {
-        echo "<script>
-        alert('data gagal ditambahkan');
-        document.location.href = 'listprd.php';
-        </script>";
-    }
-}
-
-?>
+$transaksi = query("SELECT * FROM `orders` WHERE `status`= 'unpaid'")
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +21,7 @@ if (isset($_POST["editprd"])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>VLT Admin - Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -50,8 +31,7 @@ if (isset($_POST["editprd"])) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="https://cdn.tiny.cloud/1/oqlwijnpf68ywo2qvmh366eagscvjp81hp37x99y45f0h92z/tinymce/6/tinymce.min.js"
-        referrerpolicy="origin"></script>
+
 </head>
 
 <body id="page-top">
@@ -74,7 +54,7 @@ if (isset($_POST["editprd"])) {
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="admins.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -101,18 +81,17 @@ if (isset($_POST["editprd"])) {
             </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                     aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-shopping-bag"></i>
                     <span>Product</span>
                 </a>
-                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="listprd.php">List Product</a>
-                        <a class="collapse-item active" href="product.php">Add Product</a>
+                        <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
                         <a class="collapse-item" href="color.php">Color</a>
                         <a class="collapse-item" href="size.php">Size</a>
@@ -120,16 +99,16 @@ if (isset($_POST["editprd"])) {
                     </div>
                 </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
                     aria-controls="collapseThree">
                     <i class="fas fa-fw fa-coins"></i>
                     <span>Transaksi</span>
                 </a>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
-                        <a class="collapse-item" href="unpaid.php">Belum Dibayar</a>
+                        <a class="collapse-item active" href="unpaid.php">Belum Dibayar</a>
                         <a class="collapse-item" href="paid.php">Dibayar</a>
                         <a class="collapse-item" href="send.php">Dikirim</a>
                         <a class="collapse-item" href="done.php">Selesai</a>
@@ -162,19 +141,7 @@ if (isset($_POST["editprd"])) {
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -359,137 +326,118 @@ if (isset($_POST["editprd"])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Category</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Unpaid</h1>
+                        
                     </div>
-                    <h5>Edit Category</h5>
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <?php foreach ($product as $prd): ?>
-                                <input type="hidden" name="id" id="" value="<?= $prd["id"]; ?>">
-                                Image <br>
-                                <img src="../images/<?= $prd["gambar"]; ?>" alt="" srcset="" style="width:500px;">
-                                <input type="file" name="gambar" id=""> <br>
-                                Name Product
-                                <input type="text" name="product" id="" class="form-control" value="<?= $prd["name"]; ?>">
-                                Short About Product
-                                <input type="text" name="sabout" id="" class="form-control" value="<?= $prd["short"]; ?>">
-                                About Product
-                                <textarea name="about" id="" cols="30" rows="10"
-                                    class="form-control"><?= $prd["about"]; ?></textarea> <br>
-                                Price
-                                <input type="text" name="price" id="" class="form-control" value=" <?php $priceFromDatabase = $prd["price"];
-                                $formattedPrice = number_format($priceFromDatabase, 0, ',', '.');
-                                echo $formattedPrice; ?>">
-                                Category <br>
-                                <select class="form-control" aria-label="Default select example" name="category">
-                                    <option>none</option>
-                                    <?php foreach ($category as $ctg): ?>
-                                        <?php if ($ctg['category'] == $prd['category']): ?>
-                                            <option value="<?= $ctg['category']; ?>" selected><?= $ctg['category']; ?></option>
-                                        <?php else: ?>
-                                            <option value="<?= $ctg['category']; ?>"><?= $ctg['category']; ?></option>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
 
-                                </select><br>
-                                Color <br>
-                                <?php foreach ($color as $clr): ?>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="color[]"
-                                            id="<?= $clr["color"]; ?>" value="<?= $clr["color"]; ?>">
-                                        <label class="form-check-label" for="<?= $clr["color"]; ?>"><?= $clr["color"]; ?></label>
-                                    </div>
+                    <div class="col-md-9 order-1 mb-5 mb-md-0">
+                        <table class="table table-hover table-responsive-sm ">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Order id</th>
+                                    <th scope="col">Order Date</th>
+                                    <th scope="col">Due Date</th>
+                                    <th scope="col">Total Payment</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                <?php foreach ($transaksi as $tr): ?>
+                                    <tr>
+                                        <th scope="row">
+                                            <?= $i++; ?>
+                                        </th>
+                                        <th>
+                                            <?php $formattedId = "INV" . str_pad($tr["id"], 5, "0", STR_PAD_LEFT);
+                                            echo $formattedId ?>
+                                        </th>
+                                        <td>
+                                            <?= $tr["order_date"]; ?>
+                                        </td>
+                                        <td>
+                                            <?= $tr["due_date"]; ?>
+                                        </td>
+                                        <td>
+                                            <?php $formattedPrice = "Rp " . number_format($tr["orders_total"], 0, ',', '.');
+                                            echo $formattedPrice; ?>
+                                        </td>
+                                        <td>
+                                            <?= $tr["status"]; ?>
+                                        </td>
+                                        <td><a href="invoicead.php?id=<?= $tr["id"]; ?>"
+                                                class="btn btn-outline-primary">Detail</a></td>
+                                    </tr>
                                 <?php endforeach; ?>
-                                <br>
-                                Size <br>
-                                <?php foreach ($size as $sz): ?>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="size[]" id="<?= $sz["size"]; ?>"
-                                            value="<?= $sz["size"]; ?>">
-                                        <label class="form-check-label" for="<?= $sz["size"]; ?>"><?= $sz["size"]; ?></label>
-                                    </div>
-                                <?php endforeach; ?><br>
-                            <?php endforeach; ?>
-                            <button type="submit" class="btn btn-primary" name="editprd">Submit</button>
-                        </div>
-                    </form>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.container-fluid -->
 
                 </div>
-                <!-- /.container-fluid -->
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Your Website 2021</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
 
             </div>
-            <!-- End of Main Content -->
+            <!-- End of Content Wrapper -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; VLTino 2021</span>
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="logout.php">Logout</a>
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
-                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-            mergetags_list: [
-                { value: 'First.Name', title: 'First Name' },
-                { value: 'Email', title: 'Email' },
-            ]
-        });
-    </script>
+        <!-- Page level custom scripts -->
+        <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script>
+
 </body>
 
 </html>

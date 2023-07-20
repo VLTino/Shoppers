@@ -125,7 +125,7 @@ catch (\Exception $e) {
 
 global $conn;
 
-$query1 = "INSERT INTO `orders` VALUES (NULL,$userid,'$alamat','$provinsi','$kota','$kecamatan','$fname','$lname','$email','$phone','$order_notes','$detail_pengiriman',$ongkir,'$estimasi','$snap_token',$order_total,'$created_at','$due_date','unpaid')";
+$query1 = "INSERT INTO `orders` VALUES (NULL,$userid,'$alamat','$provinsi','$kota','$kecamatan','$fname','$lname','$email','$phone','$order_notes','$detail_pengiriman',$ongkir,'$estimasi','$snap_token',$order_total,'$created_at','$due_date','unpaid',NULL)";
 
 
 mysqli_query($conn, $query1);
