@@ -7,10 +7,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
   $email = $_SESSION["email"];
   $password = $_SESSION["password"];
 
-  // Gunakan nilai email sesuai kebutuhan
-  echo "email: " . $email;
-  echo "<br>";
-  echo "password: " . $password;
+  
 } 
 require 'admins/functions.php';
 

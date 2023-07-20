@@ -1,4 +1,11 @@
 <?php
+namespace Midtrans;
+require_once dirname(__FILE__) . '/midtransphp/midtrans-php-master/Midtrans.php';
+// Set Your server key
+// can find in Merchant Portal -> Settings -> Access keys
+Config::$serverKey = 'SB-Mid-server-a-N7sylbogmzvwFJ7PbqCe2x';
+Config::$clientKey = 'SB-Mid-client-cpj2em5xbS_DUWq1';
+
 session_start();
 require('admins/functions.php');
 
@@ -12,30 +19,12 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
   $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
 
   
-} else {
-  // Pengguna belum login, lakukan tindakan yang sesuai
-  echo "Anda belum login.";
-}
+} 
 
 
-// Memeriksa apakah ada data yang dikirimkan dari halaman pertama
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Mengambil data dari formulir
-  $fname = $_POST['fname'];
-  $lname = $_POST['lname'];
-  $provinsi = $_POST['provinsi'];
-  $kota = $_POST['kota'];
-  $kecamatan = $_POST['kecamatan'];
-  $alamat = $_POST['alamat'];
-  $ekspedisi = $_POST['ekspedisi'];
-  $ongkir = $_POST['ongkir'];
-  $order_total = $_POST['order_total'];
-  $estimasi = $_POST['estimasi'];
-  $email = $_POST['email_address'];
-  $phone = $_POST['phone'];
-  $order_notes = $_POST['order_notes'];
-  
-}
+$id = $_GET["id"];
+$orders = query("SELECT * FROM `orders` WHERE `id` = $id");
+$cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
 
 ?>
 
@@ -139,27 +128,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        
         <div class="row">
           <div class="col-md-6 mb-5 mb-md-0">
-            <h2 class="h3 mb-3 text-black">Billing Details</h2>
+            <?php foreach ($orders as $ord): ?>
+            <h2 class="h3 mb-3 text-black"><?php $formattedId = "INV" . str_pad($ord["id"], 5, "0", STR_PAD_LEFT); 
+            
+            echo $formattedId?></h2>
             <div class="p-3 p-lg-5 border">
-
             <h5 class="text-black">Nama</h5>
-            <p class="text-black"><?= $fname." ".$lname?></p>
+            <p class="text-black"><?= $ord["firstname"]." ".$ord["lastname"];?></p>
             <h5 class="text-black">Provinsi</h5>
-            <p class="text-black"><?= $provinsi?></p>
+            <p class="text-black"><?= $ord["provinsi"]?></p>
             <h5 class="text-black">Kabupaten/Kota</h5>
-            <p class="text-black"><?= $kota?></p>
+            <p class="text-black"><?= $ord["kabupaten"]?></p>
             <h5 class="text-black">Kecamatan</h5>
-            <p class="text-black"><?= $kecamatan?></p>
+            <p class="text-black"><?= $ord["kecamatan"]?></p>
             <h5 class="text-black">Alamat</h5>
-            <p class="text-black" style="word-break:break-word"><?= $alamat ?></p>
+            <p class="text-black" style="word-break:break-word"><?= $ord["alamat"] ?></p>
             <div class="row"><div class="col-md-6"><h5 class="text-black">Email</h5>
-            <p class="text-black"><?= $email ?></p></div>
+            <p class="text-black"><?= $ord["email"]?></p></div>
 <div class="col-md-6"> <h5 class="text-black">Phone</h5>
-            <p class="text-black"><?= $phone ?></p></div></div>
+            <p class="text-black"><?= $ord["phone"]?></p></div></div>
             <div class="row"><div class="col-md-6"><h5 class="text-black">Kurir</h5>
-            <p class="text-black"><?= $ekspedisi ?></p></div>
+            <p class="text-black"><?= $ord["kurir"]?></p></div>
            <div class="col-md-6"><h5 class="text-black">Estimasi</h5>
-            <p class="text-black"><?= $estimasi.' Hari' ?></p></div></div>
+            <p class="text-black"><?= $ord["estimasi"].' Hari' ?></p></div></div>
            
             
             
@@ -168,9 +159,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <div class="form-group">
                 <label for="c_order_notes" class="text-black">Order Notes</label>
                 <textarea name="order_notes" id="c_order_notes" cols="30" rows="5" class="form-control"
-                  disabled><?= $order_notes?></textarea>
+                  disabled><?= $ord["order_notes"]?></textarea>
               </div>
-
+<?php endforeach; ?>
             </div>
           </div>
           <div class="col-md-6">
@@ -190,18 +181,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php
                 $product_total = 0; // variabel untuk menghitung total harga produk
 
-                foreach ($user as $us) :
-                    $user = $us['id'];
-
-                    $cart = query("SELECT * FROM `cart` WHERE `id_customer`=$user");
                     
 
-                    foreach ($cart as $cr) :
+                    foreach ($cart_order as $cr) :
                       $product_id = $cr["product_id"];
                       $cart_id = $cr["id"];
                       $color = $cr["color"];
                       $size = $cr["size"];
                       $jumlah = $cr["jumlah"];
+                      
 
                       $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
 
@@ -227,13 +215,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                           </tr>
                           <?php $product_total += $price * $jumlah; // tambahkan harga produk ke total
                           endforeach; ?>
-                      <?php endforeach; ?>
+                      
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
                         <td class="text-black"><?php
                           $formattedPrice = "Rp" . number_format($product_total, 0, ',', '.');
                           echo $formattedPrice; ?></td>
                       </tr>
+                      <?php foreach ($orders as $ord): 
+                        $ongkir = $ord["ongkir"];
+                        $order_total = $ord["orders_total"];?>
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Ongkir</strong></td>
                         <td class="text-black"><?php
@@ -246,52 +237,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                           $formattedPrice = "Rp" . number_format($order_total, 0, ',', '.');
                           echo $formattedPrice; ?></strong></td>
                       </tr>
+                      <?php endforeach; ?>
                     </tbody>
                   </table>
 
-                  <div class="border p-3 mb-3">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsebank" role="button"
-                        aria-expanded="false" aria-controls="collapsebank">Direct Bank Transfer</a></h3>
-
-                    <div class="collapse" id="collapsebank">
-                      <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as
-                          the payment reference. Your order won’t be shipped until the funds have cleared in our
-                          account.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="border p-3 mb-3">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsecheque" role="button"
-                        aria-expanded="false" aria-controls="collapsecheque">Cheque Payment</a></h3>
-
-                    <div class="collapse" id="collapsecheque">
-                      <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as
-                          the payment reference. Your order won’t be shipped until the funds have cleared in our
-                          account.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="border p-3 mb-5">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsepaypal" role="button"
-                        aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
-
-                    <div class="collapse" id="collapsepaypal">
-                      <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as
-                          the payment reference. Your order won’t be shipped until the funds have cleared in our
-                          account.</p>
-                      </div>
-                    </div>
-                  </div>
-
+                  
+      
                   <div class="form-group">
-                      <button class="btn btn-primary btn-sm py-3 btn-block" onclick="window.location='thankyou.php'">Place
+                      <button class="btn btn-primary btn-sm py-3 btn-block" id="pay-button">Place
                         Order</button>
                       <button class="btn btn-danger btn-sm py-3 btn-block" onclick="window.location='checkout.php'">Cancel</button>
+                      <?php foreach ($orders as $ord){
+                        $snap_token = $ord["snaptoken"];
+                      }?>
+                      <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<?php echo Config::$clientKey;?>"></script>
+        <script type="text/javascript">
+            document.getElementById('pay-button').onclick = function(){
+                // SnapToken acquired from previous step
+                snap.pay('<?php echo $snap_token?>');
+            };
+        </script>
                   </div>
 
                 </div>

@@ -419,63 +419,26 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     </tbody>
                   </table>
 
-                  <div class="border p-3 mb-3">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsebank" role="button"
-                        aria-expanded="false" aria-controls="collapsebank">Direct Bank Transfer</a></h3>
-
-                    <div class="collapse" id="collapsebank">
-                      <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as
-                          the payment reference. Your order won’t be shipped until the funds have cleared in our
-                          account.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="border p-3 mb-3">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsecheque" role="button"
-                        aria-expanded="false" aria-controls="collapsecheque">Cheque Payment</a></h3>
-
-                    <div class="collapse" id="collapsecheque">
-                      <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as
-                          the payment reference. Your order won’t be shipped until the funds have cleared in our
-                          account.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="border p-3 mb-5">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsepaypal" role="button"
-                        aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
-
-                    <div class="collapse" id="collapsepaypal">
-                      <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as
-                          the payment reference. Your order won’t be shipped until the funds have cleared in our
-                          account.</p>
-                      </div>
-                    </div>
-                  </div>
+                  
 
   
-              <input type="text" name="total_berat" id="" value="1200">
-              <input type="text" name="provinsi" id="" value="" required>
-              <input type="text" name="kota" id="" value="" required>
-              <input type="text" name="kecamatan" id="" value="" required>
-              <input type="text" name="kodepos" id="" value="" required>
-              <input type="text" name="ekspedisi" id="" value="" required>
-              <input type="text" name="paket" id="" value="" required>
-              <input type="text" name="ongkir" id="" value="" required>
-              <input type="text" name="estimasi" id="" value="" required>
-              <input type="text" name="order_total" id="" required>
-              <input type="datetime-local" name="created_at" id="waktu_kirim" required>
+              <input type="hidden" name="total_berat" id="" value="1200">
+              <input type="hidden" name="provinsi" id="" value="" required>
+              <input type="hidden" name="kota" id="" value="" required>
+              <input type="hidden" name="kecamatan" id="" value="" required>
+              <input type="hidden" name="kodepos" id="" value="" required>
+              <input type="hidden" name="ekspedisi" id="" value="" required>
+              <input type="hidden" name="paket" id="" value="" required>
+              <input type="hidden" name="ongkir" id="" value="" required>
+              <input type="hidden" name="estimasi" id="" value="" required>
+              <input type="hidden" name="order_total" id="" required>
+              <input type="datetime-local" name="created_at" id="waktu_kirim" required style="display:none;">
               <?php foreach ($user as $us) :?>
-              <input type="text" name="user_id" id="" required value="<?= $us["id"]; ?>">
+              <input type="hidden" name="user_id" id="" required value="<?= $us["id"]; ?>">
               <?php endforeach; ?>
               <?php foreach ($cart as $cr) : ?>
-                <input type="text" name="color[]" id="" required value="<?= $cr["color"]; ?>">
-                <input type="text" name="size[]" id="" required value="<?= $cr["size"]; ?>">
+                <input type="hidden" name="color[]" id="" required value="<?= $cr["color"]; ?>">
+                <input type="hidden" name="size[]" id="" required value="<?= $cr["size"]; ?>">
                 <?php endforeach; ?>
               <script>
     // Mendapatkan waktu saat ini

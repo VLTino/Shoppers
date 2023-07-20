@@ -5,6 +5,8 @@
 
 namespace Midtrans;
 
+$berat= $_POST["total_berat"];
+$paket= $_POST["paket"];
 $fname = $_POST['fname'];
 $lname = $_POST['lname'];
 $provinsi = $_POST['provinsi'];
@@ -24,7 +26,7 @@ $color = isset($_POST['color']) ? $_POST['color'] : array();
 $size = isset($_POST['size']) ? $_POST['size'] : array();
 $userid = $_POST["user_id"];
 
-
+$detail_pengiriman = "$ekspedisi $paket";
 // ... (kode sebelumnya)
 
 // Menggabungkan product_id, jumlahpr, color, dan size menjadi satu array
@@ -85,7 +87,7 @@ $transaction_details = array(
 // Menambahkan item baru ke array item_details
 $item_details = array(
     array(
-    'id' => "a1",
+    'id' => $formattedId,
     'price' => $order_total,
     'quantity' => 1,
     'name' => "Pembayaran Shopeers"
@@ -123,7 +125,7 @@ catch (\Exception $e) {
 
 global $conn;
 
-$query1 = "INSERT INTO `orders` VALUES (NULL,$userid,'$alamat','$provinsi','$kota','$kecamatan','$fname','$lname','$order_notes','$snap_token',$order_total,'$created_at','$due_date','unpaid')";
+$query1 = "INSERT INTO `orders` VALUES (NULL,$userid,'$alamat','$provinsi','$kota','$kecamatan','$fname','$lname','$email','$phone','$order_notes','$detail_pengiriman',$ongkir,'$estimasi','$snap_token',$order_total,'$created_at','$due_date','unpaid')";
 
 
 mysqli_query($conn, $query1);
