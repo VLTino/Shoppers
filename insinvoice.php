@@ -148,7 +148,7 @@ $query3 = "DELETE FROM `cart` WHERE `id_customer`= $userid";
 
 mysqli_query($conn, $query3);
 
-header('Location: cart.php');
+header('Location: transaksi.php');
 exit;
 
 
