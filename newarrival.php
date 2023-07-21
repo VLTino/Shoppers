@@ -113,7 +113,7 @@ $product = query("SELECT * FROM `product` ORDER BY `id` DESC");
             <div class="container">
             <div class="row mb-5" id="productList">
             <?php foreach ($product as $prd): ?>
-                  <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+                  <div class="col-sm-6 col-lg-3 mb-4" data-aos="fade-up">
                     <div class="block-4 text-center border">
                       <figure class="block-4-image">
                         <a href="shop-single.php"><img src="images/<?= $prd["gambar"]; ?>" alt="Image placeholder"
