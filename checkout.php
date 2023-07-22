@@ -357,7 +357,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     <tbody>
                     <?php
                 $product_total = 0; // variabel untuk menghitung total harga produk
-
+                $berat_total = 0;
                 foreach ($user as $us) :
                     $userid = $us['id'];
 
@@ -381,6 +381,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                       $gambar = $pr["gambar"];
                       $name = $pr["name"];
                       $idpr = $pr["id"];
+                      $berat = $pr["berat"];
                     }
 
                     ?>
@@ -396,7 +397,8 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                           echo $sub;?>
                             </td>
                           </tr>
-                          <?php $product_total += $price * $jumlah; // tambahkan harga produk ke total
+                          <?php $product_total += $price * $jumlah; // tambahkan harga produk ke total 
+                          $berat_total += $berat*$jumlah;
                           endforeach; ?>
                       <?php endforeach; ?>
                       <tr>
@@ -427,13 +429,18 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                         ?></strong></td>
 
                       </tr>
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Total Berat</strong></td>
+                        <td class="text-black font-weight-bold order-total"><strong><?= $berat_total?> gram</strong></td>
+
+                      </tr>
                     </tbody>
                   </table>
 
                   
 
   
-              <input type="hidden" name="total_berat" id="" value="1200">
+              <input type="hidden" name="total_berat" id="" value="<?= $berat_total?>">
               <input type="hidden" name="provinsi" id="" value="" required>
               <input type="hidden" name="kota" id="" value="" required>
               <input type="hidden" name="kecamatan" id="" value="" required>

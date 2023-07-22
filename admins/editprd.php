@@ -408,7 +408,10 @@ if (isset($_POST["editprd"])) {
                                             value="<?= $sz["size"]; ?>">
                                         <label class="form-check-label" for="<?= $sz["size"]; ?>"><?= $sz["size"]; ?></label>
                                     </div>
-                                <?php endforeach; ?><br>
+                                <?php endforeach; ?><br><br>
+                                Berat Product
+                                <input type="number" name="berat" id="" class="form-control col-3"
+                                    placeholder="dalam gram" value="<?= $prd["berat"]; ?>"><br>
                             <?php endforeach; ?>
                             <button type="submit" class="btn btn-primary" name="editprd">Submit</button>
                         </div>

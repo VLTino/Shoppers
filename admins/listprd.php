@@ -458,6 +458,7 @@ if (!isset($_POST['filter'])) {
                                 <th scope="col">Category</th>
                                 <th scope="col">Color</th>
                                 <th scope="col">Size</th>
+                                <th scope="col">Berat</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -492,6 +493,9 @@ if (!isset($_POST['filter'])) {
                                     </td>
                                     <td>
                                         <?= $prd["size"]; ?>
+                                    </td>
+                                    <td>
+                                        <?= $prd["berat"]; ?>
                                     </td>
                                     <td>
                                     <a href="editprd.php?id=<?= $prd["id"];?>" class="btn-circle btn-success btn-sm"><i

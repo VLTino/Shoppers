@@ -276,6 +276,7 @@ function plusprd($data)
     $about = $data["about"];
     $price = htmlspecialchars($data["price"]);
     $category = htmlspecialchars($data["category"]);
+    $berat = htmlspecialchars($data["berat"]);
      
 
 
@@ -312,7 +313,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 }
 
-    $query = "INSERT INTO `product` VALUES (NULL,'$gambar','$nama','$short','$about','$price','$category','$fixcolor','$fixsize');";
+    $query = "INSERT INTO `product` VALUES (NULL,'$gambar','$nama','$short','$about','$price','$category','$fixcolor','$fixsize','$berat');";
     mysqli_query($conn,$query);
     return mysqli_affected_rows($conn);
 }
@@ -328,6 +329,7 @@ function editprd($data)
     $about = $data["about"];
     $price = htmlspecialchars($data["price"]);
     $category = htmlspecialchars($data["category"]);
+    $berat = htmlspecialchars($data["berat"]);
     
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -367,7 +369,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $gambar = $gambarlama;
     }
 
-    $query = "UPDATE `product` SET `gambar`='$gambar',`name`='$nama',`short`='$short',`about`='$about',`price`='$price',`category`='$category',`color`='$fixcolor',`size`='$fixsize' WHERE `id` = $id";
+    $query = "UPDATE `product` SET `gambar`='$gambar',`name`='$nama',`short`='$short',`about`='$about',`price`='$price',`category`='$category',`color`='$fixcolor',`size`='$fixsize',`berat`='$berat    ' WHERE `id` = $id";
     mysqli_query($conn,$query);
 
     if ($gambarlama && $gambarlama != $gambar) {
