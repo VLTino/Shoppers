@@ -556,4 +556,12 @@ function cartplus($data)
     return mysqli_affected_rows($conn);
 }
 
+function deletecart($id)
+{
+    global $conn;
+
+    $query = "DELETE FROM `cart` WHERE `id`=$id;";
+    mysqli_query($conn,$query);
+    return mysqli_affected_rows($conn);
+}
 ?>

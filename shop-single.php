@@ -13,10 +13,12 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 
   
 } 
+$id = $_GET["id"];
 
 if (isset($_POST["cart"])) {
   if (cartplus($_POST) > 0) {
-      
+    header("Location: shop-single.php?id=$id&success=true");
+    exit();  
   } else {
       echo mysqli_error($conn);
   }
@@ -24,7 +26,6 @@ if (isset($_POST["cart"])) {
 }
 
 
-$id = $_GET["id"];
 $product = query("SELECT * FROM `product` WHERE `id`=$id");
 $clr = query("SELECT * FROM `color`");
 ?>
@@ -54,6 +55,35 @@ $clr = query("SELECT * FROM `color`");
 </head>
 
 <body>
+<div id="custom-alert" class="alert alert-success fade show" style="display: none;" role="alert">
+  <strong>Yeay</strong> Produk berhasil ditambahkan ke keranjang!
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<script>
+  // Fungsi untuk menampilkan alert
+  function showAlert() {
+    const alertElement = document.getElementById("custom-alert");
+    alertElement.style.display = "block";
+
+    // Sembunyikan alert setelah 3 detik
+    setTimeout(function() {
+      alertElement.style.display = "none";
+    }, 3000);
+  }
+
+  // Cek apakah alert perlu ditampilkan berdasarkan parameter URL 'success'
+  const urlParams = new URLSearchParams(window.location.search);
+  const successParam = urlParams.get('success');
+
+  if (successParam && successParam === "true") {
+    showAlert();
+  }
+</script>
+
+
 
   <div class="site-wrap">
   <header class="site-navbar" role="banner">
