@@ -28,6 +28,7 @@ if (isset($_POST["cart"])) {
 
 $product = query("SELECT * FROM `product` WHERE `id`=$id");
 $clr = query("SELECT * FROM `color`");
+$newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
 ?>
 
 <!DOCTYPE html>
@@ -268,66 +269,30 @@ $clr = query("SELECT * FROM `color`");
         <div class="row">
           <div class="col-md-12">
             <div class="nonloop-block-3 owl-carousel">
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Tank Top</a></h3>
-                    <p class="mb-0">Finding perfect t-shirt</p>
-                    <p class="text-primary font-weight-bold">$50</p>
+              <?php foreach ($newprd as $prd): ?>
+                <div class="item">
+                  <div class="block-4 text-center">
+                    <figure class="block-4-image">
+                      <img src="images/<?= $prd["gambar"]; ?>" alt="<?= $prd["name"]; ?>" class="img-fluid">
+                    </figure>
+                    <div class="block-4-text p-4">
+                      <h3><a href="shop-single.php?id=<?= $prd["id"]; ?>">
+                          <?= $prd["name"]; ?>
+                        </a></h3>
+                      <p class="mb-0">
+                        <?= $prd["short"]; ?>
+                      </p>
+                      <p class="text-primary font-weight-bold">
+                        <?php $priceFromDatabase = $prd["price"];
+                        $formattedPrice = "Rp " . number_format($priceFromDatabase, 0, ',', '.');
+                        echo $formattedPrice; ?>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Corater</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Polo Shirt</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">T-Shirt Mockup</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Corater</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
+              <?php endforeach; ?>
+
+
             </div>
           </div>
         </div>

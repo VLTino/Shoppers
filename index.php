@@ -210,7 +210,7 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
                       <img src="images/<?= $prd["gambar"]; ?>" alt="<?= $prd["name"]; ?>" class="img-fluid">
                     </figure>
                     <div class="block-4-text p-4">
-                      <h3><a href="#">
+                      <h3><a href="shop-single.php?id=<?= $prd["id"]; ?>">
                           <?= $prd["name"]; ?>
                         </a></h3>
                       <p class="mb-0">
