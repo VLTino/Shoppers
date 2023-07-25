@@ -98,7 +98,7 @@ if(isset($_POST["login"])){
               
                  
                 
-                <!-- <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>  -->
+                <span class="ml-auto"><a href="forgotpass.php" class="forgot-pass">Forgot Password</a></span> 
               </div>
 
               <input type="submit" value="Log In" class="btn btn-block btn-primary" name="login">

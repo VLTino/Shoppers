@@ -509,13 +509,12 @@ function price($data)
 }
 
 
-function registerco($data)
+function changepass($data)
 {
 
     global $conn;
 
-    $email = stripslashes($data["email"]);
-    $password = mysqli_real_escape_string($conn, $data["password"]);
+    $password = mysqli_real_escape_string($conn, $data["password1"]);
     $password2 = mysqli_real_escape_string($conn, $data["password2"]);
 
     //cek email
@@ -531,7 +530,7 @@ function registerco($data)
 
 
     $password = password_hash($password, PASSWORD_DEFAULT);
-    mysqli_query($conn, "INSERT INTO `customer` VALUES (NULL,'$email','$password')");
+    mysqli_query($conn, "UPDATE `customer` SET `password` = '$password'");
 
     return mysqli_affected_rows($conn);
 }
