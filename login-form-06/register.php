@@ -1,28 +1,4 @@
-<?php
 
-// session_start();
-
-// if(!isset($_SESSION["login"])){
-//     header("Location: index.php");
-//     exit;
-// }
-
-
-require '../admins/functions.php';
-
-if (isset($_POST["registercustomer"])) {
-    if (registerco($_POST) > 0) {
-        echo "<script>
-        alert('user baru berhasil ditambahkan')
-        document.location.href = 'index.php';
-        </script>";
-    } else {
-        echo mysqli_error($conn);
-    }
-   
-}
-
-?>
 
 <!doctype html>
 <html lang="en">
@@ -58,10 +34,15 @@ if (isset($_POST["registercustomer"])) {
               <h3>Register</h3>
               <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
             </div>
-            <form action="#" method="post">
+            <form action="prosesregis.php" method="post">
               <div class="form-group first">
-                <label for="username">Email</label>
-                <input type="email" class="form-control" id="username" name="email">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="name">
+
+              </div>
+              <div class="form-group first">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email">
 
               </div>
               <div class="form-group last mb-3">

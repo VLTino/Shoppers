@@ -5,37 +5,49 @@ if(isset($_SESSION["login"])){
     exit;
 }
 
-
 require '../admins/functions.php';
 
 if(isset($_POST["login"])){
     $email = $_POST ["email"];
     $password = $_POST ["password"];
 
-    $result = mysqli_query($conn, "select * from customer where email = '$email' ") ;
+    $result = mysqli_query($conn, "SELECT * FROM customer WHERE email = '$email'") ;
 
-    //cek username
+    // cek email
     if(mysqli_num_rows($result) === 1 ) {
-
-        //cek password 
         $row = mysqli_fetch_assoc($result);
-       if ( password_verify($password,$row["password"])){
-        //cek session
-        $_SESSION["login"] = true ; 
-        $_SESSION["email"] = $email; 
-        $_SESSION["password"] = $password; 
-        header("Location: ../index.php");
-        exit;
-       }
+
+        // cek apakah akun sudah diverifikasi (verifikasi == 1)
+        if ($row["verifikasi"] == 1) {
+            // cek password 
+            if (password_verify($password, $row["password"])){
+                // cek session
+                $_SESSION["login"] = true ; 
+                $_SESSION["email"] = $email; 
+                $_SESSION["password"] = $password; 
+                header("Location: ../index.php");
+                exit;
+            } else {
+                // Password salah
+                echo "<script> 
+                        alert('Password salah')
+                      </script>";
+            }
+        } else {
+            // Akun belum diverifikasi
+            echo "<script> 
+                    alert('Akun belum diverifikasi')
+                  </script>";
+        }
+    } else {
+        // Email tidak ditemukan
+        echo "<script> 
+                alert('Email tidak ditemukan')
+              </script>";
     }
-    $error = true ;
-
-
-
-
 }
-
 ?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -72,13 +84,13 @@ if(isset($_POST["login"])){
             </div>
             <form action="#" method="post">
               <div class="form-group first">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="email">
+                <label for="username">Gmail</label>
+                <input type="text" class="form-control" id="username" name="email" required>
 
               </div>
               <div class="form-group last mb-3">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password">
+                <input type="password" class="form-control" id="password" name="password" required>
                 
               </div>
               
