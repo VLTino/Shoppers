@@ -1,5 +1,5 @@
 <?php
-
+require '../admins/functions.php';
 $email = $_GET["email"];
 
 if (isset($_POST["change"])) {
@@ -56,16 +56,16 @@ if (isset($_POST["change"])) {
             <form action="#" method="post">
               <div class="form-group first">
                 <label for="username">Change Password</label>
-                <input type="text" class="form-control" id="username" name="password1" required>
+                <input type="password" class="form-control" id="username" name="password1" required>
 
               </div>
               <div class="form-group first">
                 <label for="pass2">Confirm Password</label>
-                <input type="text" class="form-control" id="pass2" name="password2" required>
+                <input type="password" class="form-control" id="pass2" name="password2" required>
 
               </div>
 
-
+<input type="hidden" name="email" id="" value="<?= $email ?>">
               <div class="d-flex mb-5 align-items-center">
 
 
