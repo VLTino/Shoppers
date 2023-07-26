@@ -177,9 +177,6 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                 <label for="kurir" class="text-black">Kurir Ekspedisi<span class="text-danger">*</span></label>
                 <select id="kurir" class="form-control" name="nama_ekspedisi" required>
                   <option value="">Pilih Kurir</option>
-                  <option value="jne">JNE</option>
-                  <option value="tiki">Tiki</option>
-                  <option value="pos">POS</option>
                 </select>
               </div>
 
@@ -240,77 +237,77 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
               <div class="form-group">
                 <label for="c_ship_different_address" class="text-black" data-toggle="collapse"
                   href="#ship_different_address" role="button" aria-expanded="false"
-                  aria-controls="ship_different_address"><input type="checkbox" value="1" id="c_ship_different_address">
+                  aria-controls="ship_different_address"><input type="checkbox" value="1" id="c_ship_different_address" name="diff_address">
                   Ship To A Different Address?</label>
                 <div class="collapse" id="ship_different_address">
                   <div class="py-2">
 
-                    <div class="form-group">
-                      <label for="c_diff_country" class="text-black">Country <span class="text-danger">*</span></label>
-                      <select id="c_diff_country" class="form-control" name="nama_provinsi">
+                  <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control diff" id="c_fname" name="difffname" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control diff" id="c_lname" name="difflname" required>
+                </div>
+              </div>
 
-                      </select>
-                    </div>
+              <div class="form-group">
+               
+                <label for="prov" class="text-black">Provinsi <span class="text-danger">*</span></label>
+                <select id="prov" class="form-control diff" name="diffnama_provinsi" required>
+
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="kab" class="text-black">Kota/Kabupaten <span class="text-danger">*</span></label>
+                <select id="kab" class="form-control diff" name="diffnama_kota" required>
+                  <option value="">Pilih Kabupaten/Kota</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="kec" class="text-black">Kecamatan <span class="text-danger">*</span></label>
+                <select id="kec" class="form-control diff" name="diffnama_kecamatan" required>
+                  <option value="">Pilih Kecamatan</option>
+                </select>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="c_address" class="text-black">Alamat Lengkap <span class="text-danger">*</span></label>
+                  <textarea name="diffalamat" id="c_address" cols="30" rows="10" class="form-control diff"
+                    placeholder="Nama Jalan, Gedung, No. Rumah , Kodepos" required></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="kurir" class="text-black">Kurir Ekspedisi<span class="text-danger">*</span></label>
+                <select id="kurir" class="form-control diff" name="diffnama_ekspedisi" required>
+                <option value="">Pilih Kurir</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="paket" class="text-black">Paket <span class="text-danger">*</span></label>
+                <select id="paket" class="form-control diff" name="diffnama_paket" required>
+                  <option value="">Pilih Paket</option>
+                </select>
+              </div>
 
 
-                    <div class="form-group row">
-                      <div class="col-md-6">
-                        <label for="c_diff_fname" class="text-black">First Name <span
-                            class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_fname" name="c_diff_fname">
-                      </div>
-                      <div class="col-md-6">
-                        <label for="c_diff_lname" class="text-black">Last Name <span
-                            class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_lname" name="c_diff_lname">
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <label for="c_diff_companyname" class="text-black">Company Name </label>
-                        <input type="text" class="form-control" id="c_diff_companyname" name="c_diff_companyname">
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <label for="c_diff_address" class="text-black">Address <span
-                            class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_address" name="c_diff_address"
-                          placeholder="Street address">
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
-                    </div>
-
-                    <div class="form-group row">
-                      <div class="col-md-6">
-                        <label for="c_diff_state_country" class="text-black">State / Country <span
-                            class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_state_country" name="c_diff_state_country">
-                      </div>
-                      <div class="col-md-6">
-                        <label for="c_diff_postal_zip" class="text-black">Posta / Zip <span
-                            class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_postal_zip" name="c_diff_postal_zip">
-                      </div>
-                    </div>
-
-                    <div class="form-group row mb-5">
-                      <div class="col-md-6">
-                        <label for="c_diff_email_address" class="text-black">Email Address <span
-                            class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_email_address" name="c_diff_email_address">
-                      </div>
-                      <div class="col-md-6">
-                        <label for="c_diff_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_phone" name="c_diff_phone"
-                          placeholder="Phone Number">
-                      </div>
-                    </div>
+              <div class="form-group row mb-5">
+                <div class="col-md-6">
+                  <label for="c_email_address" class="text-black">Email Address <span
+                      class="text-danger">*</span></label>
+                  <input type="email" class="form-control diff" id="c_email_address" name="diffemail_address" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control diff" id="c_phone" name="diffphone" placeholder="Phone Number" required>
+                </div>
+              </div>
 
                   </div>
 
@@ -578,7 +575,254 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 
   <script>
     $(document).ready(function () {
+
       $.ajax({
+        type: 'POST',
+        url: 'admins/dataprovinsi.php',
+        success: function (provinsi) {
+          $("select[name=nama_provinsi]").html(provinsi);
+        }
+      });
+
+      $("select[name=nama_provinsi]").on("change", function () {
+        var provinsi_terpilih = $("option:selected", this).attr("id_provinsi");
+        $.ajax({
+          type: 'POST',
+          url: 'admins/datakota.php',
+          data: { id_provinsi: provinsi_terpilih },
+          success: function (kota) {
+            $("select[name=nama_kota]").html(kota);
+          }
+        });
+      });
+
+      $("select[name=nama_kota]").on("change", function () {
+        var kota_terpilih = $("option:selected", this).attr("city_id");
+        $.ajax({
+          type: 'POST',
+          url: 'admins/datakecamatan.php',
+          data: { id_kota: kota_terpilih },
+          success: function (kecamatan) {
+            $("select[name=nama_kecamatan]").html(kecamatan);
+          }
+        });
+
+        $.ajax({
+        type: 'POST',
+        url: 'admins/datakurir.php',
+        success: function (kurir) {
+          $("select[name=nama_ekspedisi]").html(kurir);
+        }
+      });
+      });
+
+      $("select[name=nama_ekspedisi]").on("change", function () {
+        var ekspedisi_terpilih = $("select[name=nama_ekspedisi]").val();
+        var kota_terpilih = $("option:selected", "select[name=nama_kota]").attr("city_id");
+        var total_berat = $("input[name=total_berat]").val();
+
+        $.ajax({
+          type: 'POST',
+          url: 'admins/datapaket.php',
+          data: 'ekspedisi=' + ekspedisi_terpilih + '&kota=' + kota_terpilih + '&berat=' + total_berat,
+          success: function (paket) {
+            $("select[name=nama_paket]").html(paket);
+
+            $("input[name=ekspedisi]").val(ekspedisi_terpilih);
+          }
+        });
+      });
+
+      $("select[name=nama_kota]").on("change", function(){
+        var prov = $("option:selected",this).attr("nama_provinsi");
+        var kota = $("option:selected",this).attr("nama_kota");
+        var codepost = $("option:selected",this).attr("codepost");
+
+        $("input[name=provinsi]").val(prov);
+        $("input[name=kota]").val(kota);
+        $("input[name=kodepos]").val(codepost);
+
+      });
+      
+      $("select[name=nama_paket]").on("change", function(){
+      var paket = $("option:selected",this).attr("paket");
+      var ongkir = parseFloat($("option:selected",this).attr("ongkir"));
+      var etd = $("option:selected",this).attr("etd");
+
+      $("input[name=paket]").val(paket);
+      $("input[name=ongkir]").val(ongkir);
+      $("input[name=estimasi]").val(etd);
+
+
+      $("td.hargaongkir").text("Rp" + ongkir.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+
+
+
+      // Mengambil nilai product_total
+      var product_total = parseFloat(<?php echo $product_total; ?>);
+      
+      // Menghitung order total
+      var order_total = product_total + ongkir;
+      $("td.order-total").text("Rp" + order_total.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+
+      // Mengupdate nilai input hidden dengan order_total
+      $("input[name=order_total]").val(order_total);
+    });
+
+      $("select[name=nama_kecamatan]").on("change", function(){
+        var kec = $("option:selected",this).attr("nama_kecamatan");
+        
+        $("input[name=kecamatan]").val(kec);
+       
+
+      });
+
+      $("input[name=diff_address]").on("change", function () {
+      if ($(this).prop("checked")) {
+
+        $.ajax({
+        type: 'POST',
+        url: 'admins/dataprovinsi0.php',
+        success: function (provinsi) {
+          $("select[name=nama_provinsi]").html(provinsi);
+        }
+      });
+
+        $.ajax({
+        type: 'POST',
+        url: 'admins/datakurir0.php',
+        success: function (kurir) {
+          $("select[name=nama_ekspedisi]").html(kurir);
+        }
+      });
+
+        $.ajax({
+        type: 'POST',
+        url: 'admins/datakota0.php',
+        success: function (kota) {
+          $("select[name=nama_kota]").html(kota);
+        }
+      });
+
+        $.ajax({
+        type: 'POST',
+        url: 'admins/datakecamatan0.php',
+        success: function (kecamatan) {
+          $("select[name=nama_kecamatan]").html(kecamatan);
+        }
+      });
+
+        $.ajax({
+        type: 'POST',
+        url: 'admins/datapaket0.php',
+        success: function (paket) {
+          $("select[name=nama_paket]").html(paket);
+        }
+      });
+
+        $.ajax({
+        type: 'POST',
+        url: 'admins/dataprovinsi.php',
+        success: function (provinsi) {
+          $("select[name=diffnama_provinsi]").html(provinsi);
+        }
+      });
+
+      $("select[name=diffnama_provinsi]").on("change", function () {
+        var provinsi_terpilih = $("option:selected", this).attr("id_provinsi");
+        $.ajax({
+          type: 'POST',
+          url: 'admins/datakota.php',
+          data: { id_provinsi: provinsi_terpilih },
+          success: function (kota) {
+            $("select[name=diffnama_kota]").html(kota);
+          }
+        });
+      });
+
+      $("select[name=diffnama_kota]").on("change", function () {
+        var kota_terpilih = $("option:selected", this).attr("city_id");
+        $.ajax({
+          type: 'POST',
+          url: 'admins/datakecamatan.php',
+          data: { id_kota: kota_terpilih },
+          success: function (kecamatan) {
+            $("select[name=diffnama_kecamatan]").html(kecamatan);
+          }
+        });
+
+        $.ajax({
+        type: 'POST',
+        url: 'admins/datakurir.php',
+        success: function (kurir) {
+          $("select[name=diffnama_ekspedisi]").html(kurir);
+        }
+      });
+      });
+
+      $("select[name=diffnama_ekspedisi]").on("change", function () {
+        var ekspedisi_terpilih = $("select[name=diffnama_ekspedisi]").val();
+        var kota_terpilih = $("option:selected", "select[name=diffnama_kota]").attr("city_id");
+        var total_berat = $("input[name=total_berat]").val();
+
+        $.ajax({
+          type: 'POST',
+          url: 'admins/datapaket.php',
+          data: 'ekspedisi=' + ekspedisi_terpilih + '&kota=' + kota_terpilih + '&berat=' + total_berat,
+          success: function (paket) {
+            $("select[name=diffnama_paket]").html(paket);
+
+            $("input[name=ekspedisi]").val(ekspedisi_terpilih);
+          }
+        });
+      });
+
+      $("select[name=diffnama_kota]").on("change", function(){
+        var prov = $("option:selected",this).attr("nama_provinsi");
+        var kota = $("option:selected",this).attr("nama_kota");
+        var codepost = $("option:selected",this).attr("codepost");
+
+        $("input[name=provinsi]").val(prov);
+        $("input[name=kota]").val(kota);
+        $("input[name=kodepos]").val(codepost);
+
+      });
+      
+      $("select[name=diffnama_paket]").on("change", function(){
+      var paket = $("option:selected",this).attr("paket");
+      var ongkir = parseFloat($("option:selected",this).attr("ongkir"));
+      var etd = $("option:selected",this).attr("etd");
+
+      $("input[name=paket]").val(paket);
+      $("input[name=ongkir]").val(ongkir);
+      $("input[name=estimasi]").val(etd);
+
+
+      $("td.hargaongkir").text("Rp" + ongkir.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+
+
+
+      // Mengambil nilai product_total
+      var product_total = parseFloat(<?php echo $product_total; ?>);
+      
+      // Menghitung order total
+      var order_total = product_total + ongkir;
+      $("td.order-total").text("Rp" + order_total.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+
+      // Mengupdate nilai input hidden dengan order_total
+      $("input[name=order_total]").val(order_total);
+    });
+
+      $("select[name=diffnama_kecamatan]").on("change", function(){
+        var kec = $("option:selected",this).attr("nama_kecamatan");
+        
+        $("input[name=kecamatan]").val(kec);
+       
+
+      });
+
+      } else{
+        $.ajax({
         type: 'POST',
         url: 'admins/dataprovinsi.php',
         success: function (provinsi) {
@@ -670,10 +914,13 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
        
 
       });
-
+      }
+      
     });
+  });
 
   </script>
+  
   
 
 

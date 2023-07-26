@@ -4,9 +4,7 @@ require '../admins/functions.php';
 
 global $conn;
 
-
 $email = stripslashes($_POST["email"]);
-
 
 // Cek apakah email sudah ada di database
 $query = "SELECT * FROM `customer` WHERE email = '$email'";
@@ -16,8 +14,11 @@ if (mysqli_num_rows($result) === 0) {
     echo "<script> 
             alert('Alamat email tidak ditemukan');window.location='forgotpass.php'
           </script>";
-          return false;
-} 
+    exit; // Ganti return false menjadi exit untuk keluar dari script.
+}
+
+// Ambil data pengguna dari hasil query
+$userData = mysqli_fetch_assoc($result);
 
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
@@ -43,8 +44,8 @@ try {
     $mail->Port = 465; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('shoppersgmail.com', 'Shoppers');
-    $mail->addAddress($email, $result["name"]); //Add a recipient
+    $mail->setFrom('shoppers@gmail.com', 'Shoppers');
+    $mail->addAddress($email, $userData["name"]); // Add a recipient using the fetched data from the query
     // $mail->addAddress('ellen@example.com'); //Name is optional
     // $mail->addReplyTo('info@example.com', 'Information');
     // $mail->addCC('cc@example.com');
@@ -57,18 +58,15 @@ try {
     //Content
     $mail->isHTML(true); //Set email format to HTML
     $mail->Subject = 'Verifikasi akun Shoppers';
-    $mail->Body = 'Hi!' . $result["name"] . ',ini adalah tautan untuk ganti password akun Anda.<br> <a href="http://p3.test/login-form-06/changepass.php?email=' . $email . '">Change Password</a>';
+    $mail->Body = 'Hi! ' . $userData["name"] . ', ini adalah tautan untuk ganti password akun Anda.<br> <a href="http://p3.test/login-form-06/changepass.php?email=' . $email . '">Change Password</a>';
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     if ($mail->send()) {
         echo "<script>alert('Email ganti password sudah terkirim lewat email');window.location='index.php'</script>";
-    }else {
-        echo "<script>alert('gagal');window.location='index.php'</script>";
+    } else {
+        echo "<script>alert('Gagal mengirim email ganti password');window.location='index.php'</script>";
     }
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
-
-
-
 ?>

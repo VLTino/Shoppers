@@ -1,26 +1,46 @@
+<?php
 
+$email = $_GET["email"];
+
+if (isset($_POST["change"])) {
+  if (changepass($_POST)) {
+    echo "<script>
+      alert('password berhasil diubah');
+      window.location = 'index.php';
+
+      </script>";
+  } else {
+    echo "<script>
+      alert('password gagal diubah');
+      window.location = 'index.php';
+      </script>";
+  }
+}
+?>
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    
-    <!-- Style -->
-    <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
 
-    <title>Forgot Password</title>
-  </head>
-  <body>
-  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <!-- Style -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>Forgot Password</title>
+</head>
+
+<body>
+
 
   <div class="d-lg-flex half">
     <div class="bg order-1 order-md-2" style="background-image: url('../images/men.jpg');"></div>
@@ -44,35 +64,36 @@
                 <input type="text" class="form-control" id="pass2" name="password2" required>
 
               </div>
-             
-              
+
+
               <div class="d-flex mb-5 align-items-center">
-              
-                 
-                
+
+
+
                 <!-- <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>  -->
               </div>
 
               <input type="submit" value="Change" class="btn btn-block btn-primary" name="change">
-              
-              
-            
-              
-              
+
+
+
+
+
             </form>
           </div>
         </div>
       </div>
     </div>
 
-    
-  </div>
-    
-    
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
-  </body>
+  </div>
+
+
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
 </html>

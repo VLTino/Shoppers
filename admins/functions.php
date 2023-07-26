@@ -514,6 +514,7 @@ function changepass($data)
 
     global $conn;
 
+    $email = stripslashes($data["email"]);
     $password = mysqli_real_escape_string($conn, $data["password1"]);
     $password2 = mysqli_real_escape_string($conn, $data["password2"]);
 
@@ -530,7 +531,7 @@ function changepass($data)
 
 
     $password = password_hash($password, PASSWORD_DEFAULT);
-    mysqli_query($conn, "UPDATE `customer` SET `password` = '$password'");
+    mysqli_query($conn, "UPDATE `customer` SET `password` = '$password' WHERE `email`= '$email'");
 
     return mysqli_affected_rows($conn);
 }
