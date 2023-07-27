@@ -86,9 +86,13 @@ function img()
     $namafilebaru .= '.';
     $namafilebaru .= $ekstensigambar;
 
-    move_uploaded_file($tmpname, '../images/' . $namafilebaru);
-    return $namafilebaru;
-
+    if ($error === 0) {
+        move_uploaded_file($tmpname, '../images/' . $namafilebaru);
+        return $namafilebaru;
+    } else {
+        echo "Kesalahan mengunggah file: " . $_FILES['gambar']['error'];
+        return false;
+    }
 }
 
 function imgedit()
@@ -564,4 +568,48 @@ function deletecart($id)
     mysqli_query($conn,$query);
     return mysqli_affected_rows($conn);
 }
+
+function changename($data)
+{
+    global $conn;
+
+    $name = htmlspecialchars($data["name"]);
+    $email = $data["email"];
+
+    $query = "UPDATE `customer` SET `name` = '$name' WHERE `email`='$email'";
+    mysqli_query($conn,$query);
+    return mysqli_affected_rows($conn); 
+}
+
+function changepp($data)
+{
+    global $conn;
+
+    $gambar = $data["gambar"];
+    $email = $data["email"];
+
+    $result = mysqli_query($conn, "SELECT `pp` FROM `customer` WHERE `email`='$email'");
+    $row = mysqli_fetch_assoc($result);
+    $gambarlama = $row['pp'];
+
+    $gambar = img();
+    if (!$gambar) {
+        return false;
+    }
+
+    $query = "UPDATE `customer` SET `pp`='$gambar' WHERE `email`='$email'";
+    mysqli_query($conn,$query);
+    
+    if (!empty($gambarlama)) {
+    if ($gambarlama && $gambarlama != $gambar) {
+        $old_file = "../images/$gambarlama";
+        if (file_exists($old_file)) {
+            unlink($old_file);
+        }
+    }
+}
+return mysqli_affected_rows($conn);
+
+}
+
 ?>

@@ -1,8 +1,37 @@
 <?php
- session_start();
+session_start();
 require('admins/functions.php');
 
+if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
+  // Mendapatkan username dari session
+  $email = $_SESSION["email"];
+  $password = $_SESSION["password"];
 
+  // Gunakan nilai email sesuai kebutuhan
+  $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
+
+
+}
+
+if (isset($_POST["changename"])) {
+  if (changename($_POST) > 0) {
+    header("Location: profile.php?successname=true");
+    exit();  
+  } else {
+      echo mysqli_error($conn);
+  }
+ 
+}
+
+if (isset($_POST["changepp"])) {
+  if (changepp($_POST) > 0) {
+    header("Location: profile.php?successpp=true");
+    exit();  
+  } else {
+      echo mysqli_error($conn);
+  }
+ 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,15 +58,111 @@ require('admins/functions.php');
 </head>
 
 <body>
+<div id="custom-alert" class="alert alert-success fade show" style="display: none;" role="alert">
+  <strong>Yeay</strong> Username berhasil diganti!
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
+<div id="custom-alert-pp" class="alert alert-success fade show" style="display: none;" role="alert">
+  <strong>Yeay</strong> Foto Profil berhasil diganti!
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<script>
+  // Fungsi untuk menampilkan alert
+  function showAlert(elementId) {
+    const alertElement = document.getElementById(elementId);
+    alertElement.style.display = "block";
+
+    // Sembunyikan alert setelah 3 detik
+    setTimeout(function() {
+      alertElement.style.display = "none";
+    }, 3000);
+  }
+
+  // Cek apakah alert perlu ditampilkan berdasarkan parameter URL 'success'
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const successParamName = urlParams.get('successname');
+  if (successParamName && successParamName === "true") {
+    showAlert('custom-alert');
+  }
+
+  const successParamPP = urlParams.get('successpp');
+  if (successParamPP && successParamPP === "true") {
+    showAlert('custom-alert-pp');
+  }
+</script>
+
+  <style>
+    .fotoprofil {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Menyembunyikan input asli */
+    button[id="file-upload"] {
+      display: none;
+    }
+
+    /* Gaya untuk tombol custom */
+    .custom-button {
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+      background-color: rgb(121, 113, 234);
+      border-radius: 4px;
+      color: white;
+    }
+
+    /* Optional: Gaya tambahan untuk mengindikasikan tombol aktif */
+    .custom-button:hover {
+      background-color: #e5e5e5;
+      color: black;
+    }
+
+    .popup-form {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #f9f9f9;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+      border-radius: 10px;
+      width: 500px;
+    }
+
+    /* CSS untuk overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9998;
+    }
+  </style>
   <div class="site-wrap">
-  <header class="site-navbar" role="banner">
+    <header class="site-navbar" role="banner">
       <div class="site-navbar-top">
         <div class="container">
           <div class="row align-items-center">
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-            
+
             </div>
 
             <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
@@ -49,7 +174,7 @@ require('admins/functions.php');
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true){
+                  <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     echo "<li class='dropdown'>
                     <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
                         <span class='icon icon-person'></span>
@@ -62,7 +187,7 @@ require('admins/functions.php');
                         <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
                     </ul>
                 </li>";
-                  }else {
+                  } else {
                     echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
                   } ?>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
@@ -108,27 +233,125 @@ require('admins/functions.php');
       <div class="container">
 
         <div class="row mb-5">
-        
+
 
           <div class="col-md-3 order-1 mb-5 mb-md-0">
             <div class="border p-4 rounded mb-4">
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Profile</h3>
               <ul class="list-unstyled mb-0 site-menu js-clone-nav d-none d-md-block">
 
-              <li class="active mb-1"><a href="profile.php" style="color:black;">Edit Profile</a></li>
-              <li class="active mb-1"><a href="transaksi.php">Transaksi</a></li>
-              <li class="active mb-1"><a href="riwayat.php">Riwayat Transaksi</a></li>
-              <!-- <li class="active mb-1"><a href="Gantisandi.php">Ganti Sandi</a></li> -->
-               
+                <li class="active mb-1"><a href="profile.php" style="color:black;">Edit Profile</a></li>
+                <li class="active mb-1"><a href="transaksi.php">Transaksi</a></li>
+                <li class="active mb-1"><a href="riwayat.php">Riwayat Transaksi</a></li>
+                <!-- <li class="active mb-1"><a href="Gantisandi.php">Ganti Sandi</a></li> -->
+
               </ul>
             </div>
-            
-          </div>
-        </div>
 
-        
+          </div>
+
+          <?php foreach ($user as $us): ?>
+            <div class="col-md-3 order-1 mb-5 mb-md-0 fotoprofil">
+
+              <div class="col-md fotoprofil">
+                <img src="<?php if (!isset($us["pp"])) {
+                  echo "images/defaultpp.png";
+                } else {
+                  echo "images/".$us["pp"];
+                } ?>" alt="" srcset="" class="img-fluid" style=" width: 100px;
+      height: 100px;
+      border-radius: 50%;">
+              </div>
+              <div class="col pt-3 fotoprofil">
+                <label for="file-upload" class="custom-button">
+                  Ubah Foto
+                </label>
+                <button id="file-upload" onclick="togglePopuppp()"></button>
+              </div>
+            </div>
+
+            <div class="col-md-6 order-1 mb-5 mb-md-0 form-group">
+              <h6>Username</h6>
+              <p>
+                <?= $us["name"]; ?><a onclick="togglePopupnama()" href="#" class="pl-3" >Ubah</a>
+              </p>
+              <h6>Email</h6>
+              <p>
+                <?= $us["email"]; ?><a href="" class="pl-3">Ubah</a>
+              </p>
+              <button class="custom-button" onclick="window.location='login-form-06/forgotpass.php'">Ganti
+                Password</button>
+            </div>
+
+            <div class="overlay" id="overlay"></div>
+  
+            <div class="popup-form" id="popupForm">
+              <h2>Ubah Nama</h2>
+              <form action="" method="post">
+                <!-- Tambahkan elemen formulir sesuai kebutuhan -->
+                <div class="form-group">
+                <label for="name">Nama:</label>
+                <input type="text" id="name" name="name" value="<?= $us["name"]; ?>" required class="form-control">
+                </div>
+                <input type="hidden" name="email" id="" value="<?= $us["email"]; ?>">
+                <button type="submit" class="btn btn-primary" name="changename">Kirim</button>
+                <a class="btn btn-danger" style="color:white;" onclick="window.location='profile.php'">Batal</a>
+              </form>
+            </div>
+
+            <div class="popup-form" id="popupForm-pp">
+              <h2>Ubah Foto Profil</h2>
+              <form action="" method="post" enctype="multipart/form-data">
+                <!-- Tambahkan elemen formulir sesuai kebutuhan -->
+                <div class="form-group">
+                
+                <input type="file" name="gambar" required>
+                </div>
+                <input type="hidden" name="email" id="" value="<?= $us["email"]; ?>">
+                <button type="submit" class="btn btn-primary" name="changepp">Kirim</button>
+                <a class="btn btn-danger" style="color:white;" onclick="window.location='profile.php'">Batal</a>
+              </form>
+            </div>
+          <?php endforeach; ?>
+
+
+        </div>
       </div>
     </div>
+
+
+    <!-- Script JavaScript untuk menampilkan atau menyembunyikan popup form -->
+    <script>
+      function togglePopupnama() {
+        var overlay = document.getElementById('overlay');
+        var popupForm = document.getElementById('popupForm');
+
+        // Jika popup form sedang tersembunyi, maka tampilkan
+        if (popupForm.style.display === 'none') {
+          popupForm.style.display = 'block';
+          overlay.style.display = 'block';
+        } else {
+          // Jika popup form sedang ditampilkan, maka sembunyikan
+          popupForm.style.display = 'none';
+          overlay.style.display = 'none';
+        }
+      }
+
+      function togglePopuppp() {
+        var overlay = document.getElementById('overlay');
+        var popupForm = document.getElementById('popupForm-pp');
+
+        // Jika popup form sedang tersembunyi, maka tampilkan
+        if (popupForm.style.display === 'none') {
+          popupForm.style.display = 'block';
+          overlay.style.display = 'block';
+        } else {
+          // Jika popup form sedang ditampilkan, maka sembunyikan
+          popupForm.style.display = 'none';
+          overlay.style.display = 'none';
+        }
+      }
+    </script>
 
     <footer class="site-footer border-top">
       <div class="container">

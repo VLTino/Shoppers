@@ -17,7 +17,7 @@
     <!-- Style -->
     <link rel="stylesheet" href="css/style.css">
 
-    <title>Forgot Password</title>
+    <title>Change Password</title>
   </head>
   <body>
   
@@ -30,7 +30,7 @@
         <div class="row align-items-center justify-content-center">
           <div class="col-md-7">
             <div class="mb-4">
-              <h3>Forgot Password</h3>
+              <h3>Ganti Password</h3>
               <p class="mb-4">Kami akan mengirim emai ke Anda</p>
             </div>
             <form action="prosesforgot.php" method="post">
