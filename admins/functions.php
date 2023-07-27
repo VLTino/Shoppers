@@ -86,13 +86,10 @@ function img()
     $namafilebaru .= '.';
     $namafilebaru .= $ekstensigambar;
 
-    if ($error === 0) {
+    
         move_uploaded_file($tmpname, '../images/' . $namafilebaru);
         return $namafilebaru;
-    } else {
-        echo "Kesalahan mengunggah file: " . $_FILES['gambar']['error'];
-        return false;
-    }
+
 }
 
 function imgedit()
@@ -592,7 +589,7 @@ function changepp($data)
     $row = mysqli_fetch_assoc($result);
     $gambarlama = $row['pp'];
 
-    $gambar = img();
+    $gambar = imgpp();
     if (!$gambar) {
         return false;
     }
@@ -600,16 +597,52 @@ function changepp($data)
     $query = "UPDATE `customer` SET `pp`='$gambar' WHERE `email`='$email'";
     mysqli_query($conn,$query);
     
-    if (!empty($gambarlama)) {
+    
     if ($gambarlama && $gambarlama != $gambar) {
-        $old_file = "../images/$gambarlama";
+        $old_file = "images/$gambarlama";
         if (file_exists($old_file)) {
             unlink($old_file);
         }
     }
-}
+
 return mysqli_affected_rows($conn);
 
+}
+
+function imgpp()
+{
+
+    $namafile = $_FILES['gambar']['name'];
+    $error = $_FILES['gambar']['error'];
+    $tmpname = $_FILES['gambar']['tmp_name'];
+
+    if ($error === 4) {
+        echo "<script>
+            alert('pilih gambar terlebih dahulu')
+            </script>";
+        return false;
+    }
+    //cek ekstensi
+    $ekstensigambarvalid = ['jpg', 'jpeg', 'png'];
+    $ekstensigambar = explode('.', $namafile);
+    $ekstensigambar = strtolower(end($ekstensigambar));
+    if (!in_array($ekstensigambar, $ekstensigambarvalid)) {
+        echo "<script>
+            alert('yang anda upload bukan gambar')
+            </script>";
+        return false;
+    }
+    //generate namafile baru
+    $namafilebaru = uniqid();
+    $namafilebaru .= '.';
+    $namafilebaru .= $ekstensigambar;
+
+   
+        move_uploaded_file($tmpname, 'images/' . $namafilebaru);
+        return $namafilebaru;
+    
+       
+    
 }
 
 ?>
