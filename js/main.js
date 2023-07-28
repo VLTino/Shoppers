@@ -148,70 +148,70 @@ jQuery(document).ready(function($) {
 	sitePlusMinus();
 
 
-	// File: script.js
+// 	// File: script.js
 
-	function getMaxPriceFromDatabase() {
-		var xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState === 4 && xhr.status === 200) {
-				var maxPrice = JSON.parse(xhr.responseText);
-				// Gunakan nilai maksimum harga dalam logika JavaScript di sini
-				console.log(maxPrice);
-				// ...
+// 	function getMaxPriceFromDatabase() {
+// 		var xhr = new XMLHttpRequest();
+// 		xhr.onreadystatechange = function() {
+// 			if (xhr.readyState === 4 && xhr.status === 200) {
+// 				var maxPrice = JSON.parse(xhr.responseText);
+// 				// Gunakan nilai maksimum harga dalam logika JavaScript di sini
+// 				console.log(maxPrice);
+// 				// ...
 				
-				// Panggil fungsi siteSliderRange dengan nilai maksimum harga
-				getMinPriceFromDatabase(maxPrice); // Memanggil fungsi getMinPriceFromDatabase dengan argumen maxPrice
-			}
-		};
-		xhr.open("GET", "../admins/maxprice.php", true);
-		xhr.send();
-	}
+// 				// Panggil fungsi siteSliderRange dengan nilai maksimum harga
+// 				getMinPriceFromDatabase(maxPrice); // Memanggil fungsi getMinPriceFromDatabase dengan argumen maxPrice
+// 			}
+// 		};
+// 		xhr.open("GET", "../admins/maxprice.php", true);
+// 		xhr.send();
+// 	}
 	
-	// Fungsi AJAX untuk mengambil data dari skrip PHP
-	function getMinPriceFromDatabase(maxPrice) { // Menambahkan parameter maxPrice di fungsi getMinPriceFromDatabase
-		var xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState === 4 && xhr.status === 200) {
-				var minPrice = JSON.parse(xhr.responseText);
-				// Gunakan nilai minimum harga dalam logika JavaScript di sini
-				console.log(minPrice);
-				// ...
+// 	// Fungsi AJAX untuk mengambil data dari skrip PHP
+// 	function getMinPriceFromDatabase(maxPrice) { // Menambahkan parameter maxPrice di fungsi getMinPriceFromDatabase
+// 		var xhr = new XMLHttpRequest();
+// 		xhr.onreadystatechange = function() {
+// 			if (xhr.readyState === 4 && xhr.status === 200) {
+// 				var minPrice = JSON.parse(xhr.responseText);
+// 				// Gunakan nilai minimum harga dalam logika JavaScript di sini
+// 				console.log(minPrice);
+// 				// ...
 				
-				// Panggil fungsi siteSliderRange dengan nilai minimum dan maksimum harga
-				siteSliderRange(minPrice, maxPrice); // Memanggil fungsi siteSliderRange dengan argumen minPrice dan maxPrice
-			}
-		};
-		xhr.open("GET", "../admins/minprice.php", true);
-		xhr.send();
-	}
+// 				// Panggil fungsi siteSliderRange dengan nilai minimum dan maksimum harga
+// 				siteSliderRange(minPrice, maxPrice); // Memanggil fungsi siteSliderRange dengan argumen minPrice dan maxPrice
+// 			}
+// 		};
+// 		xhr.open("GET", "../admins/minprice.php", true);
+// 		xhr.send();
+// 	}
 	
-	// Fungsi siteSliderRange dengan parameter nilai minimum dan maksimum harga
-var siteSliderRange = function(minPrice, maxPrice) {
-	$("#slider-range").slider({
-	  range: true,
-	  min: 0,
-	  max: maxPrice,
-	  values: [minPrice, maxPrice],
-	  slide: function(event, ui) {
-		$("#amount").val(
-		  "Rp" +
-			ui.values[0].toLocaleString() +
-			" - Rp" +
-			ui.values[1].toLocaleString()
-		);
-	  }
-	});
-	$("#amount").val(
-	  "Rp" +
-		$("#slider-range").slider("values", 0).toLocaleString() +
-		" - Rp" +
-		$("#slider-range").slider("values", 1).toLocaleString()
-	);
-  };
+// 	// Fungsi siteSliderRange dengan parameter nilai minimum dan maksimum harga
+// var siteSliderRange = function(minPrice, maxPrice) {
+// 	$("#slider-range").slider({
+// 	  range: true,
+// 	  min: 0,
+// 	  max: maxPrice,
+// 	  values: [minPrice, maxPrice],
+// 	  slide: function(event, ui) {
+// 		$("#amount").val(
+// 		  "Rp" +
+// 			ui.values[0].toLocaleString() +
+// 			" - Rp" +
+// 			ui.values[1].toLocaleString()
+// 		);
+// 	  }
+// 	});
+// 	$("#amount").val(
+// 	  "Rp" +
+// 		$("#slider-range").slider("values", 0).toLocaleString() +
+// 		" - Rp" +
+// 		$("#slider-range").slider("values", 1).toLocaleString()
+// 	);
+//   };
   
 	
-	// Panggil fungsi untuk mengambil data maksimum harga dari database
-	getMaxPriceFromDatabase();
+// 	// Panggil fungsi untuk mengambil data maksimum harga dari database
+// 	getMaxPriceFromDatabase();
 	
 
 

@@ -1,9 +1,20 @@
 <?php
- session_start(); 
+session_start();
 require('admins/functions.php');
 
+// Proses untuk mendapatkan nilai maxPrice dari database atau sumber data lainnya
+$maxPrice = query("SELECT * FROM product ORDER BY price DESC LIMIT 1;
+");
+foreach ($maxPrice as $mp) {
+  $MMP = $mp["price"];
+}
 
-
+// Proses untuk mendapatkan nilai maxPrice dari database atau sumber data lainnya
+$minPrice = query("SELECT * FROM product ORDER BY price ASC LIMIT 1;
+");
+foreach ($minPrice as $mip) {
+  $MMiP = $mip["price"];
+}
 
 // // Periksa apakah form dikirimkan
 // if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filter'])) {
@@ -102,6 +113,7 @@ $color = query("SELECT * FROM `color`");
   <link rel="stylesheet" href="css/aos.css">
 
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 </head>
 
@@ -118,9 +130,13 @@ $color = query("SELECT * FROM `color`");
                 
                 <span class="icon icon-search2"></span>
 
-                <input type="text" name="search"class="form-control border-0" placeholder="Search">
+                <input type="text" id="searchInput" name="search" class="form-control border-0" placeholder="Search">
+                <button type="submit" name="search" style="display:none;"></button>
+
               </form>
             </div>
+           
+
 
             <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
               <div class="site-logo">
@@ -131,8 +147,8 @@ $color = query("SELECT * FROM `color`");
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true){
-                    echo "<li class='dropdown'>
+                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
+                  echo "<li class='dropdown'>
                     <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
                         <span class='icon icon-person'></span>
                     </a>
@@ -144,9 +160,9 @@ $color = query("SELECT * FROM `color`");
                         <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
                     </ul>
                 </li>";
-                  }else {
-                    echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
-                  } ?>
+                } else {
+                  echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
+                } ?>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                   <li>
                     <a href="cart.php" class="site-cart">
@@ -347,109 +363,59 @@ $color = query("SELECT * FROM `color`");
                 <br>
 
 
+<!-- Add this script in the head section -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<script>
+  $(document).ready(function () {
+    // Function to filter products based on selected options
+    function filterProducts() {
+      var formData = $('.filter-input').serialize(); // Get filter data from form
 
-                <script>
-                  //    $(document).ready(function() {
-                  //   // Fungsi untuk mengirim permintaan filter ke server
-                  //   function filterProducts() {
-                  //     var formData = $('.filterForm').serialize(); // Mendapatkan nilai filter dari form
-                  //     $.ajax({
-                  //       url: 'filter.php', // Ganti dengan URL endpoint untuk pemrosesan filter di sisi server
-                  //       type: 'POST',
-                  //       data: formData,
-                  //       beforeSend: function() {
-                  //         // Tampilkan loader atau animasi loading
-                  //         $('#productList').html('<div class="loader">Loading...</div>');
-                  //       },
-                  //       success: function(response) {
-                  //         // Update daftar produk dengan hasil filter dari server
-                  //         $('#productList').html(response);
-                  //       }
-                  //     });
-                  //   }
+      $.ajax({
+        url: 'filter.php', // Replace with the server-side endpoint to process the filter
+        type: 'POST',
+        data: formData,
+        beforeSend: function () {
+          $('#productList').html('<div class="loader">Loading...</div>');
+        },
+        success: function (response) {
+          $('#productList').html(response);
+        }
+      });
+    }
 
-                  //   // Tangkap perubahan pada elemen filter dan panggil fungsi filterProducts
-                  //   $('.filterForm input').change(function() {
-                  //     filterProducts();
-                  //   });
+    // Set up the price range slider
+    var minPrice = <?= $MMiP ?>;
+    var maxPrice = <?= $MMP ?>;
+    var currentMinPrice = <?= $MMiP ?>;
+    var currentMaxPrice = <?= $MMP ?>;
 
-                  //   $('.filterForm select').change(function() {
-                  //     filterProducts();
-                  //   });
-                  // });
+    $("#slider-range").slider({
+      range: true,
+      min: minPrice,
+      max: maxPrice,
+      values: [currentMinPrice, currentMaxPrice],
+      slide: function (event, ui) {
+        $("#amount").val("Rp " + ui.values[0].toLocaleString() + " - Rp " + ui.values[1].toLocaleString());
+      },
+      change: function (event, ui) {
+        filterProducts(); // Trigger filter when slider values change
+      }
+    });
 
+    $("#amount").val("Rp " + $("#slider-range").slider("values", 0).toLocaleString() + " - Rp " + $("#slider-range").slider("values", 1).toLocaleString());
 
-
-
-                  
-                  document.addEventListener('DOMContentLoaded', function () {
-                    var filterForm = document.querySelector('#searchInput');
-
-                    filterForm.addEventListener('keypress', function (event) {
-                      if (event.keyCode === 13) {
-                        event.preventDefault();
-                      }
-                    });
-                  });
-
-
-                  $(document).ready(function () {
-                    $('#searchInput').on('input', function () {
-                      var searchTerm = $(this).val();
-
-                      // Kirim permintaan filter ke server menggunakan Ajax
-                      $.ajax({
-                        url: 'filter.php', // Ganti dengan URL endpoint untuk pemrosesan filter di sisi server
-                        type: 'POST',
-                        data: { search: searchTerm },
-                        beforeSend: function () {
-                          // Tampilkan loader atau animasi loading
-                          $('#productList').html('<div class="loader">Loading...</div>');
-                        },
-                        success: function (response) {
-                          // Update daftar produk dengan hasil filter dari server
-                          $('#productList').html(response);
-                        }
-                      });
-                    });
-                  });
-
-                 
+    // Trigger filter when any input is changed
+    $('.filter-input').change(function () {
+      filterProducts();
+    });
+  });
+</script>
 
 
 
-
-                  $(document).ready(function () {
-                    // Fungsi untuk mengirim permintaan filter ke server
-                    function filterProducts() {
-                      var formData = $('.filter-input').serialize(); // Mendapatkan nilai filter dari form
-                      $.ajax({
-                        url: 'filter.php', // Ganti dengan URL endpoint untuk pemrosesan filter di sisi server
-                        type: 'POST',
-                        data: formData,
-                        beforeSend: function () {
-                          // Tampilkan loader atau animasi loading
-                          $('#productList').html('<div class="loader">Loading...</div>');
-                        },
-                        success: function (response) {
-                          // Update daftar produk dengan hasil filter dari server
-                          $('#productList').html(response);
-                        }
-                      });
-                    }
-
-                    // Tangkap perubahan pada elemen filter dan panggil fungsi filterProducts
-                    $('.filter-input').change(function () {
-                      filterProducts();
-                    });
-
-                    $('.filter-input select').change(function () {
-                      filterProducts();
-                    });
-                  });
-
-                </script>
+                
               </div>
 
             </div>
