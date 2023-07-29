@@ -7,8 +7,8 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
   $email = $_SESSION["email"];
   $password = $_SESSION["password"];
 
-  
-} 
+
+}
 require 'admins/functions.php';
 
 $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
@@ -59,11 +59,13 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
           <div class="row align-items-center">
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-            <form action="shop.php" class="site-block-top-search" method="post" class="filterForm">
-                
-                <span class="icon icon-search2"></span>
+              <form action="shop.php" method="get" class="site-block-top-search">
 
-                <input type="text" name="search"class="form-control border-0" placeholder="Search">
+                <span class="icon icon-search2"></span>
+                <input type="text" id="searchInput" name="search" class="form-control border-0" placeholder="Search">
+                <button type="submit" style="display: none;"></button>
+
+                <input type="hidden" name="filter" value="true">
               </form>
             </div>
 
@@ -76,7 +78,7 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true){
+                  <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     echo "<li class='dropdown'>
                     <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
                         <span class='icon icon-person'></span>
@@ -89,7 +91,7 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
                         <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
                     </ul>
                 </li>";
-                  }else {
+                  } else {
                     echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
                   } ?>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
