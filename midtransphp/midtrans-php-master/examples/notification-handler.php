@@ -5,9 +5,10 @@
 
 namespace Midtrans;
 
+require('../../../admins/functions.php');
 require_once dirname(__FILE__) . '/../Midtrans.php';
 Config::$isProduction = false;
-Config::$serverKey = '<your server key>';
+Config::$serverKey = 'SB-Mid-server-a-N7sylbogmzvwFJ7PbqCe2x';
 
 // non-relevant function only used for demo/example purpose
 printExampleWarningMessage();
@@ -29,29 +30,21 @@ if ($transaction == 'capture') {
     // For credit card transaction, we need to check whether transaction is challenge by FDS or not
     if ($type == 'credit_card') {
         if ($fraud == 'challenge') {
-            // TODO set payment status in merchant's database to 'Challenge by FDS'
-            // TODO merchant should decide whether this transaction is authorized or not in MAP
-            echo "Transaction order_id: " . $order_id ." is challenged by FDS";
+            mysqli_query($conn,"UPDATE `orders` SET 'status' = 'challenged by FDS' WHERE 'id'=$order_id");
         } else {
-            // TODO set payment status in merchant's database to 'Success'
-            echo "Transaction order_id: " . $order_id ." successfully captured using " . $type;
+            mysqli_query($conn,"UPDATE `orders` SET 'status' = 'paid' WHERE 'id'=$order_id");
         }
     }
 } else if ($transaction == 'settlement') {
-    // TODO set payment status in merchant's database to 'Settlement'
-    echo "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
+    mysqli_query($conn,"UPDATE `orders` SET 'status' = 'paid' WHERE 'id'=$order_id");
 } else if ($transaction == 'pending') {
-    // TODO set payment status in merchant's database to 'Pending'
-    echo "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type;
+    mysqli_query($conn,"UPDATE `orders` SET 'status' = 'pending' WHERE 'id'=$order_id");
 } else if ($transaction == 'deny') {
-    // TODO set payment status in merchant's database to 'Denied'
-    echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.";
+    mysqli_query($conn,"UPDATE `orders` SET 'status' = 'deny' WHERE 'id'=$order_id");
 } else if ($transaction == 'expire') {
-    // TODO set payment status in merchant's database to 'expire'
-    echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is expired.";
+    mysqli_query($conn,"UPDATE `orders` SET 'status' = 'expired' WHERE 'id'=$order_id");
 } else if ($transaction == 'cancel') {
-    // TODO set payment status in merchant's database to 'Denied'
-    echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is canceled.";
+    mysqli_query($conn,"UPDATE `orders` SET 'status' = 'canceled' WHERE 'id'=$order_id");
 }
 
 function printExampleWarningMessage() {
