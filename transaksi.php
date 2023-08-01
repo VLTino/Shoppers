@@ -16,9 +16,19 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
     // Pengguna belum login, lakukan tindakan yang sesuai
     echo "Anda belum login.";
 }
+
+if (isset($_GET["status"])) {
+    $status = $_GET["status"];
+}
+
 foreach ($user as $us) {
+    if (isset($status)) {
     $usid = $us["id"];
+    $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid AND `status` = '$status'");
+    }else {
+        $usid = $us["id"];
     $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid");
+    }
 }
 
 
@@ -32,6 +42,12 @@ foreach ($user as $us) {
     <title>Shoppers &mdash; Colorlib e-Commerce Template</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
@@ -154,6 +170,11 @@ foreach ($user as $us) {
 
 
                     <div class="col-md-9 order-1 mb-5 mb-md-0">
+                        <button onclick="window.location='transaksi.php'" class="btn btn-primary"><span class="fab fa-dropbox"></span>Semua</button>
+                        <button onclick="window.location='transaksi.php?status=unpaid'" class="btn btn-primary"><span class="fab fa-creative-commons-nc"></span> Belum Bayar</button>
+                        <button onclick="window.location='transaksi.php?status=paid'" class="btn btn-primary"><span class="far fa-check-circle"></span>Dibayar</button>
+                        <button onclick="window.location='transaksi.php?status=diproses'" class="btn btn-primary"><span class="fas fa-truck"></span>Dikirim</button>
+                        <button onclick="window.location='transaksi.php?status=sampai'" class="btn btn-primary"><span class="fas fa-truck-loading"></span>Sampai</button>
                         <table class="table table-hover table-responsive-sm ">
                             <thead>
                                 <tr>
@@ -167,7 +188,11 @@ foreach ($user as $us) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i = 1; ?>
+                                <?php $i = 1; 
+                                if (empty($transaksi)) {
+                                    echo "<tr><td colspan='7'><h5 style='color:red;text-align:center'>Tidak Ada Data</h5></td></tr>";
+                                } ?>
+
                                 <?php foreach ($transaksi as $tr): ?>
                                     <tr>
                                         <th scope="row">
