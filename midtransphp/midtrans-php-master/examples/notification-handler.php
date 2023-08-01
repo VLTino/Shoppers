@@ -30,21 +30,21 @@ if ($transaction == 'capture') {
     // For credit card transaction, we need to check whether transaction is challenge by FDS or not
     if ($type == 'credit_card') {
         if ($fraud == 'challenge') {
-            mysqli_query($conn,"UPDATE `orders` SET 'status' = 'challenged by FDS' WHERE 'id'=$order_id");
+            mysqli_query($conn,"UPDATE `orders` SET `status` = 'challenged by FDS' WHERE `id`=$order_id");
         } else {
-            mysqli_query($conn,"UPDATE `orders` SET 'status' = 'paid' WHERE 'id'=$order_id");
+            mysqli_query($conn,"UPDATE `orders` SET `status` = 'paid' WHERE `id`=$order_id");
         }
     }
 } else if ($transaction == 'settlement') {
-    mysqli_query($conn,"UPDATE `orders` SET 'status' = 'paid' WHERE 'id'=$order_id");
+    mysqli_query($conn,"UPDATE `orders` SET `status` = 'paid' WHERE `id`=$order_id");
 } else if ($transaction == 'pending') {
-    mysqli_query($conn,"UPDATE `orders` SET 'status' = 'pending' WHERE 'id'=$order_id");
+    mysqli_query($conn,"UPDATE `orders` SET `status` = 'pending' WHERE `id`=$order_id");
 } else if ($transaction == 'deny') {
-    mysqli_query($conn,"UPDATE `orders` SET 'status' = 'deny' WHERE 'id'=$order_id");
+    mysqli_query($conn,"UPDATE `orders` SET `status` = 'deny' WHERE `id`=$order_id");
 } else if ($transaction == 'expire') {
-    mysqli_query($conn,"UPDATE `orders` SET 'status' = 'expired' WHERE 'id'=$order_id");
+    mysqli_query($conn,"UPDATE `orders` SET `status` = 'expired' WHERE `id`=$order_id");
 } else if ($transaction == 'cancel') {
-    mysqli_query($conn,"UPDATE `orders` SET 'status' = 'canceled' WHERE 'id'=$order_id");
+    mysqli_query($conn,"UPDATE `orders` SET `status` = 'canceled' WHERE `id`=$order_id");
 }
 
 function printExampleWarningMessage() {

@@ -988,8 +988,8 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
       // Update the values in the hidden fields
       document.getElementById("firstname").value = firstNameInput.value;
       document.getElementById("lastname").value = lastNameInput.value;
-      document.getElementById("email").value = phoneInput.value;
-      document.getElementById("number").value = emailInput.value;
+      document.getElementById("email").value = emailInput.value;
+      document.getElementById("number").value = phoneInput.value;
       document.getElementById("alamatlengkap").value = alamatInput.value;
     }
 
