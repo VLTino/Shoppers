@@ -7,7 +7,7 @@ if (!isset($_SESSION["admin"])) {
 }
 
 require 'functions.php';
-
+$orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
 $transaksi = query("SELECT * FROM `orders` WHERE `status`= 'unpaid'")
     ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@ $transaksi = query("SELECT * FROM `orders` WHERE `status`= 'unpaid'")
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="admins.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -176,7 +176,7 @@ $transaksi = query("SELECT * FROM `orders` WHERE `status`= 'unpaid'")
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
+                                <span class="badge badge-danger badge-counter">3</span>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -184,42 +184,23 @@ $transaksi = query("SELECT * FROM `orders` WHERE `status`= 'unpaid'")
                                 <h6 class="dropdown-header">
                                     Alerts Center
                                 </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <?php foreach ($orders as $ord): ?>
+                                <a class="dropdown-item d-flex align-items-center" href="invoicead.php?id=<?= $ord["id"] ?>">
                                     <div class="mr-3">
                                         <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
+                                            <i class="fas fa-shopping-bag text-white"></i>
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
+                                        <div class="small text-gray-500"><?= $ord["order_date"] ?></div>
+                                        <span class="font-weight-bold">Order by <?= $ord["firstname"]." ".$ord["lastname"] ?></span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                <?php endforeach; ?>
+                                
                             </div>
                         </li>
+
 
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
@@ -326,11 +307,11 @@ $transaksi = query("SELECT * FROM `orders` WHERE `status`= 'unpaid'")
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Unpaid</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Belum Dibayar</h1>
                         
                     </div>
 
-                    <div class="col-md-9 order-1 mb-5 mb-md-0">
+                    <div class="col-md-12 order-1 mb-5 mb-md-0">
                         <table class="table table-hover table-responsive-sm ">
                             <thead>
                                 <tr>
@@ -344,6 +325,9 @@ $transaksi = query("SELECT * FROM `orders` WHERE `status`= 'unpaid'")
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php if (empty($transaksi)) {
+                                    echo "<tr><td colspan='7'><h5 style='color:red;text-align:center'>Tidak Ada Data</h5></td></tr>";
+                                } ?>
                                 <?php $i = 1; ?>
                                 <?php foreach ($transaksi as $tr): ?>
                                     <tr>

@@ -4,7 +4,7 @@
 session_start();
 require('functions.php');
 
-if (!isset($_SESSION["login"])) {
+if (!isset($_SESSION["admin"])) {
     header("Location: index.php");
     exit;
 }
@@ -167,7 +167,12 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
                   
       
                   <div class="form-group">
-                      <button class="btn btn-primary btn-sm py-3 btn-block" onclick="window.location='resi.php'">Proses</button>
+                    <?php
+                    foreach ($orders as $ord):
+                    if ($ord["status"] === 'paid'): ?>
+                      <button class="btn btn-primary btn-sm py-3 btn-block" onclick="window.location='resi.php?id=<?= $ord['id'] ;?>'">Proses</button>
+                      <?php endif; ?>
+                      <?php endforeach; ?>
                       <button class="btn btn-danger btn-sm py-3 btn-block" onclick="window.location='unpaid.php'">back</button>
                       
                

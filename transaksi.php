@@ -173,7 +173,7 @@ foreach ($user as $us) {
                         <button onclick="window.location='transaksi.php'" class="btn btn-primary"><span class="fab fa-dropbox"></span>Semua</button>
                         <button onclick="window.location='transaksi.php?status=unpaid'" class="btn btn-primary"><span class="fab fa-creative-commons-nc"></span> Belum Bayar</button>
                         <button onclick="window.location='transaksi.php?status=paid'" class="btn btn-primary"><span class="far fa-check-circle"></span>Dibayar</button>
-                        <button onclick="window.location='transaksi.php?status=diproses'" class="btn btn-primary"><span class="fas fa-truck"></span>Dikirim</button>
+                        <button onclick="window.location='transaksi.php?status=dikirim'" class="btn btn-primary"><span class="fas fa-truck"></span>Dikirim</button>
                         <button onclick="window.location='transaksi.php?status=sampai'" class="btn btn-primary"><span class="fas fa-truck-loading"></span>Sampai</button>
                         <table class="table table-hover table-responsive-sm ">
                             <thead>

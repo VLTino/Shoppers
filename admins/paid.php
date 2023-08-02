@@ -7,25 +7,9 @@ if (!isset($_SESSION["admin"])) {
 }
 
 require 'functions.php';
-
-$id = $_GET["id"];
-$category = query("SELECT * FROM `category` WHERE `id`=$id ");
-
-if (isset($_POST["ctge"])) {
-    if (editctg($_POST)) {
-        echo "<script>
-        alert('data berhasil diedit');
-        document.location.href = 'category.php';
-        </script>";
-    } else {
-        echo "<script>
-        alert('data gagal diedit');
-        document.location.href = 'category.php';
-        </script>";
-    }
-}
 $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
-?>
+$transaksi = query("SELECT * FROM `orders` WHERE `status`= 'paid'")
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +21,7 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>VLT Admin - Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -97,36 +81,35 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
             </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                     aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-shopping-bag"></i>
                     <span>Product</span>
                 </a>
-                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="listprd.php">List Product</a>
                         <a class="collapse-item" href="product.php">Add Product</a>
-                        <a class="collapse-item active" href="category.php">Category</a>
+                        <a class="collapse-item" href="category.php">Category</a>
                         <a class="collapse-item" href="color.php">Color</a>
                         <a class="collapse-item" href="size.php">Size</a>
 
                     </div>
                 </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
                     aria-controls="collapseThree">
                     <i class="fas fa-fw fa-coins"></i>
                     <span>Transaksi</span>
                 </a>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="unpaid.php">Belum Dibayar</a>
-                        <a class="collapse-item" href="paid.php">Dibayar</a>
+                        <a class="collapse-item active" href="paid.php">Dibayar</a>
                         <a class="collapse-item" href="send.php">Dikirim</a>
                         <a class="collapse-item" href="done.php">Selesai</a>
                     </div>
@@ -158,19 +141,7 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -199,8 +170,8 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                             </div>
                         </li>
 
-                       <!-- Nav Item - Alerts -->
-                       <li class="nav-item dropdown no-arrow mx-1">
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
@@ -336,93 +307,120 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Category</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Dibayar</h1>
+                        
                     </div>
-                    <h5>Edit Category</h5>
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <?php foreach ($category as $ctg): ?>
-                                <input type="hidden" name="id" id="" value="<?= $ctg["id"]; ?>">
-                                Current image <br>
-                                <img src="../images/<?= $ctg["gambar"]; ?>" alt="" srcset="" style="width:200px;">
-                                <input type="file" name="gambar" id=""> <br>
-                                Name Category
-                                <input type="text" name="category" id="" class="form-control"
-                                    value="<?= $ctg["category"]; ?>">
-                                Teks Above Category
-                                <input type="text" name="teks" id="" class="form-control" value="<?= $ctg["teks"]; ?>"> <br>
-                                Page Link
-                                <input type="text" name="link" id="" class="form-control" value="<?= $ctg["link"]; ?>">
-                            <?php endforeach; ?>
-                            <button type="submit" class="btn btn-primary" name="ctge">Submit</button>
+
+                    <div class="col-md-12 order-1 mb-5 mb-md-0">
+                        <table class="table table-hover table-responsive-sm ">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Order id</th>
+                                    <th scope="col">Order Date</th>
+                                    <th scope="col">Due Date</th>
+                                    <th scope="col">Total Payment</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php if (empty($transaksi)) {
+                                    echo "<tr><td colspan='7'><h5 style='color:red;text-align:center'>Tidak Ada Data</h5></td></tr>";
+                                } ?>
+                                <?php $i = 1; ?>
+                                <?php foreach ($transaksi as $tr): ?>
+                                    <tr>
+                                        <th scope="row">
+                                            <?= $i++; ?>
+                                        </th>
+                                        <th>
+                                            <?php $formattedId = "INV" . str_pad($tr["id"], 5, "0", STR_PAD_LEFT);
+                                            echo $formattedId ?>
+                                        </th>
+                                        <td>
+                                            <?= $tr["order_date"]; ?>
+                                        </td>
+                                        <td>
+                                            <?= $tr["due_date"]; ?>
+                                        </td>
+                                        <td>
+                                            <?php $formattedPrice = "Rp " . number_format($tr["orders_total"], 0, ',', '.');
+                                            echo $formattedPrice; ?>
+                                        </td>
+                                        <td>
+                                            <?= $tr["status"]; ?>
+                                        </td>
+                                        <td><a href="invoicead.php?id=<?= $tr["id"]; ?>"
+                                                class="btn btn-outline-primary">Detail</a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.container-fluid -->
+
+                </div>
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Your Website 2021</span>
                         </div>
-                    </form>
-
-
-
-                </div>
-                <!-- /.container-fluid -->
+                    </div>
+                </footer>
+                <!-- End of Footer -->
 
             </div>
-            <!-- End of Main Content -->
+            <!-- End of Content Wrapper -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; VLTino 2021</span>
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="logout.php">Logout</a>
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
-                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+        <!-- Page level custom scripts -->
+        <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 

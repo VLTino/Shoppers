@@ -1,5 +1,6 @@
 <?php
 namespace Midtrans;
+
 require_once dirname(__FILE__) . '/midtransphp/midtrans-php-master/Midtrans.php';
 // Set Your server key
 // can find in Merchant Portal -> Settings -> Access keys
@@ -18,8 +19,8 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
   // Gunakan nilai email sesuai kebutuhan
   $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
 
-  
-} 
+
+}
 
 
 $id = $_GET["id"];
@@ -55,17 +56,17 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
 <body>
 
   <div class="site-wrap">
-  <header class="site-navbar" role="banner">
+    <header class="site-navbar" role="banner">
       <div class="site-navbar-top">
         <div class="container">
           <div class="row align-items-center">
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-            <form action="shop.php" class="site-block-top-search" method="post" class="filterForm">
-                
+              <form action="shop.php" class="site-block-top-search" method="post" class="filterForm">
+
                 <span class="icon icon-search2"></span>
 
-                <input type="text" name="search"class="form-control border-0" placeholder="Search">
+                <input type="text" name="search" class="form-control border-0" placeholder="Search">
               </form>
             </div>
 
@@ -78,7 +79,7 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true){
+                  <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     echo "<li class='dropdown'>
                     <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
                         <span class='icon icon-person'></span>
@@ -91,7 +92,7 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
                         <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
                     </ul>
                 </li>";
-                  }else {
+                  } else {
                     echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
                   } ?>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
@@ -136,48 +137,80 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
 
     <div class="site-section">
       <div class="container">
-       
+
         <div class="row">
           <div class="col-md-6 mb-5 mb-md-0">
             <?php foreach ($orders as $ord): ?>
-            <h2 class="h3 mb-3 text-black"><?php $formattedId = "INV" . str_pad($ord["id"], 5, "0", STR_PAD_LEFT); 
-            
-            echo $formattedId?></h2>
-            <div class="p-3 p-lg-5 border">
-            <h5 class="text-black">Nama</h5>
-            <p class="text-black"><?= $ord["firstname"]." ".$ord["lastname"];?></p>
-            <h5 class="text-black">Alamat</h5>
-            <p class="text-black" style="word-break:break-word"><?= $ord["alamat"] ?></p>
-            <h5 class="text-black">Kecamatan</h5>
-            <p class="text-black"><?= $ord["kecamatan"]?></p>
-            <h5 class="text-black">Kabupaten/Kota</h5>
-            <p class="text-black"><?= $ord["kabupaten"]?></p>
-            <h5 class="text-black">Provinsi</h5>
-            <p class="text-black"><?= $ord["provinsi"]?></p>
-            <div class="row"><div class="col-md-6"><h5 class="text-black">Email</h5>
-            <p class="text-black"><?= $ord["email"]?></p></div>
-<div class="col-md-6"> <h5 class="text-black">Phone</h5>
-            <p class="text-black"><?= $ord["phone"]?></p></div></div>
-            <div class="row"><div class="col-md-6"><h5 class="text-black">Kurir</h5>
-            <p class="text-black"><?= $ord["kurir"]?></p></div>
-           <div class="col-md-6"><h5 class="text-black">Estimasi</h5>
-            <p class="text-black"><?= $ord["estimasi"].' Hari' ?></p></div></div>
-           
-            
-            
-             
+              <h2 class="h3 mb-3 text-black">
+                <?php $formattedId = "INV" . str_pad($ord["id"], 5, "0", STR_PAD_LEFT);
 
-              <div class="form-group">
-                <label for="c_order_notes" class="text-black">Order Notes</label>
-                <textarea name="order_notes" id="c_order_notes" cols="30" rows="5" class="form-control"
-                  disabled><?= $ord["order_notes"]?></textarea>
-              </div>
-<?php endforeach; ?>
+                echo $formattedId ?>
+              </h2>
+              <div class="p-3 p-lg-5 border">
+                <h5 class="text-black">Nama</h5>
+                <p class="text-black">
+                  <?= $ord["firstname"] . " " . $ord["lastname"]; ?>
+                </p>
+                <h5 class="text-black">Alamat</h5>
+                <p class="text-black" style="word-break:break-word">
+                  <?= $ord["alamat"] ?>
+                </p>
+                <h5 class="text-black">Kecamatan</h5>
+                <p class="text-black">
+                  <?= $ord["kecamatan"] ?>
+                </p>
+                <h5 class="text-black">Kabupaten/Kota</h5>
+                <p class="text-black">
+                  <?= $ord["kabupaten"] ?>
+                </p>
+                <h5 class="text-black">Provinsi</h5>
+                <p class="text-black">
+                  <?= $ord["provinsi"] ?>
+                </p>
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="text-black">Email</h5>
+                    <p class="text-black">
+                      <?= $ord["email"] ?>
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <h5 class="text-black">Phone</h5>
+                    <p class="text-black">
+                      <?= $ord["phone"] ?>
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="text-black">Kurir</h5>
+                    <p class="text-black">
+                      <?= $ord["kurir"] ?>
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <h5 class="text-black">Estimasi</h5>
+                    <p class="text-black">
+                      <?= $ord["estimasi"] . ' Hari' ?>
+                    </p>
+                  </div>
+                </div>
+
+
+
+
+
+                <div class="form-group">
+                  <label for="c_order_notes" class="text-black">Order Notes</label>
+                  <textarea name="order_notes" id="c_order_notes" cols="30" rows="5" class="form-control"
+                    disabled><?= $ord["order_notes"] ?></textarea>
+                </div>
+              <?php endforeach; ?>
             </div>
           </div>
           <div class="col-md-6">
 
-            
+
 
             <div class="row mb-5">
               <div class="col-md-12">
@@ -189,86 +222,116 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
                       <th>Total</th>
                     </thead>
                     <tbody>
-                    <?php
-                $product_total = 0; // variabel untuk menghitung total harga produk
-
-                    
-
-                    foreach ($cart_order as $cr) :
-                      $product_id = $cr["product_id"];
-                      $cart_id = $cr["id"];
-                      $color = $cr["color"];
-                      $size = $cr["size"];
-                      $jumlah = $cr["jumlah"];
+                      <?php
+                      $product_total = 0; // variabel untuk menghitung total harga produk
                       
 
-                      $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
 
-                    
-                    
-                    
-                    foreach ($prd as $pr) {
-                      $price = $pr["price"];
-                      $gambar = $pr["gambar"];
-                      $name = $pr["name"];
-                    }
+                      foreach ($cart_order as $cr):
+                        $product_id = $cr["product_id"];
+                        $cart_id = $cr["id"];
+                        $color = $cr["color"];
+                        $size = $cr["size"];
+                        $jumlah = $cr["jumlah"];
 
-                    ?>
-                          <tr>
-                            <td>
-                              <?= $pr["name"]; ?> <strong class="mx-2">x</strong>
-                              <?= $jumlah; ?>
-                            </td>
-                            <td>
-                            <?php $subtotal=$price*$jumlah; $sub = "Rp" . number_format($subtotal, 0, ',', '.');
-                          echo $sub;?>
-                            </td>
-                          </tr>
-                          <?php $product_total += $price * $jumlah; // tambahkan harga produk ke total
-                          endforeach; ?>
-                      
+
+                        $prd = query("SELECT * FROM `product` WHERE `id` = $product_id");
+
+
+
+
+                        foreach ($prd as $pr) {
+                          $price = $pr["price"];
+                          $gambar = $pr["gambar"];
+                          $name = $pr["name"];
+                        }
+
+                        ?>
+                        <tr>
+                          <td>
+                            <?= $pr["name"]; ?> <strong class="mx-2">x</strong>
+                            <?= $jumlah; ?>
+                          </td>
+                          <td>
+                            <?php $subtotal = $price * $jumlah;
+                            $sub = "Rp" . number_format($subtotal, 0, ',', '.');
+                            echo $sub; ?>
+                          </td>
+                        </tr>
+                        <?php $product_total += $price * $jumlah; // tambahkan harga produk ke total
+                      endforeach; ?>
+
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-                        <td class="text-black"><?php
+                        <td class="text-black">
+                          <?php
                           $formattedPrice = "Rp" . number_format($product_total, 0, ',', '.');
-                          echo $formattedPrice; ?></td>
+                          echo $formattedPrice; ?>
+                        </td>
                       </tr>
-                      <?php foreach ($orders as $ord): 
+                      <?php foreach ($orders as $ord):
                         $ongkir = $ord["ongkir"];
-                        $order_total = $ord["orders_total"];?>
-                      <tr>
-                        <td class="text-black font-weight-bold"><strong>Ongkir</strong></td>
-                        <td class="text-black"><?php
-                          $formattedPrice = "Rp" . number_format($ongkir, 0, ',', '.');
-                          echo $formattedPrice; ?></td>
-                      </tr>
-                      <tr>
-                        <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                        <td class="text-black font-weight-bold"><strong><?php
-                          $formattedPrice = "Rp" . number_format($order_total, 0, ',', '.');
-                          echo $formattedPrice; ?></strong></td>
-                      </tr>
+                        $order_total = $ord["orders_total"]; ?>
+                        <tr>
+                          <td class="text-black font-weight-bold"><strong>Ongkir</strong></td>
+                          <td class="text-black">
+                            <?php
+                            $formattedPrice = "Rp" . number_format($ongkir, 0, ',', '.');
+                            echo $formattedPrice; ?>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                          <td class="text-black font-weight-bold"><strong>
+                              <?php
+                              $formattedPrice = "Rp" . number_format($order_total, 0, ',', '.');
+                              echo $formattedPrice; ?>
+                            </strong></td>
+                        </tr>
                       <?php endforeach; ?>
                     </tbody>
                   </table>
 
-                  
-      
-                  <div class="form-group">
-                      <button class="btn btn-primary btn-sm py-3 btn-block" id="pay-button">Place
-                        Order</button>
-                      <button class="btn btn-danger btn-sm py-3 btn-block" onclick="window.location='checkout.php'">Cancel</button>
-                      <?php foreach ($orders as $ord){
-                        $snap_token = $ord["snaptoken"];
-                      }?>
-                      <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<?php echo Config::$clientKey;?>"></script>
-        <script type="text/javascript">
-            document.getElementById('pay-button').onclick = function(){
-                // SnapToken acquired from previous step
-                snap.pay('<?php echo $snap_token?>');
-            };
-        </script>
-                  </div>
+
+                  <?php
+                  foreach ($orders as $ord):
+                    if ($ord["status"] === 'unpaid'): ?>
+                      <div class="form-group">
+                        <button class="btn btn-primary btn-sm py-3 btn-block" id="pay-button">Place
+                          Order</button>
+                        <button class="btn btn-danger btn-sm py-3 btn-block"
+                          onclick="window.location='transaksi.php'">Back</button>
+                        <?php foreach ($orders as $ord) {
+                          $snap_token = $ord["snaptoken"];
+                        } ?>
+                        <script src="https://app.sandbox.midtrans.com/snap/snap.js"
+                          data-client-key="<?php echo Config::$clientKey; ?>"></script>
+                        <script type="text/javascript">
+                          document.getElementById('pay-button').onclick = function () {
+                            // SnapToken acquired from previous step
+                            snap.pay('<?php echo $snap_token ?>');
+                          };
+                        </script>
+                      </div>
+                    <?php elseif ($ord["status"] === 'paid'): ?>
+                      <div class="form-group">
+                        <button class="btn btn-danger btn-sm py-3 btn-block"
+                          onclick="window.location='transaksi.php'">Back</button>
+                      </div>
+                      <?php elseif ($ord["status"] === 'dikirim'): ?>
+                        <div class="form-group">
+                        <button class="btn btn-success btn-sm py-3 btn-block"
+                          onclick="window.location='transaksi.php'">Konfirmasi</button>
+                        <button class="btn btn-danger btn-sm py-3 btn-block"
+                          onclick="window.location='transaksi.php'">Back</button>
+                      </div>
+                      <?php elseif ($ord["status"] === 'sampai'): ?>
+                        <div class="form-group">
+                        <button class="btn btn-danger btn-sm py-3 btn-block"
+                          onclick="window.location='transaksi.php'">Back</button>
+                      </div>
+                    <?php endif; ?>
+                  <?php endforeach; ?>
 
                 </div>
               </div>
@@ -370,7 +433,7 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
 
   <script src="js/main.js"></script>
 
- 
+
 
 </body>
 

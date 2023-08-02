@@ -473,6 +473,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     <div class="form-group">
                       <button class="btn btn-primary btn-lg py-3 btn-block" type="submit">Place
                         Order</button>
+                      <button class="btn btn-danger btn-lg py-3 btn-block" onclick="window.location='cart.php'">Cancel</button>
                     </div>
 
 

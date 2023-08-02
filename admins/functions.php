@@ -645,4 +645,17 @@ function imgpp()
     
 }
 
+function resi($data)
+{
+    global $conn;
+
+    $id = $data["id"];
+    $resi = $data["resi"];
+
+    $query = "UPDATE `orders` SET `resi` = '$resi', `status` = 'dikirim' WHERE `id` = $id";
+    mysqli_query($conn,$query);
+
+    return mysqli_affected_rows($conn);
+}
+
 ?>
