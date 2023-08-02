@@ -319,6 +319,7 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
                           onclick="window.location='transaksi.php'">Back</button>
                       </div>
                       <?php elseif ($ord["status"] === 'dikirim'): ?>
+                        <h5>No. Resi : <?= $ord["resi"]; ?></h5> <br>
                         <div class="form-group">
                         <button class="btn btn-success btn-sm py-3 btn-block"
                           onclick="window.location='transaksi.php'">Konfirmasi</button>
