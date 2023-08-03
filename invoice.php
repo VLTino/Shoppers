@@ -291,8 +291,7 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
                       <?php endforeach; ?>
                     </tbody>
                   </table>
-
-
+                  
                   <?php
                   foreach ($orders as $ord):
                     if ($ord["status"] === 'unpaid'): ?>
@@ -333,7 +332,9 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
                       </div>
                     <?php endif; ?>
                   <?php endforeach; ?>
-
+                  <div class="form-group">
+                  <button id="cetakButton" class="btn btn-secondary form-control">Print</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -434,7 +435,28 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
 
   <script src="js/main.js"></script>
 
+  <script>
+// Fungsi untuk menangani aksi klik pada button cetak
+document.getElementById("cetakButton").addEventListener("click", function() {
+    // Panggil fungsi cetak halaman
+    cetakHalaman();
+});
 
+// Fungsi untuk mencetak halaman
+function cetakHalaman() {
+    // Ambil konten div dengan class "site-section"
+    var konten = document.querySelector(".site-section").outerHTML;
+
+    // Buka jendela cetak baru
+    var win = window.open('', '_blank');
+    win.document.write('<html><head><title>Invoice</title></head><body>');
+    win.document.write(konten);
+    win.document.write('</body></html>');
+
+    // Cetak halaman
+    win.print();
+}
+</script>
 
 </body>
 

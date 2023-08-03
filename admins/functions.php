@@ -658,4 +658,17 @@ function resi($data)
     return mysqli_affected_rows($conn);
 }
 
+function aboutad($data)
+{
+    global $conn;
+
+    $video = $data["video"];
+    $teks = $data ["teks"];
+
+    $query = "UPDATE `about` SET `video` ='$video' , `teks` = '$teks' WHERE `id` = 1";
+    mysqli_query($conn,$query);
+
+    return mysqli_affected_rows($conn);
+}
+
 ?>

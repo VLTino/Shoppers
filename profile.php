@@ -274,11 +274,7 @@ if (isset($_POST["changepp"])) {
               <h6>Username</h6>
               <p>
                 <?= $us["name"]; ?><a onclick="togglePopupnama()" href="#" class="pl-3" >Ubah</a>
-              </p>
-              <h6>Email</h6>
-              <p>
-                <?= $us["email"]; ?><a href="" class="pl-3">Ubah</a>
-              </p>
+              </p><br>
               <button class="custom-button" onclick="window.location='login-form-06/forgotpass.php'">Ganti
                 Password</button>
             </div>
