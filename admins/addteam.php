@@ -8,17 +8,19 @@ if (!isset($_SESSION["admin"])) {
 
 require 'functions.php';
 
-$about = query("SELECT *FROM `about` WHERE `id` = 1");
+$category = query("SELECT * FROM `category` ");
+$color = query("SELECT * FROM `color` ");
+$size = query("SELECT * FROM `size` ");
 
-if (isset($_POST["aboutad"])) {
-    if (aboutad($_POST)) {
+if (isset($_POST["prd"])) {
+    if (plusprd($_POST)) {
         echo "<script>
-        alert('data berhasil diedit');
+        alert('data berhasil ditambahkan');
         document.location.href = 'listprd.php';
         </script>";
     } else {
         echo "<script>
-        alert('data gagal diedit');
+        alert('data gagal ditambahkan');
         document.location.href = 'listprd.php';
         </script>";
     }
@@ -97,18 +99,18 @@ if (isset($_POST["aboutad"])) {
             </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                     aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-shopping-bag"></i>
                     <span>Product</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="listprd.php">List Product</a>
-                        <a class="collapse-item" href="product.php">Add Product</a>
+                        <a class="collapse-item active" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
                         <a class="collapse-item" href="color.php">Color</a>
                         <a class="collapse-item" href="size.php">Size</a>
@@ -336,21 +338,21 @@ if (isset($_POST["aboutad"])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">About</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Team</h1>
                     </div>
-                    <h5>Edit About</h5><br>
-                    <?php foreach ($about as $ab): ?>
+                    <h5>Plus Team</h5>
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            Video <br>
-                            <p style="color:red;">width="100%" height="340"</p>
-                            <textarea name="video" id="" cols="30" rows="10" class="form-control"><?= $ab["video"]; ?></textarea>
-                            Teks
-                            <textarea name="teks" id="" cols="30" rows="10" class="form-control teks"><?= $ab["teks"]; ?></textarea> <br>
-                            <button type="submit" class="btn btn-primary" name="aboutad">Submit</button>
+                            Image <br>
+                            <input type="file" name="gambar" id=""> <br>
+                            Name 
+                            <input type="text" name="product" id="" class="form-control">
+                            About 
+                            <textarea name="about" id="" cols="30" rows="10" class="form-control"></textarea> <br>
+                            <button type="submit" class="btn btn-primary" name="prd">Submit</button>
                         </div>
                     </form>
-<?php endforeach; ?>
+
 
                 </div>
                 <!-- /.container-fluid -->
@@ -417,7 +419,7 @@ if (isset($_POST["aboutad"])) {
     <script src="js/demo/chart-pie-demo.js"></script>
     <script>
         tinymce.init({
-            selector: '.teks',
+            selector: 'textarea',
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
             tinycomments_mode: 'embedded',
