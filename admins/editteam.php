@@ -8,8 +8,10 @@ if (!isset($_SESSION["admin"])) {
 
 require 'functions.php';
 
+
+
 if (isset($_POST["#"])) {
-    if (asdasdasd($_POST)) {
+    if (asdasd($_POST)) {
         echo "<script>
         alert('data berhasil ditambahkan');
         document.location.href = 'listprd.php';
@@ -336,7 +338,7 @@ if (isset($_POST["#"])) {
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Team</h1>
                     </div>
-                    <h5>Plus Team</h5>
+                    <h5>Edit Team</h5>
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             Image <br>
@@ -345,7 +347,7 @@ if (isset($_POST["#"])) {
                             <input type="text" name="product" id="" class="form-control">
                             About 
                             <textarea name="about" id="" cols="30" rows="10" class="form-control"></textarea> <br>
-                            <button type="submit" class="btn btn-primary" name="team">Submit</button>
+                            <button type="submit" class="btn btn-primary" name="editteam">Submit</button>
                         </div>
                     </form>
 
