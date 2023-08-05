@@ -173,49 +173,13 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="kurir" class="text-black">Kurir Ekspedisi<span class="text-danger">*</span></label>
-                  <select id="kurir" class="form-control" name="nama_ekspedisi">
-                    <option value="">Pilih Kurir</option>
-                  </select>
-                </div>
+                
 
                 <div class="form-group">
-                  <label for="paket" class="text-black">Paket <span class="text-danger">*</span></label>
-                  <select id="paket" class="form-control" name="nama_paket">
-                    <option value="">Pilih Paket</option>
-                  </select>
-                </div>
-
-
-                <div class="form-group row mb-5">
-                  <div class="col-md-6">
-                    <label for="c_email_address" class="text-black">Email Address <span
-                        class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="c_email_address" name="email_address">
-                  </div>
-                  <div class="col-md-6">
+                  
                     <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="c_phone" name="phone" placeholder="Phone Number">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="c_create_account" class="text-black" data-toggle="collapse" href="#create_an_account"
-                    role="button" aria-expanded="false" aria-controls="create_an_account"><input type="checkbox"
-                      value="1" id="c_create_account"> Create an account?</label>
-                  <div class="collapse" id="create_an_account">
-                    <div class="py-2">
-                      <p class="mb-3">Create an account by entering the information below. If you are a returning
-                        customer
-                        please login at the top of the page.</p>
-                      <div class="form-group">
-                        <label for="c_account_password" class="text-black">Account Password</label>
-                        <input type="email" class="form-control" id="c_account_password" name="c_account_password"
-                          placeholder="">
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
 
 
@@ -271,33 +235,15 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                         </div>
                       </div>
 
-                      <div class="form-group">
-                        <label for="kurir" class="text-black">Kurir Ekspedisi<span class="text-danger">*</span></label>
-                        <select id="kurir" class="form-control diff" name="diffnama_ekspedisi">
-                          <option value="">Pilih Kurir</option>
-                        </select>
-                      </div>
+                    
+
 
                       <div class="form-group">
-                        <label for="paket" class="text-black">Paket <span class="text-danger">*</span></label>
-                        <select id="paket" class="form-control diff" name="diffnama_paket">
-                          <option value="">Pilih Paket</option>
-                        </select>
-                      </div>
-
-
-                      <div class="form-group row mb-5">
-                        <div class="col-md-6">
-                          <label for="c_email_addressdiff" class="text-black">Email Address <span
-                              class="text-danger">*</span></label>
-                          <input type="email" class="form-control diff" id="c_email_addressdiff"
-                            name="diffemail_address">
-                        </div>
-                        <div class="col-md-6">
+                      
                           <label for="c_phonediff" class="text-black">Phone <span class="text-danger">*</span></label>
                           <input type="text" class="form-control diff" id="c_phonediff" name="diffphone"
                             placeholder="Phone Number">
-                        </div>
+                       
                       </div>
 
                     </div>
@@ -305,11 +251,34 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                   </div>
                 </div>
 
+    <div class="form-group">
+    <label for="c_email_address" class="text-black">Email Address <span
+                            class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="c_email_address" name="email">
+    </div>
+
+                <div class="form-group">
+                  <label for="kurir" class="text-black">Kurir Ekspedisi<span class="text-danger">*</span></label>
+                  <select id="kurir" class="form-control" name="nama_ekspedisi">
+                    <option value="">Pilih Kurir</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="paket" class="text-black">Paket <span class="text-danger">*</span></label>
+                  <select id="paket" class="form-control" name="nama_paket">
+                    <option value="">Pilih Paket</option>
+                  </select>
+                </div>
+
                 <div class="form-group">
                   <label for="c_order_notes" class="text-black">Order Notes</label>
                   <textarea name="order_notes" id="c_order_notes" cols="30" rows="5" class="form-control"
                     placeholder="Write your notes here..."></textarea>
                 </div>
+
+                
+
 
               </div>
             </div>
@@ -436,12 +405,11 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 
 
 
-                    <input type="text" name="alamatlengkap" id="alamatlengkap" required>
-                    <input type="text" name="firstname" id="firstname" required>
-                    <input type="text" name="lastname" id="lastname" required>
-                    <input type="text" name="number" id="number" required>
-                    <input type="text" name="email" id="email" required>
                     <input type="hidden" name="total_berat" id="" value="<?= $berat_total ?>">
+                    <input type="hidden" name="alamatlengkap" id="alamatlengkap" required>
+                    <input type="hidden" name="firstname" id="firstname" required>
+                    <input type="hidden" name="lastname" id="lastname" required>
+                    <input type="hidden" name="number" id="number" required>
                     <input type="hidden" name="provinsi" id="" value="" required>
                     <input type="hidden" name="kota" id="" value="" required>
                     <input type="hidden" name="kecamatan" id="" value="" required>
@@ -721,7 +689,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
             type: 'POST',
             url: 'admins/datapaket0.php',
             success: function (paket) {
-              $("select[name=nama_paket]").html(paket);
+              $("select[name=nama_paket]").html(paket); 
             }
           });
 
@@ -760,13 +728,13 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
               type: 'POST',
               url: 'admins/datakurir.php',
               success: function (kurir) {
-                $("select[name=diffnama_ekspedisi]").html(kurir);
+                $("select[name=nama_ekspedisi]").html(kurir);
               }
             });
           });
 
-          $("select[name=diffnama_ekspedisi]").on("change", function () {
-            var ekspedisi_terpilih = $("select[name=diffnama_ekspedisi]").val();
+          $("select[name=nama_ekspedisi]").on("change", function () {
+            var ekspedisi_terpilih = $("select[name=nama_ekspedisi]").val();
             var kota_terpilih = $("option:selected", "select[name=diffnama_kota]").attr("city_id");
             var total_berat = $("input[name=total_berat]").val();
 
@@ -775,7 +743,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
               url: 'admins/datapaket.php',
               data: 'ekspedisi=' + ekspedisi_terpilih + '&kota=' + kota_terpilih + '&berat=' + total_berat,
               success: function (paket) {
-                $("select[name=diffnama_paket]").html(paket);
+                $("select[name=nama_paket]").html(paket);
 
                 $("input[name=ekspedisi]").val(ekspedisi_terpilih);
               }
@@ -793,7 +761,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 
           });
 
-          $("select[name=diffnama_paket]").on("change", function () {
+          $("select[name=nama_paket]").on("change", function () {
             var paket = $("option:selected", this).attr("paket");
             var ongkir = parseFloat($("option:selected", this).attr("ongkir"));
             var etd = $("option:selected", this).attr("etd");
@@ -827,6 +795,47 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
           });
 
         } else {
+
+          $.ajax({
+            type: 'POST',
+            url: 'admins/dataprovinsi0.php',
+            success: function (provinsi) {
+              $("select[name=diffnama_provinsi]").html(provinsi);
+            }
+          });
+
+          $.ajax({
+            type: 'POST',
+            url: 'admins/datakurir0.php',
+            success: function (kurir) {
+              $("select[name=nama_ekspedisi]").html(kurir);
+            }
+          });
+
+          $.ajax({
+            type: 'POST',
+            url: 'admins/datakota0.php',
+            success: function (kota) {
+              $("select[name=diffnama_kota]").html(kota);
+            }
+          });
+
+          $.ajax({
+            type: 'POST',
+            url: 'admins/datakecamatan0.php',
+            success: function (kecamatan) {
+              $("select[name=diffnama_kecamatan]").html(kecamatan);
+            }
+          });
+
+          $.ajax({
+            type: 'POST',
+            url: 'admins/datapaket0.php',
+            success: function (paket) {
+              $("select[name=nama_paket]").html(paket); 
+            }
+          });
+
           $.ajax({
             type: 'POST',
             url: 'admins/dataprovinsi.php',
@@ -926,29 +935,69 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 
   </script>
 
-  <script>
-    $(document).ready(function () {
-      // Fungsi untuk mengatur nilai input saat "Ship To Different Address" dicentang
-      function clearNonDiffInputs() {
-        if ($("input[name=diff_address]").prop("checked")) {
-          // Clear value for non-diff inputs
-          $("input[name=fname]").val("");
-          $("input[name=lname]").val("");
-          $("input[name=email_address]").val("");
-          $("input[name=phone]").val("");
-          $("textarea[name=alamat]").val("");
-        }
+<script>
+  $(document).ready(function () {
+    // Fungsi untuk mengatur nilai input saat "Ship To Different Address" berubah
+    function clearNonDiffInputs() {
+
+      $("input[name=firstname]").val("");
+        $("input[name=lastname]").val("");
+        $("input[name=email]").val("");
+        $("input[name=number]").val("");
+        $("input[name=alamatlengkap]").val("");
+
+        // Set hidden input values to empty
+        $("input[name=provinsi]").val("");
+        $("input[name=kota]").val("");
+        $("input[name=kecamatan]").val("");
+        $("input[name=kodepos]").val("");
+        $("input[name=ekspedisi]").val("");
+        $("input[name=paket]").val("");
+        $("input[name=ongkir]").val("");
+        $("input[name=estimasi]").val("");
+        $("input[name=order_total]").val("");
+
+      if ($("input[name=diff_address]").prop("checked")) {
+        // Clear value for non-diff inputs
+        $("input[name=fname]").val("");
+        $("input[name=lname]").val("");
+        $("input[name=email_address]").val("");
+        $("input[name=phone]").val("");
+        $("textarea[name=alamat]").val("");
+
+        // Disable non-diff inputs
+        $("input[name=fname]").prop("disabled", true);
+        $("input[name=lname]").prop("disabled", true);
+        $("input[name=email_address]").prop("disabled", true);
+        $("input[name=phone]").prop("disabled", true);
+        $("textarea[name=alamat]").prop("disabled", true);
+      } else {
+        // Clear value for diff inputs
+        $("input[name=difffname]").val("");
+        $("input[name=difflname]").val("");
+        $("input[name=diffemail_address]").val("");
+        $("input[name=diffphone]").val("");
+        $("textarea[name=diffalamat]").val("");
+
+        // Enable non-diff inputs
+        $("input[name=fname]").prop("disabled", false);
+        $("input[name=lname]").prop("disabled", false);
+        $("input[name=email_address]").prop("disabled", false);
+        $("input[name=phone]").prop("disabled", false);
+        $("textarea[name=alamat]").prop("disabled", false);
       }
+    }
 
-      // Panggil fungsi saat halaman pertama kali dimuat
+    // Panggil fungsi saat halaman pertama kali dimuat
+    clearNonDiffInputs();
+
+    // Panggil fungsi saat "Ship To Different Address" berubah (dicentang/dilepas)
+    $("input[name=diff_address]").on("change", function () {
       clearNonDiffInputs();
-
-      // Panggil fungsi saat "Ship To Different Address" berubah (dicentang/dilepas)
-      $("input[name=diff_address]").on("change", function () {
-        clearNonDiffInputs();
-      });
     });
-  </script>
+  });
+</script>
+
 
   <script>
     // Function to update the hidden fields
@@ -956,14 +1005,12 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
       // Get the values from the first and last name inputs
       const firstNameInput = document.getElementById("c_fname");
       const lastNameInput = document.getElementById("c_lname");
-      const emailInput = document.getElementById("c_email_address");
       const phoneInput = document.getElementById("c_phone");
       const alamatInput = document.getElementById("c_address");
 
       // Update the values in the hidden fields
       document.getElementById("firstname").value = firstNameInput.value;
       document.getElementById("lastname").value = lastNameInput.value;
-      document.getElementById("email").value = emailInput.value;
       document.getElementById("number").value = phoneInput.value;
       document.getElementById("alamatlengkap").value = alamatInput.value;
     }
@@ -971,7 +1018,6 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
     // Add event listeners to the first and last name inputs
     document.getElementById("c_fname").addEventListener("input", updateHiddenFields);
     document.getElementById("c_lname").addEventListener("input", updateHiddenFields);
-    document.getElementById("c_email_address").addEventListener("input", updateHiddenFields);
     document.getElementById("c_phone").addEventListener("input", updateHiddenFields);
     document.getElementById("c_address").addEventListener("input", updateHiddenFields);
 
@@ -982,14 +1028,12 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
       // Get the values from the first and last name inputs
       const firstNameInput = document.getElementById("c_fnamediff");
       const lastNameInput = document.getElementById("c_lnamediff");
-      const emailInput = document.getElementById("c_email_addressdiff");
       const phoneInput = document.getElementById("c_phonediff");
       const alamatInput = document.getElementById("c_addressdiff");
 
       // Update the values in the hidden fields
       document.getElementById("firstname").value = firstNameInput.value;
       document.getElementById("lastname").value = lastNameInput.value;
-      document.getElementById("email").value = emailInput.value;
       document.getElementById("number").value = phoneInput.value;
       document.getElementById("alamatlengkap").value = alamatInput.value;
     }
@@ -997,7 +1041,6 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
     // Add event listeners to the first and last name inputs
     document.getElementById("c_fnamediff").addEventListener("input", updateHiddenFields);
     document.getElementById("c_lnamediff").addEventListener("input", updateHiddenFields);
-    document.getElementById("c_email_addressdiff").addEventListener("input", updateHiddenFields);
     document.getElementById("c_phonediff").addEventListener("input", updateHiddenFields);
     document.getElementById("c_addressdiff").addEventListener("input", updateHiddenFields);
 

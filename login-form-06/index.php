@@ -55,6 +55,13 @@ if(isset($_POST["login"])){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
 
     <link rel="stylesheet" href="fonts/icomoon/style.css">
 
@@ -90,7 +97,12 @@ if(isset($_POST["login"])){
               </div>
               <div class="form-group last mb-3">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control" id="password" name="password"  required>
+								<div class="password-toggle-btn position-absolute" onclick="togglePasswordVisibility()" style="right: 10px; top: 50%; transform: translate(0, -50%);">
+									<span class="password-toggle-icon mr-3" id="password-toggle-icon">
+										<i class="fa fa-eye-slash"></i>
+									</span>
+								</div>
                 
               </div>
               
@@ -122,5 +134,19 @@ if(isset($_POST["login"])){
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+	function togglePasswordVisibility() {
+		const passwordInput = document.getElementById('password');
+		const passwordToggleIcon = document.getElementById('password-toggle-icon');
+
+		if (passwordInput.type === 'password') {
+			passwordInput.type = 'text';
+			passwordToggleIcon.innerHTML = '<i class="fa fa-eye"></i>';
+		} else {
+			passwordInput.type = 'password';
+			passwordToggleIcon.innerHTML = '<i class="fa fa-eye-slash"></i>';
+		}
+	}
+</script>
   </body>
 </html>
