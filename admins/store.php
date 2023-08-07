@@ -303,7 +303,33 @@ $location = query("SELECT * FROM `storelocation` WHERE `id` = 1;");
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                <div id="custom-alert" class="alert alert-success fade show" style="display: none;" role="alert">
+  <strong>Yeay</strong> Lokasi berhasil diedit!
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
+<script>
+  // Fungsi untuk menampilkan alert
+  function showAlert() {
+    const alertElement = document.getElementById("custom-alert");
+    alertElement.style.display = "block";
+
+    // Sembunyikan alert setelah 3 detik
+    setTimeout(function() {
+      alertElement.style.display = "none";
+    }, 3000);
+  }
+
+  // Cek apakah alert perlu ditampilkan berdasarkan parameter URL 'success'
+  const urlParams = new URLSearchParams(window.location.search);
+  const successParam = urlParams.get('success');
+
+  if (successParam && successParam === "true") {
+    showAlert();
+  }
+</script>
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Belum Dibayar</h1>

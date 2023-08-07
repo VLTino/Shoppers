@@ -7,7 +7,16 @@ if (!isset($_SESSION["admin"])) {
 }
 
 require 'functions.php';
-
+if (isset($_POST["location"])) {
+    if (storelc($_POST)) {
+        header("Location:store.php?success=true");
+    } else {
+        echo "<script>
+        alert('data gagal diedit');
+        document.location.href = 'store.php';
+        </script>";
+    }
+}
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -332,6 +341,12 @@ require 'functions.php';
                             <option value="">Pilih Kecamatan</option>
                             </select>
                             </div>
+                            <input type="hidden" name="provinsi" id="">
+                            <input type="hidden" name="kota" id="">
+                            <input type="hidden" name="kecamatan" id="">
+                            <input type="hidden" name="id_city" id="">
+                            <a href="store.php" class="btn btn-danger">Back</a>
+                            <button type="submit" class="btn btn-primary" name="location">Submit</button>
                        </form>
                     </div>
                     <!-- /.container-fluid -->
@@ -413,12 +428,20 @@ require 'functions.php';
         var provinsi_terpilih = $("option:selected", this).attr("id_provinsi");
         $.ajax({
           type: 'POST',
-          url: 'datakota.php',
+          url: 'datakota.php',  
           data: { id_provinsi: provinsi_terpilih },
           success: function (kota) {
             $("select[name=nama_kota]").html(kota);
           }
         });
+        $.ajax({
+          type: 'POST',
+          url: 'datakecamatan0.php',
+          success: function (kecamatan) {
+            $("select[name=nama_kecamatan]").html(kecamatan);
+          }
+        });
+
       });
 
       $("select[name=nama_kota]").on("change", function () {
@@ -440,10 +463,12 @@ require 'functions.php';
       $("select[name=nama_kota]").on("change", function () {
         var prov = $("option:selected", this).attr("nama_provinsi");
         var kota = $("option:selected", this).attr("nama_kota");
+        var id_kota = $("option:selected", this).attr("city_id");
         var codepost = $("option:selected", this).attr("codepost");
 
         $("input[name=provinsi]").val(prov);
         $("input[name=kota]").val(kota);
+        $("input[name=id_city]").val(id_kota);
         $("input[name=kodepos]").val(codepost);
 
       });

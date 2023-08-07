@@ -671,4 +671,19 @@ function aboutad($data)
     return mysqli_affected_rows($conn);
 }
 
+function storelc($data)
+{
+    global $conn;
+
+    $provinsi = $data["provinsi"];
+    $kota = $data["kota"];
+    $kecamatan = $data["kecamatan"];
+    $id_city = $data["id_city"];
+
+    $query = "UPDATE `storelocation` SET `provinsi` = '$provinsi' , `kabupaten`='$kota' , `kecamatan`='$kecamatan' , `id_kota`='$id_city'  WHERE `id` = 1";
+    mysqli_query($conn,$query);
+
+    return mysqli_affected_rows($conn);
+}
+
 ?>
