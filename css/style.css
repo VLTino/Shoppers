@@ -756,3 +756,94 @@ a {
     display: block;
     padding: 5px 10px; /* Atur jarak yang diinginkan */
 }
+
+
+
+.formulas {
+  width: 100%;
+  position: relative;
+  top: 100px;
+  background-color: white;
+  padding: 50px;
+  margin-bottom: 250px;
+  border-radius: 10px;
+  border:solid 1px;
+}
+
+.rating {
+  margin-top: 0px;
+  border: none;
+  float: left;
+}
+
+.rating > label {
+  color: #90A0A3;
+  float: right;
+}
+
+.rating > label:before {
+  margin: 5px;
+  font-size: 2em;
+  font-family: FontAwesome;
+  content: "\f005";
+  display: inline-block;
+}
+
+.rating > input {
+  display: none;
+}
+
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+  color: #F79426;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label,
+.rating > input:checked ~ label:hover ~ label {
+  color: #FECE31;
+}
+
+
+.rating2 {
+  margin-top: 0px;
+  border: none;
+  float: left;
+}
+
+.rating2 > label {
+  color: #90A0A3;
+  float: right;
+}
+
+.rating2 > label:before {
+  margin: 5px;
+  font-size: 2em;
+  font-family: FontAwesome;
+  content: "\f005";
+  display: inline-block;
+}
+
+.rating2 > input {
+  display: none;
+}
+
+.rating2 > input:checked ~ label
+{
+  color: #F79426;
+}
+
+.btn-ulas {
+  position: absolute;
+  margin-top: 670px;
+  right: 50px;
+  height: 40px;
+}
+
+/* Atur posisi rating */
+.rating {
+  position: relative;
+  bottom: 25px; /* Sesuaikan posisi vertikal sesuai kebutuhan */
+}
