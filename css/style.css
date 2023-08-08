@@ -837,13 +837,33 @@ a {
 
 .btn-ulas {
   position: absolute;
-  margin-top: 670px;
+  top: 70px;
   right: 50px;
   height: 40px;
+}
+
+@media screen and (max-width:770px) {
+  .btn-ulas{
+    position: relative;
+    top: auto;
+    bottom: auto;
+    right: auto;
+    left: auto;
+    
+  }
+  .star{
+    width: 35px;
+  }
 }
 
 /* Atur posisi rating */
 .rating {
   position: relative;
-  bottom: 25px; /* Sesuaikan posisi vertikal sesuai kebutuhan */
+  bottom: 20px; /* Sesuaikan posisi vertikal sesuai kebutuhan */
+}
+
+.imgpr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

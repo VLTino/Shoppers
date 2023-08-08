@@ -137,18 +137,21 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 
     <div class="container">
         <div class="formulas">
-            <h3>Berikan Ulasan Kepada Kami</h3><br>
+            <h3>Rating</h3><br>
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
+                  <h3>Product</h3>
+                  <div class="imgpr">
+                  <img src="images/shoe_1.jpg" alt="" srcset="" style="width:500px;" class="img-fluid"><br>
+                  </div>
                     Gambar <br>
-                    <input type="file" name="gambar" id=""><br>
-                    Nama
-                    <input type="text" name="nama" id="" class="form-control">
-                    Kota
-                    <input type="text" name="kota" id="" class="form-control">
+                    <label style="color:red;" for="gambar">Tidak Wajib</label>
+                    <input type="file" name="gambar" id="gambar" class="form-control"><br>
                     Teks
-                    <textarea name="teks" id="" cols="30" rows="10" class="form-control"></textarea>               
-                    
+                    <textarea name="teks" id="" cols="30" rows="10" class="form-control"></textarea> <br><br>              
+              
+                    <div class="row">
+                      <div class="col-md-6">
                     <p>Rating</p>
                 <div class="rating">
                     <input type="radio" id="star5" name="rating" value="5" />
@@ -161,10 +164,14 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     <label class="star" for="star2" title="Good" aria-hidden="true"></label>
                     <input type="radio" id="star1" name="rating" value="1" />
                     <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
-                </div><br>
-                
-                <button type="submit" class="btn btn-primary btn-ulas" name="ulas">Submit</button>
-                
+                </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="btn-ulas">
+                <button type="submit" class="btn btn-primary" name="ulas">Submit</button>
+                </div>
+                </div>
+                </div>
                 </div>
                
             </form>
