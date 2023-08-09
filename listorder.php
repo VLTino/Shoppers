@@ -21,8 +21,9 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 
 
 }
-$idprd=$_GET["id"];
-$product = query("SELECT * FROM `product` WHERE `id`= $idprd");
+
+
+
 // if (isset($_POST["ulas"])) {
 //   if (ulas($_POST)) {
 //       echo "<script>
@@ -139,8 +140,8 @@ $product = query("SELECT * FROM `product` WHERE `id`= $idprd");
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <a
-              href="transaksi.php">Transaksi</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Ulas</strong>
+        <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <a
+              href="transaksi.php">Transaksi</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Review</strong>
           </div>
         </div>
       </div>
@@ -149,48 +150,61 @@ $product = query("SELECT * FROM `product` WHERE `id`= $idprd");
     
 
     <div class="container">
-        <div class="formulas">
-            <h3>Review</h3><br>
-            <form action="" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                  <?php foreach ($product as $pr) {
-                     $name = $pr["name"];
-                     $gambar = $pr["gambar"];
-                  } ?>
-                  <div class="imgpr">
-                  <img src="images/<?= $gambar; ?>" alt="" srcset="" style="width:500px;" class="img-fluid"><br>
-                  <h3><?= $name; ?></h3><br>
-                  </div>
-                    Teks
-                    <textarea name="teks" id="" cols="30" rows="10" class="form-control"></textarea> <br><br>              
-              
-                    <div class="row">
-                      <div class="col-md-6">
-                    <p>Rating</p>
-                <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
-                </div>
-                </div>
-                <input type="hidden" name="idprd" id="" value="<?= $idprd ?>">
-                <div class="col-md-6">
-                  <div class="btn-ulas">
-                <button type="submit" class="btn btn-primary" name="ulas">Submit</button>
-                </div>
-                </div>
-                </div>
-                </div>
-               
-            </form>
-        </div>
+    <table class="table table-hover table-responsive-sm ">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Gambar</th>
+                                    <th scope="col">Produk</th>
+                                    <th scope="col">Harga</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1;  ?>
+
+                                <?php foreach ($user as $us): 
+                                $orderid = $_GET["order_id"];
+                                $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $orderid ");
+                                      foreach ($cart_order as $crt):
+                                        $pid = $crt["product_id"];
+                                        $produk = query("SELECT * FROM `product` WHERE `id`=$pid");
+                                        foreach ($produk as $prd) {
+                                            $id = $prd["id"];
+                                            $name = $prd["name"];
+                                            $price = $prd["price"];
+                                            $gambar = $prd["gambar"];
+                                            $status = "Selesai";
+                                        }
+                                    
+                                      ?>
+                                    <tr>
+                                        <th scope="row">
+                                            <?= $i++; ?>
+                                        </th>
+                                        <td>
+                                       <img src="images/<?= $gambar; ?>" alt="" srcset="" style="width:300px" class="img-fluid">
+                                        </td>
+                                        <th>
+                                        <?= $name;?>
+                                        </th>
+                                        <td>
+                                            <?php $formattedPrice = "Rp " . number_format($price, 0, ',', '.');
+                                            echo $formattedPrice; ?>
+                                        </td>
+                                        <td>
+                                            <?= $status; ?>
+                                        </td>
+                                        <td><a href="ulas.php?id=<?= $id ?>"
+                                                class="btn btn-outline-primary">Review</a></td>
+                                    </tr>
+                               
+                                <?php endforeach; ?>
+                                <?php endforeach; ?>
+
+                            </tbody>
+                        </table>
     </div>
     
     

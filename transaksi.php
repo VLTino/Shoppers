@@ -23,11 +23,11 @@ if (isset($_GET["status"])) {
 
 foreach ($user as $us) {
     if (isset($status)) {
-    $usid = $us["id"];
-    $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid AND `status` = '$status'");
-    }else {
         $usid = $us["id"];
-    $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid");
+        $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid AND `status` = '$status'");
+    } else {
+        $usid = $us["id"];
+        $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid");
     }
 }
 
@@ -44,10 +44,10 @@ foreach ($user as $us) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
@@ -86,8 +86,8 @@ foreach ($user as $us) {
                         <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                             <div class="site-top-icons">
                                 <ul>
-                                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true){
-                    echo "<li class='dropdown'>
+                                    <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
+                                        echo "<li class='dropdown'>
                     <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
                         <span class='icon icon-person'></span>
                     </a>
@@ -99,10 +99,10 @@ foreach ($user as $us) {
                         <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
                     </ul>
                 </li>";
-                  }else {
-                    echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
-                  } ?>
-                                    
+                                    } else {
+                                        echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
+                                    } ?>
+
                                     <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                                     <li>
                                         <a href="cart.php" class="site-cart">
@@ -170,11 +170,16 @@ foreach ($user as $us) {
 
 
                     <div class="col-md-9 order-1 mb-5 mb-md-0">
-                        <button onclick="window.location='transaksi.php'" class="btn btn-primary"><span class="fab fa-dropbox"></span>Semua</button>
-                        <button onclick="window.location='transaksi.php?status=unpaid'" class="btn btn-primary"><span class="fab fa-creative-commons-nc"></span> Belum Bayar</button>
-                        <button onclick="window.location='transaksi.php?status=paid'" class="btn btn-primary"><span class="far fa-check-circle"></span>Dibayar</button>
-                        <button onclick="window.location='transaksi.php?status=dikirim'" class="btn btn-primary"><span class="fas fa-truck"></span>Dikirim</button>
-                        <button onclick="window.location='transaksi.php?status=sampai'" class="btn btn-primary"><span class="fas fa-truck-loading"></span>Sampai</button>
+                        <button onclick="window.location='transaksi.php'" class="btn btn-primary"><span
+                                class="fab fa-dropbox"></span>Semua</button>
+                        <button onclick="window.location='transaksi.php?status=unpaid'" class="btn btn-primary"><span
+                                class="fab fa-creative-commons-nc"></span> Belum Bayar</button>
+                        <button onclick="window.location='transaksi.php?status=paid'" class="btn btn-primary"><span
+                                class="far fa-check-circle"></span>Dibayar</button>
+                        <button onclick="window.location='transaksi.php?status=dikirim'" class="btn btn-primary"><span
+                                class="fas fa-truck"></span>Dikirim</button>
+                        <button onclick="window.location='transaksi.php?status=sampai'" class="btn btn-primary"><span
+                                class="fas fa-truck-loading"></span>Sampai</button>
                         <table class="table table-hover table-responsive-sm ">
                             <thead>
                                 <tr>
@@ -188,7 +193,7 @@ foreach ($user as $us) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i = 1; 
+                                <?php $i = 1;
                                 if (empty($transaksi)) {
                                     echo "<tr><td colspan='7'><h5 style='color:red;text-align:center'>Tidak Ada Data</h5></td></tr>";
                                 } ?>
@@ -199,7 +204,7 @@ foreach ($user as $us) {
                                             <?= $i++; ?>
                                         </th>
                                         <th>
-                                        <?php $formattedId = "INV" . str_pad($tr["id"], 5, "0", STR_PAD_LEFT);
+                                            <?php $formattedId = "INV" . str_pad($tr["id"], 5, "0", STR_PAD_LEFT);
                                             echo $formattedId ?>
                                         </th>
                                         <td>
@@ -215,8 +220,13 @@ foreach ($user as $us) {
                                         <td>
                                             <?= $tr["status"]; ?>
                                         </td>
-                                        <td><a href="invoice.php?id=<?= $tr["id"]; ?>"
-                                                class="btn btn-outline-primary">Detail</a></td>
+                                        <?php if ($tr["status"] === "sampai"): ?>
+                                            <td><a href="invoice.php?id=<?= $tr["id"]; ?>"
+                                                    class="btn btn-outline-primary">Review</a></td>
+                                        <?php else: ?>
+                                            <td><a href="invoice.php?id=<?= $tr["id"]; ?>"
+                                                    class="btn btn-outline-primary">Detail</a></td>
+                                        <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>
 

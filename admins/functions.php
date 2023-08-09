@@ -686,4 +686,17 @@ function storelc($data)
     return mysqli_affected_rows($conn);
 }
 
+function konfirmasi($data)
+{
+    global $conn;
+
+    $id = $data["orderid"];
+    $status = "sampai";
+
+    $query = "UPDATE `orders` SET `status` = '$status'  WHERE `id` = $id";
+    mysqli_query($conn,$query);
+
+    return mysqli_affected_rows($conn);
+}
+
 ?>

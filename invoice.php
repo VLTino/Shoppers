@@ -27,6 +27,17 @@ $id = $_GET["id"];
 $orders = query("SELECT * FROM `orders` WHERE `id` = $id");
 $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
 
+if (isset($_POST["konfirmasi"])) {
+  if (konfirmasi($_POST)) {
+    header("Location: transaksi.php?status=sampai");
+  } else {
+      echo "<script>
+      alert('data gagal diedit');
+      document.location.href = 'color.php';
+      </script>";
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -296,8 +307,7 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
                   foreach ($orders as $ord):
                     if ($ord["status"] === 'unpaid'): ?>
                       <div class="form-group">
-                        <button class="btn btn-primary btn-sm py-3 btn-block" id="pay-button">Place
-                          Order</button>
+                        <button class="btn btn-primary btn-sm py-3 btn-block" id="pay-button">Pay</button>
                         <button class="btn btn-danger btn-sm py-3 btn-block"
                           onclick="window.location='transaksi.php'">Back</button>
                         <?php foreach ($orders as $ord) {
@@ -319,14 +329,19 @@ $cart_order = query("SELECT * FROM `cart_orders` WHERE `orders_id` = $id");
                       </div>
                       <?php elseif ($ord["status"] === 'dikirim'): ?>
                         <h5>No. Resi : <?= $ord["resi"]; ?></h5> <br>
+                        <form action="" method="post">
                         <div class="form-group">
+                          <input type="hidden" name="orderid" id="" value="<?= $id; ?>">
                         <button class="btn btn-success btn-sm py-3 btn-block"
-                          onclick="window.location='transaksi.php'">Konfirmasi</button>
+                          type="submit" name="konfirmasi">Konfirmasi</button>
+                          </form>
                         <button class="btn btn-danger btn-sm py-3 btn-block"
                           onclick="window.location='transaksi.php'">Back</button>
                       </div>
                       <?php elseif ($ord["status"] === 'sampai'): ?>
                         <div class="form-group">
+                        <button class="btn btn-success btn-sm py-3 btn-block"
+                          onclick="window.location='listorder.php?order_id=<?= $id; ?>'">Review</button>
                         <button class="btn btn-danger btn-sm py-3 btn-block"
                           onclick="window.location='transaksi.php'">Back</button>
                       </div>
