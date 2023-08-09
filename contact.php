@@ -30,12 +30,14 @@
         <div class="container">
           <div class="row align-items-center">
 
-            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-            <form action="shop.php" class="site-block-top-search" method="post" class="filterForm">
-                
-                <span class="icon icon-search2"></span>
+          <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+              <form action="shop.php" method="get" class="site-block-top-search">
 
-                <input type="text" name="search"class="form-control border-0" placeholder="Search">
+                <span class="icon icon-search2"></span>
+                <input type="text" id="searchInput" name="search" class="form-control border-0" placeholder="Search">
+                <button type="submit" style="display: none;"></button>
+
+                <input type="hidden" name="filter" value="true">
               </form>
             </div>
 

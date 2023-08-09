@@ -21,21 +21,26 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 
 
 }
+
+foreach ($user as $us) {
+  $id = $us["id"];
+}
+
 $idprd=$_GET["id"];
 $product = query("SELECT * FROM `product` WHERE `id`= $idprd");
-// if (isset($_POST["ulas"])) {
-//   if (ulas($_POST)) {
-//       echo "<script>
-//       alert('data berhasil diedit');
-//       document.location.href = 'color.php';
-//       </script>";
-//   } else {
-//       echo "<script>
-//       alert('data gagal diedit');
-//       document.location.href = 'color.php';
-//       </script>";
-//   }
-// }
+if (isset($_POST["ulas"])) {
+  if (ulas($_POST)) {
+      echo "<script>
+      alert('data berhasil diedit');
+      document.location.href = 'color.php';
+      </script>";
+  } else {
+      echo "<script>
+      alert('data gagal diedit');
+      document.location.href = 'color.php';
+      </script>";
+  }
+}
 
 
 ?>
@@ -180,7 +185,9 @@ $product = query("SELECT * FROM `product` WHERE `id`= $idprd");
                     <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
                 </div>
                 </div>
+                <input type="datetime-local" name="tanggal" id="" value="<?php echo date('Y-m-d\TH:i'); ?>" style="display:none;">
                 <input type="hidden" name="idprd" id="" value="<?= $idprd ?>">
+                <input type="hidden" name="iduser" id="" value="<?= $id ?>">
                 <div class="col-md-6">
                   <div class="btn-ulas">
                 <button type="submit" class="btn btn-primary" name="ulas">Submit</button>

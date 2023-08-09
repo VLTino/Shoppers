@@ -11,21 +11,23 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
   // Gunakan nilai email sesuai kebutuhan
   $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
 
-  
-} 
+
+}
 $id = $_GET["id"];
 
 if (isset($_POST["cart"])) {
   if (cartplus($_POST) > 0) {
     header("Location: shop-single.php?id=$id&success=true");
-    exit();  
+    exit();
   } else {
-      echo mysqli_error($conn);
+    echo mysqli_error($conn);
   }
- 
+
 }
 
 
+
+$rating = query("SELECT * FROM `ulasan` WHERE `id_produk` = $id");
 $product = query("SELECT * FROM `product` WHERE `id`=$id");
 $clr = query("SELECT * FROM `color`");
 $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
@@ -56,48 +58,48 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
 </head>
 
 <body>
-<div id="custom-alert" class="alert alert-success fade show" style="display: none;" role="alert">
-  <strong>Yeay</strong> Produk berhasil ditambahkan ke keranjang!
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
+  <div id="custom-alert" class="alert alert-success fade show" style="display: none;" role="alert">
+    <strong>Yeay</strong> Produk berhasil ditambahkan ke keranjang!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
-<script>
-  // Fungsi untuk menampilkan alert
-  function showAlert() {
-    const alertElement = document.getElementById("custom-alert");
-    alertElement.style.display = "block";
+  <script>
+    // Fungsi untuk menampilkan alert
+    function showAlert() {
+      const alertElement = document.getElementById("custom-alert");
+      alertElement.style.display = "block";
 
-    // Sembunyikan alert setelah 3 detik
-    setTimeout(function() {
-      alertElement.style.display = "none";
-    }, 3000);
-  }
+      // Sembunyikan alert setelah 3 detik
+      setTimeout(function () {
+        alertElement.style.display = "none";
+      }, 3000);
+    }
 
-  // Cek apakah alert perlu ditampilkan berdasarkan parameter URL 'success'
-  const urlParams = new URLSearchParams(window.location.search);
-  const successParam = urlParams.get('success');
+    // Cek apakah alert perlu ditampilkan berdasarkan parameter URL 'success'
+    const urlParams = new URLSearchParams(window.location.search);
+    const successParam = urlParams.get('success');
 
-  if (successParam && successParam === "true") {
-    showAlert();
-  }
-</script>
+    if (successParam && successParam === "true") {
+      showAlert();
+    }
+  </script>
 
 
 
   <div class="site-wrap">
-  <header class="site-navbar" role="banner">
+    <header class="site-navbar" role="banner">
       <div class="site-navbar-top">
         <div class="container">
           <div class="row align-items-center">
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-            <form action="shop.php" class="site-block-top-search" method="post" class="filterForm">
-                
+              <form action="shop.php" class="site-block-top-search" method="post" class="filterForm">
+
                 <span class="icon icon-search2"></span>
 
-                <input type="text" name="search"class="form-control border-0" placeholder="Search">
+                <input type="text" name="search" class="form-control border-0" placeholder="Search">
               </form>
             </div>
 
@@ -110,7 +112,7 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true){
+                  <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     echo "<li class='dropdown'>
                     <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
                         <span class='icon icon-person'></span>
@@ -123,7 +125,7 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
                         <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
                     </ul>
                 </li>";
-                  }else {
+                  } else {
                     echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
                   } ?>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
@@ -157,14 +159,14 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
     </header>
 
     <?php foreach ($product as $prd): ?>
-    <div class="bg-light py-3">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <strong
-              class="text-black"><?= $prd["name"]; ?></strong></div>
+      <div class="bg-light py-3">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <strong
+                class="text-black"><?= $prd["name"]; ?></strong></div>
+          </div>
         </div>
       </div>
-    </div>
 
       <div class="site-section">
         <div class="container">
@@ -182,81 +184,140 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
                   ?>
                 </strong></p>
               <form action="" method="post">
-              <?php
-              // Ambil nilai ukuran dari kolom 'size' pada tabel produk
-              $sizeValues = $prd["size"];
+                <?php
+                // Ambil nilai ukuran dari kolom 'size' pada tabel produk
+                $sizeValues = $prd["size"];
 
-              // Pecah nilai ukuran menjadi array
-              $sizeArray = explode(',', $sizeValues);
-              ?>
-              <div class="mb-1 d-flex">
-                <?php foreach ($sizeArray as $size): ?>
-                  <label for="<?= $size; ?>" class="d-flex mr-3 mb-3">
-                    <span class="d-inline-block mr-2" style="top:2px; position: relative;"><input type="radio"
-                        id="<?= $size; ?>" name="size" value="<?= $size; ?>" required></span> <span class="d-inline-block text-black">
-                      <?= $size; ?>
-                    </span>
-                  </label>
-                <?php endforeach; ?>
-              </div>
-              <?php
-              // Ambil nilai ukuran dari kolom 'size' pada tabel produk
-              $colorValues = $prd["color"];
-
-              // Pecah nilai ukuran menjadi array
-              $colorArray = explode(',', $colorValues);
-              ?>
-              <div class="mb-1 d-flex">
-                <?php foreach ($colorArray as $color): ?>
-                  <?php foreach ($clr as $clrColor): ?>
-                    <?php if ($color === $clrColor["color"]): ?>
-                      <label for="<?= $color; ?>" class="d-flex mr-3 mb-3">
-                        <span class="d-inline-block mr-2" style="top:2px; position: relative;">
-                          <input type="radio" id="<?= $color; ?>" name="color" value="<?= $color; ?>" required>
-                        </span>
-                        <a class="d-flex color-item align-items-center">
-                          <span class="color d-inline-block rounded-circle mr-2"
-                            style="background-color: <?= $clrColor["codeclr"]; ?>"></span>
-                          <span class="d-inline-block text-black">
-                            <?= $color; ?>
-                          </span>
-                        </a>
-                      </label>
-                    <?php endif; ?>
+                // Pecah nilai ukuran menjadi array
+                $sizeArray = explode(',', $sizeValues);
+                ?>
+                <div class="mb-1 d-flex">
+                  <?php foreach ($sizeArray as $size): ?>
+                    <label for="<?= $size; ?>" class="d-flex mr-3 mb-3">
+                      <span class="d-inline-block mr-2" style="top:2px; position: relative;"><input type="radio"
+                          id="<?= $size; ?>" name="size" value="<?= $size; ?>" required></span> <span
+                        class="d-inline-block text-black">
+                        <?= $size; ?>
+                      </span>
+                    </label>
                   <?php endforeach; ?>
-                <?php endforeach; ?>
-              </div>
+                </div>
+                <?php
+                // Ambil nilai ukuran dari kolom 'size' pada tabel produk
+                $colorValues = $prd["color"];
 
-              <div class="mb-5">
-                <div class="input-group mb-3" style="max-width: 120px;">
-                  <div class="input-group-prepend">
-                    <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                  </div>
-                  <input type="text" name="jumlah" class="form-control text-center" value="1" placeholder=""
-                    aria-label="Example text with button addon" aria-describedby="button-addon1">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                  </div>
+                // Pecah nilai ukuran menjadi array
+                $colorArray = explode(',', $colorValues);
+                ?>
+                <div class="mb-1 d-flex">
+                  <?php foreach ($colorArray as $color): ?>
+                    <?php foreach ($clr as $clrColor): ?>
+                      <?php if ($color === $clrColor["color"]): ?>
+                        <label for="<?= $color; ?>" class="d-flex mr-3 mb-3">
+                          <span class="d-inline-block mr-2" style="top:2px; position: relative;">
+                            <input type="radio" id="<?= $color; ?>" name="color" value="<?= $color; ?>" required>
+                          </span>
+                          <a class="d-flex color-item align-items-center">
+                            <span class="color d-inline-block rounded-circle mr-2"
+                              style="background-color: <?= $clrColor["codeclr"]; ?>"></span>
+                            <span class="d-inline-block text-black">
+                              <?= $color; ?>
+                            </span>
+                          </a>
+                        </label>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
+                  <?php endforeach; ?>
                 </div>
 
-              </div>
-              <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true):?>
-              <?php foreach ($user as $us): ?>
-              <input type="hidden" name="id_customer" id="" value="<?= $us["id"]; ?>">
-              <?php endforeach; ?>
-              <?php endif;?>
-              <input type="hidden" name="product_id" id="" value="<?= $prd["id"]; ?>">
-              <input type="hidden" name="price" id="" value="<?= $prd["price"]; ?>">
-              <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true):?>
-              <p><button type="submit" class="buy-now btn btn-sm btn-primary" name="cart">Add To Cart</button></p>
-              <?php else: ?>
-                <p><button type="submit" class="buy-now btn btn-sm btn-primary" onclick="window.location='login-form-06'">Add To Cart</button></p>
+                <div class="mb-5">
+                  <div class="input-group mb-3" style="max-width: 120px;">
+                    <div class="input-group-prepend">
+                      <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                    </div>
+                    <input type="text" name="jumlah" class="form-control text-center" value="1" placeholder=""
+                      aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                    </div>
+                  </div>
+
+                </div>
+                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true): ?>
+                  <?php foreach ($user as $us): ?>
+                    <input type="hidden" name="id_customer" id="" value="<?= $us["id"]; ?>">
+                  <?php endforeach; ?>
+                <?php endif; ?>
+                <input type="hidden" name="product_id" id="" value="<?= $prd["id"]; ?>">
+                <input type="hidden" name="price" id="" value="<?= $prd["price"]; ?>">
+                <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true): ?>
+                  <p><button type="submit" class="buy-now btn btn-sm btn-primary" name="cart">Add To Cart</button></p>
+                <?php else: ?>
+                  <p><button type="submit" class="buy-now btn btn-sm btn-primary"
+                      onclick="window.location='login-form-06'">Add To Cart</button></p>
                 <?php endif; ?>
               </form>
             <?php endforeach; ?>
           </div>
         </div>
       </div>
+      
+      <?php if (empty($rating)): ?>
+        <div class="container">
+        <div class="review">
+          <div class="row">
+            <div class="col-12">
+          <h5 style="color:red;text-align:center;">Belum ada ulasan.</h5>
+          </div>
+          </div>
+        </div>
+        </div>
+        <?php else: ?>
+          <?php foreach ($rating as $rt): 
+            $star = $rt["rating"];
+            $idus = $rt["id_user"];
+            $teks = $rt["teks"];
+            $tanggal = $rt["date_sub"];
+            $user = query("SELECT * FROM `customer` WHERE `id` = $idus");
+
+            foreach ($user as $us) {
+              $gambar = $us["pp"];
+              $name = $us["name"];
+            }
+
+            ?>
+      <div class="container">
+        <div class="review">
+          <div class="row">
+            <div class="col-lg-1">
+              <img src="<?php if (!isset($gambar)) {
+                  echo "images/defaultpp.png";
+                } else {
+                  echo "images/".$gambar;
+                } ?>" alt="" srcset="" style="width:75px;height:75px;border-radius:50%;margin-top:10px">
+            </div>
+            <div class="col-lg-10">
+              <h5><?= $name; ?></h5>
+              <div class="rating2">
+                <input type="radio" id="star5" name="rating" value="5" <?php if ($star == "5") echo "checked"; ?> disabled />
+                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                <input type="radio" id="star4" name="rating" value="4" <?php if ($star == "4") echo "checked"; ?> disabled />
+                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                <input type="radio" id="star3" name="rating" value="3" <?php if ($star == "3") echo "checked"; ?> disabled />
+                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                <input type="radio" id="star2" name="rating" value="2" <?php if ($star == "2") echo "checked"; ?> disabled />
+                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                <input type="radio" id="star1" name="rating" value="1" <?php if ($star == "1") echo "checked"; ?> disabled />
+                <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+              </div><br><br>
+              <p style="margin:0px;"><?php echo date('Y-m-d H:i', strtotime($tanggal)); ?></p>
+              <p><?= $teks; ?></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+      <?php endif; ?>
     </div>
 
     <div class="site-section block-3 site-blocks-2 bg-light">
@@ -389,6 +450,10 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
 
   <script src="js/main.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/0d2b3238f9.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

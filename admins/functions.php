@@ -699,4 +699,21 @@ function konfirmasi($data)
     return mysqli_affected_rows($conn);
 }
 
+function ulas($data)
+{
+    global $conn;
+
+    $idpr = $data["idprd"];
+    $idus = $data["iduser"];
+    $teks = htmlspecialchars($data["teks"]);
+    $rating = $data["rating"];
+    $tanggal = $data["tanggal"];
+
+    $query = "INSERT INTO `ulasan` VALUES (NULL,$idus,$idpr,'$teks',$rating,'$tanggal')";
+    mysqli_query($conn,$query);
+
+    return mysqli_affected_rows($conn);
+
+}
+
 ?>
