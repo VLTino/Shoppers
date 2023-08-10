@@ -1,7 +1,14 @@
 <?php
+require('functions.php');
 $ekspedisi=$_POST["ekspedisi"];
 $kota=$_POST["kota"];
 $berat=$_POST["berat"];
+
+$store = query("SELECT `id_kota` FROM `storelocation` WHERE `id` = 1");
+
+foreach ($store as $st) {
+  $idkota = $st["id_kota"];
+}
 
 
 $curl = curl_init();
@@ -14,7 +21,7 @@ curl_setopt_array($curl, array(
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS => "origin=501&destination=".$kota."&weight=".$berat."&courier=".$ekspedisi,
+  CURLOPT_POSTFIELDS => "origin=".$idkota."&destination=".$kota."&weight=".$berat."&courier=".$ekspedisi,
   CURLOPT_HTTPHEADER => array(
     "content-type: application/x-www-form-urlencoded",
     "key: f39965e7eae6f0ebbcbea6c800553c08"

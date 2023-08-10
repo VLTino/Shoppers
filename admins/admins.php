@@ -76,6 +76,7 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="header.php">Header</a>
                         <a class="collapse-item" href="benefit.php">Benefit</a>
+                        <a class="collapse-item" href="ads.php">Ads</a>
                     </div>
                 </div>
             </li>
@@ -96,6 +97,7 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                     </div>
                 </div>
             </li>
+
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
@@ -130,6 +132,12 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                         <a class="collapse-item" href="done.php">Selesai</a>
                     </div>
                 </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="contact.php">
+                    <i class="fas fa-fw fa-phone"></i>
+                    <span>Contact</span></a>
             </li>
 
             <!-- Divider -->

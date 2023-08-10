@@ -76,10 +76,26 @@ $transaksi = query("SELECT * FROM `orders` WHERE `status`= 'paid'")
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="header.php">Header</a>
                         <a class="collapse-item" href="benefit.php">Benefit</a>
+                        <a class="collapse-item" href="ads.php">Ads</a>
                     </div>
                 </div>
             </li>
-
+ <!-- Nav Item - Pages Collapse Menu -->
+ <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true"
+                    aria-controls="collapseFour">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>About</span>
+                </a>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Section:</h6>
+                        <a class="collapse-item" href="aboutad.php">Edit About</a>
+                        <a class="collapse-item" href="listteam.php">List Team</a>
+                        <a class="collapse-item" href="addteam.php">Add Team</a>
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
@@ -115,7 +131,11 @@ $transaksi = query("SELECT * FROM `orders` WHERE `status`= 'paid'")
                     </div>
                 </div>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="contact.php">
+                    <i class="fas fa-fw fa-phone"></i>
+                    <span>Contact</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
 
