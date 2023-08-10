@@ -1,5 +1,5 @@
 <?php 
-$conn = mysqli_connect("localhost", "root", "", "db_rajaongkir");
+$conn = mysqli_connect("localhost", "root", "", "onlineshop");
 
 
 function query($query)

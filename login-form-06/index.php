@@ -115,7 +115,13 @@ if(isset($_POST["login"])){
 
               <input type="submit" value="Log In" class="btn btn-block btn-primary" name="login">
               
+              <span class="d-block text-center my-4 text-muted">— or —</span>
               
+              <div class="social-login">
+                <a href="#" class="google btn d-flex justify-content-center align-items-center">
+                  <span class="icon-google mr-3"></span> Login with Google
+                </a>
+              </div>
               
               <input type="button" value="Register" class="btn btn-block btn-dark" onclick="window.location='register.php'">
               

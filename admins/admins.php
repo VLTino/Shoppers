@@ -93,7 +93,6 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                         <a class="collapse-item" href="aboutad.php">Edit About</a>
                         <a class="collapse-item" href="listteam.php">List Team</a>
                         <a class="collapse-item" href="addteam.php">Add Team</a>
-                        <a class="collapse-item" href="editteam.php">Edit Team</a>
                     </div>
                 </div>
             </li>

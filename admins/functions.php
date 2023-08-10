@@ -716,4 +716,75 @@ function ulas($data)
 
 }
 
+function addteam($data)
+{
+    global $conn;
+    error_reporting(0);
+    $gambar = $data["gambar"];
+    $name = htmlspecialchars($data["name"]);
+    $as = htmlspecialchars($data["as"]);
+    $about = $data["about"];
+
+    $gambar = img();
+    if (!$gambar) {
+        return false;
+    }
+
+    $query = "INSERT INTO `team` VALUES (NULL,'$gambar','$name','$as','$about')";
+    mysqli_query($conn,$query);
+
+    return mysqli_affected_rows($conn);
+
+}
+
+function deletetm($id)
+{
+    global $conn;
+    error_reporting(0);
+    $result = mysqli_query($conn, "SELECT `gambar` FROM `team` WHERE `id`=$id ");
+    $row = mysqli_fetch_assoc($result);
+    $gambarlama = $row['gambar'];
+
+    $old_file = "../images/$gambarlama";
+    if (file_exists($old_file)) {
+        unlink($old_file);
+    }
+    $query ="DELETE FROM `team` WHERE `id`=$id";
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function edittm($data)
+{
+
+    global $conn;
+    error_reporting(0);
+    $gambar = $data["gambar"];
+    $name = htmlspecialchars($data["name"]);
+    $as = htmlspecialchars($data["as"]);
+    $about = $data["about"];
+    $id = $data["id"];
+    
+
+    $result = mysqli_query($conn, "SELECT `gambar` FROM `team` WHERE `id`= $id");
+    $row = mysqli_fetch_assoc($result);
+    $gambarlama = $row['gambar'];
+
+    $gambar = imgedit();
+    if (!$gambar) {
+        $gambar = $gambarlama;
+    }
+
+    $query = "UPDATE `team` SET `gambar`='$gambar',`name`='$name',`sebagai`='$as',`teks`='$about' WHERE `id` = $id";
+    mysqli_query($conn,$query);
+
+    if ($gambarlama && $gambarlama != $gambar) {
+        $old_file = "../images/$gambarlama";
+        if (file_exists($old_file)) {
+            unlink($old_file);
+        }
+    }
+
+    return mysqli_affected_rows($conn);
+}
 ?>

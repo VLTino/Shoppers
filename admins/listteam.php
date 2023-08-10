@@ -8,18 +8,19 @@ if (!isset($_SESSION["admin"])) {
 
 require 'functions.php';
 
+$orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
+$team = query("SELECT * FROM `team`");
 
-
-if (isset($_POST["#"])) {
-    if (asdasd($_POST)) {
+if (isset($_POST["prd"])) {
+    if (plusctg($_POST)) {
         echo "<script>
         alert('data berhasil ditambahkan');
-        document.location.href = 'listprd.php';
+        document.location.href = 'product.php';
         </script>";
     } else {
         echo "<script>
         alert('data gagal ditambahkan');
-        document.location.href = 'listprd.php';
+        document.location.href = 'product.php';
         </script>";
     }
 }
@@ -46,9 +47,7 @@ if (isset($_POST["#"])) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="https://cdn.tiny.cloud/1/oqlwijnpf68ywo2qvmh366eagscvjp81hp37x99y45f0h92z/tinymce/6/tinymce.min.js"
-        referrerpolicy="origin"></script>
-</head>
+
 
 <body id="page-top">
 
@@ -107,31 +106,32 @@ if (isset($_POST["#"])) {
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
-                        <a class="collapse-item" href="listprd.php">List Product</a>
-                        <a class="collapse-item active" href="product.php">Add Product</a>
+                        <a class="collapse-item active" href="listprd.php">List Product</a>
+                        <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
-                        <a class="collapse-item" href="color.php">Color</a>
+                        <a class="collapse-item" href="color.php">Color</a> 
                         <a class="collapse-item" href="size.php">Size</a>
 
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
-                    aria-controls="collapseThree">
-                    <i class="fas fa-fw fa-coins"></i>
-                    <span>Transaksi</span>
-                </a>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Section:</h6>
-                        <a class="collapse-item" href="unpaid.php">Belum Dibayar</a>
-                        <a class="collapse-item" href="paid.php">Dibayar</a>
-                        <a class="collapse-item" href="send.php">Dikirim</a>
-                        <a class="collapse-item" href="done.php">Selesai</a>
-                    </div>
-                </div>
-            </li>
+                        </div>
+                        </div>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+                        aria-controls="collapseThree">
+                        <i class="fas fa-fw fa-coins"></i>
+                        <span>Transaksi</span>
+                        </a>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Section:</h6>
+                            <a class="collapse-item" href="unpaid.php">Belum Dibayar</a>
+                            <a class="collapse-item" href="paid.php">Dibayar</a>
+                            <a class="collapse-item" href="send.php">Dikirim</a>
+                            <a class="collapse-item" href="done.php">Selesai</a> 
+                        </div>
+                        </div>
+                        </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -159,13 +159,14 @@ if (isset($_POST["#"])) {
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
+                    <form method="post" action="listprd.php"
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            <input type="hidden" name="category" id="" value="none">
+                            <input type="text" name="search" class="form-control bg-light border-0 small" placeholder="Search for..." 
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary" type="submit" name="filter">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
@@ -338,19 +339,53 @@ if (isset($_POST["#"])) {
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Team</h1>
                     </div>
-                    <h5>Edit Team</h5>
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            Image <br>
-                            <input type="file" name="gambar" id=""> <br>
-                            Name 
-                            <input type="text" name="product" id="" class="form-control">
-                            About 
-                            <textarea name="about" id="" cols="30" rows="10" class="form-control"></textarea> <br>
-                            <button type="submit" class="btn btn-primary" name="editteam">Submit</button>
-                        </div>
-                    </form>
+                    <h5>List Team</h5>
 
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">As</th>
+                                <th scope="col">About</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1;  
+                            if (empty($team)) {
+                                    echo "<tr><td colspan='6'><h5 style='color:red;text-align:center'>Tidak Ada Data</h5></td></tr>";
+                                } ?>
+                            
+                            <?php foreach ($team as $tm): ?>
+                                <tr>
+                                    <td>
+                                        <?= $i++; ?>
+                                    </td>
+                                    <td><img src="../images/<?= $tm["gambar"]; ?>" alt="" srcset="" style="width:100px;height:100px;border-radius:50%;">
+                                    </td>
+                                    <td>
+                                        <?= $tm["name"]; ?>
+                                    </td>
+                                    <td>
+                                        <?= $tm["sebagai"];
+                                         ?>
+                                    </td>
+                                    <td>
+                                        <?= $tm["teks"];
+                                         ?>
+                                    </td>
+                                    <td>
+                                    <a href="edittm.php?id=<?= $tm["id"];?>" class="btn-circle btn-success btn-sm"><i
+                                                class="fas fa-pen"></i></a>
+                                        <a onclick="return confirm('Apakah kamu yakin ingin mengapus ini?')" href="deletetm.php?id=<?= $tm["id"];?>" class="btn-circle btn-danger btn-sm"><i
+                                                class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -415,19 +450,7 @@ if (isset($_POST["#"])) {
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-            mergetags_list: [
-                { value: 'First.Name', title: 'First Name' },
-                { value: 'Email', title: 'Email' },
-            ]
-        });
-    </script>
+
 </body>
 
 </html>

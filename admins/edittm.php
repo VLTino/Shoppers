@@ -8,16 +8,19 @@ if (!isset($_SESSION["admin"])) {
 
 require 'functions.php';
 
-if (isset($_POST["team"])) {
-    if (addteam($_POST)) {
+$id = $_GET["id"];
+$team = query("SELECT * FROM `team` WHERE `id` =$id");
+
+if (isset($_POST["edittm"])) {
+    if (edittm($_POST)) {
         echo "<script>
         alert('data berhasil ditambahkan');
-        document.location.href = 'addteam.php';
+        document.location.href = 'listteam.php';
         </script>";
     } else {
         echo "<script>
         alert('data gagal ditambahkan');
-        document.location.href = 'addteam.php';
+        document.location.href = 'listteam.php';
         </script>";
     }
 }
@@ -336,18 +339,27 @@ if (isset($_POST["team"])) {
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Team</h1>
                     </div>
-                    <h5>Plus Team</h5>
+                    <h5>Edit Team</h5>
                     <form action="" method="post" enctype="multipart/form-data">
+                        <?php foreach ($team as $tm) {
+                            $gambar = $tm["gambar"];
+                            $name = $tm["name"];
+                            $as = $tm["sebagai"];
+                            $about = $tm["teks"];
+                            $id = $tm["id"];
+                        } ?>
                         <div class="form-group">
+                            <input type="hidden" name="id" id="" value="<?= $id; ?>">
                             Image <br>
+                            <img src="../images/<?= $gambar; ?>" alt="" srcset="" style="width:100px;height:100px;border-radius:50%;">
                             <input type="file" name="gambar" id=""> <br>
                             Name 
-                            <input type="text" name="name" id="" class="form-control">
+                            <input type="text" name="name" id="" class="form-control" value="<?= $name; ?>">
                             As 
-                            <input type="text" name="as" id="" class="form-control">
+                            <input type="text" name="as" id="" class="form-control" value="<?= $as; ?>">
                             About 
-                            <textarea name="about" id="" cols="30" rows="10" class="form-control"></textarea> <br>
-                            <button type="submit" class="btn btn-primary" name="team">Submit</button>
+                            <textarea name="about" id="" cols="30" rows="10" class="form-control"><?= $about; ?></textarea> <br>
+                            <button type="submit" class="btn btn-primary" name="edittm">Submit</button>
                         </div>
                     </form>
 
