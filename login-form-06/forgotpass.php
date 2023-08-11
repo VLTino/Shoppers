@@ -31,7 +31,7 @@
           <div class="col-md-7">
             <div class="mb-4">
               <h3>Ganti Password</h3>
-              <p class="mb-4">Kami akan mengirim emai ke Anda</p>
+              <p class="mb-4">Kami akan mengirim email ke Anda</p>
             </div>
             <form action="prosesforgot.php" method="post">
               <div class="form-group first">

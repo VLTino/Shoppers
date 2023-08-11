@@ -175,7 +175,7 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
         <div class="row">
           <?php foreach ($category as $ctg): ?>
             <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-              <a class="block-2-item" href="<?= $ctg["link"]; ?>">
+              <a class="block-2-item" href="shop.php">
                 <figure class="image">
                   <img src="images/<?= $ctg["gambar"]; ?>" alt="" class="img-fluid">
                 </figure>
