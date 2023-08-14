@@ -7,45 +7,99 @@ if(isset($_SESSION["login"])){
 
 require '../admins/functions.php';
 
+require_once 'vendor/autoload.php';
+
+// init configuration
+$clientID = '726349655970-nliaoe7endndtv0m0kfthup1iv4qujgn.apps.googleusercontent.com';
+$clientSecret = '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';
+$redirectUri = 'http://localhost/p3/login-form-06/index.php';
+
+// create Client Request to access Google API
+$client = new Google_Client();
+$client->setClientId($clientID);
+$client->setClientSecret($clientSecret);
+$client->setRedirectUri($redirectUri);
+$client->addScope("email");
+$client->addScope("profile");
+
 if(isset($_POST["login"])){
-    $email = $_POST ["email"];
-    $password = $_POST ["password"];
+  $email = $_POST ["email"];
+  $password = $_POST ["password"];
 
-    $result = mysqli_query($conn, "SELECT * FROM customer WHERE email = '$email'") ;
+  $result = mysqli_query($conn, "SELECT * FROM customer WHERE email = '$email'") ;
 
-    // cek email
-    if(mysqli_num_rows($result) === 1 ) {
-        $row = mysqli_fetch_assoc($result);
+  // cek email
+  if(mysqli_num_rows($result) === 1 ) {
+      $row = mysqli_fetch_assoc($result);
 
-        // cek apakah akun sudah diverifikasi (verifikasi == 1)
-        if ($row["verifikasi"] == 1) {
-            // cek password 
-            if (password_verify($password, $row["password"])){
-                // cek session
-                $_SESSION["login"] = true ; 
-                $_SESSION["email"] = $email; 
-                $_SESSION["password"] = $password; 
-                header("Location: ../index.php");
-                exit;
-            } else {
-                // Password salah
-                echo "<script> 
-                        alert('Password salah')
-                      </script>";
-            }
-        } else {
-            // Akun belum diverifikasi
-            echo "<script> 
-                    alert('Akun belum diverifikasi')
-                  </script>";
-        }
-    } else {
-        // Email tidak ditemukan
-        echo "<script> 
-                alert('Email tidak ditemukan')
-              </script>";
-    }
-}
+      // cek apakah akun sudah diverifikasi (verifikasi == 1)
+      if ($row["verifikasi"] == 1) {
+          // cek password 
+          if (password_verify($password, $row["password"])){
+              // cek session
+              $_SESSION["login"] = true ; 
+              $_SESSION["email"] = $email; 
+              $_SESSION["password"] = $password; 
+              header("Location: ../index.php");
+              exit;
+          } else {
+              // Password salah
+              echo "<script> 
+                      alert('Password salah')
+                    </script>";
+          }
+      } else {
+          // Akun belum diverifikasi
+          echo "<script> 
+                  alert('Akun belum diverifikasi')
+                </script>";
+      }
+  } else {
+      // Email tidak ditemukan
+      echo "<script> 
+              alert('Email tidak ditemukan')
+            </script>";
+  }
+}else if (isset($_GET['code'])) {
+  $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+  $client->setAccessToken($token['access_token']);
+
+  // get profile info
+  $google_oauth = new Google_Service_Oauth2($client);
+  $google_account_info = $google_oauth->userinfo->get();
+  $userinfo = [
+    'email' => $google_account_info['email'],
+    'full_name' => $google_account_info['givenName'],
+    'verifiedEmail' => $google_account_info['verifiedEmail'],
+    'token' => $google_account_info['id'],
+  ];
+
+  $sql = "SELECT * FROM `customer` WHERE `email` = '{$userinfo['email']}'";
+  $result = mysqli_query($conn,$sql);
+  if (mysqli_num_rows($result) > 0) {
+    $_SESSION["login"] = true ; 
+    $_SESSION["email"] = $userinfo['email']; 
+    $_SESSION["password"] = " "; 
+    header("Location: ../index.php");
+              exit;
+  }else{
+    $sql = "INSERT INTO `customer` VALUES (NULL,NULL,'{$userinfo['full_name']}','{$userinfo['email']}',' ','{$userinfo['verifiedEmail']}','{$userinfo['token']}',NULL)";
+    $result = mysqli_query($conn,$sql);
+    $_SESSION["login"] = true ; 
+    $_SESSION["email"] = $userinfo['email']; 
+    $_SESSION["password"] = " "; 
+    header("Location: ../index.php");
+              exit;
+
+  }
+
+
+  
+} 
+// else {
+//   echo "<a href='".$client->createAuthUrl()."'>Google Login</a>";
+// }
+
 ?>
 
 <!doctype html>
@@ -118,7 +172,7 @@ if(isset($_POST["login"])){
               <span class="d-block text-center my-4 text-muted">— or —</span>
               
               <div class="social-login">
-                <a href="#" class="google btn d-flex justify-content-center align-items-center">
+                <a href="<?= $client->createAuthUrl() ?>" class="google btn d-flex justify-content-center align-items-center">
                   <span class="icon-google mr-3"></span> Login with Google
                 </a>
               </div>
