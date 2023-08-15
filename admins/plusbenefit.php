@@ -156,6 +156,12 @@ if (isset($_POST["sbmc1"])) {
                     <i class="fas fa-fw fa-phone"></i>
                     <span>Contact</span></a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="store.php">
+                    <i class="fas fa-fw fa-store"></i>
+                    <span>Store Location</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
 

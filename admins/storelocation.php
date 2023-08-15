@@ -123,13 +123,13 @@ if (isset($_POST["location"])) {
                     </div>
                 </div>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
                     aria-controls="collapseThree">
                     <i class="fas fa-fw fa-coins"></i>
                     <span>Transaksi</span>
                 </a>
-                <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item active" href="unpaid.php">Belum Dibayar</a>
@@ -143,6 +143,12 @@ if (isset($_POST["location"])) {
                 <a class="nav-link" href="contact.php">
                     <i class="fas fa-fw fa-phone"></i>
                     <span>Contact</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="store.php">
+                    <i class="fas fa-fw fa-store"></i>
+                    <span>Store Location</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
