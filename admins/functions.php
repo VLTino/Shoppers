@@ -787,4 +787,17 @@ function edittm($data)
 
     return mysqli_affected_rows($conn);
 }
+
+function contact($data)
+{
+    global $conn;
+    $alamat = htmlspecialchars($data["alamattoko"]);
+    $phone = htmlspecialchars($data["phone"]);
+    $email = htmlspecialchars($data["email"]);
+
+    $query = "UPDATE `contact` SET `alamat` = '$alamat', `phone` = '$phone', `email` = '$email'";
+    mysqli_query($conn,$query);
+
+    return mysqli_affected_rows($conn);
+}
 ?>

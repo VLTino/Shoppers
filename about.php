@@ -5,6 +5,8 @@ require('admins/functions.php');
 $benefit = query("SELECT * FROM `benefit`");
 $about = query("SELECT * FROM `about` WHERE `id` = 1");
 $team = query("SELECT * FROM `team`");
+$contact = query("SELECT * FROM `contact` WHERE `id`=1");
+$imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
 
 foreach ($about as $ab){
   $video = $ab["video"];
@@ -235,20 +237,30 @@ foreach ($about as $ab){
           <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
             <h3 class="footer-heading mb-4">Promo</h3>
             <a href="#" class="block-6">
-              <img src="images/hero_1.jpg" alt="Image placeholder" class="img-fluid rounded mb-4">
+            <?php foreach ($imgh as $imgh):
+                                $gambar = $imgh["gambar"];
+                            ?>
+              <img src="images/<?= $gambar; ?>" alt="Image placeholder" class="img-fluid rounded mb-4">
+              <?php endforeach; ?>
               <h3 class="font-weight-light  mb-0">Finding Your Perfect Shoes</h3>
-              <p>Promo from  nuary 15 &mdash; 25, 2019</p>
+              <p>Promo from nuary 15 &mdash; 25, 2019</p>
             </a>
           </div>
+          <?php foreach ($contact as $ctc):
+                                $alamat = $ctc["alamat"];
+                                $phone = $ctc["phone"];
+                                $email = $ctc["email"];
+                            ?>
           <div class="col-md-6 col-lg-3">
             <div class="block-5 mb-5">
               <h3 class="footer-heading mb-4">Contact Info</h3>
               <ul class="list-unstyled">
-                <li class="address">203 Fake St. Mountain View, San Francisco, California, USA</li>
-                <li class="phone"><a href="tel://23923929210">+2 392 3929 210</a></li>
-                <li class="email">emailaddress@domain.com</li>
+                <li class="address"><?= $alamat; ?></li>
+                <li class="phone"><a href="tel://23923929210"><?= $phone; ?></a></li>
+                <li class="email"><?= $email; ?></li>
               </ul>
             </div>
+            <?php endforeach; ?>
 
             <div class="block-7">
               <form action="#" method="post">
@@ -264,12 +276,17 @@ foreach ($about as $ab){
         <div class="row pt-5 mt-5 text-center">
           <div class="col-md-12">
             <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;
+              <script data-cfasync="false"
+                src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+              <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
+              with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank"
+                class="text-primary">Colorlib</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
-          
+
         </div>
       </div>
     </footer>

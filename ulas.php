@@ -41,7 +41,8 @@ if (isset($_POST["ulas"])) {
       </script>";
   }
 }
-
+$contact = query("SELECT * FROM `contact` WHERE `id`=1");
+$imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
 
 ?>
 
@@ -238,20 +239,30 @@ if (isset($_POST["ulas"])) {
           <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
             <h3 class="footer-heading mb-4">Promo</h3>
             <a href="#" class="block-6">
-              <img src="images/hero_1.jpg" alt="Image placeholder" class="img-fluid rounded mb-4">
+            <?php foreach ($imgh as $imgh):
+                                $gambar = $imgh["gambar"];
+                            ?>
+              <img src="images/<?= $gambar; ?>" alt="Image placeholder" class="img-fluid rounded mb-4">
+              <?php endforeach; ?>
               <h3 class="font-weight-light  mb-0">Finding Your Perfect Shoes</h3>
               <p>Promo from nuary 15 &mdash; 25, 2019</p>
             </a>
           </div>
+          <?php foreach ($contact as $ctc):
+                                $alamat = $ctc["alamat"];
+                                $phone = $ctc["phone"];
+                                $email = $ctc["email"];
+                            ?>
           <div class="col-md-6 col-lg-3">
             <div class="block-5 mb-5">
               <h3 class="footer-heading mb-4">Contact Info</h3>
               <ul class="list-unstyled">
-                <li class="address">203 Fake St. Mountain View, San Francisco, California, USA</li>
-                <li class="phone"><a href="tel://23923929210">+2 392 3929 210</a></li>
-                <li class="email">emailaddress@domain.com</li>
+                <li class="address"><?= $alamat; ?></li>
+                <li class="phone"><a href="tel://23923929210"><?= $phone; ?></a></li>
+                <li class="email"><?= $email; ?></li>
               </ul>
             </div>
+            <?php endforeach; ?>
 
             <div class="block-7">
               <form action="#" method="post">
