@@ -795,7 +795,20 @@ function contact($data)
     $phone = htmlspecialchars($data["phone"]);
     $email = htmlspecialchars($data["email"]);
 
-    $query = "UPDATE `contact` SET `alamat` = '$alamat', `phone` = '$phone', `email` = '$email'";
+    $query = "UPDATE `contact` SET `alamat` = '$alamat', `phone` = '$phone', `email` = '$email' WHEER `id` = 1";
+    mysqli_query($conn,$query);
+
+    return mysqli_affected_rows($conn);
+}
+
+function changegender($data)
+{
+    global $conn;
+
+    $email = $data["email"];
+    $gender = $data["gender"];
+
+    $query = "UPDATE `customer` SET `gender` = '$gender' WHERE `email`= '$email'";
     mysqli_query($conn,$query);
 
     return mysqli_affected_rows($conn);

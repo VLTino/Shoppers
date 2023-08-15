@@ -16,22 +16,33 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 if (isset($_POST["changename"])) {
   if (changename($_POST) > 0) {
     header("Location: profile.php?successname=true");
-    exit();  
+    exit();
   } else {
-      echo mysqli_error($conn);
+    echo mysqli_error($conn);
   }
- 
+
 }
 
 if (isset($_POST["changepp"])) {
   if (changepp($_POST) > 0) {
     header("Location: profile.php?successpp=true");
-    exit();  
+    exit();
   } else {
-      echo mysqli_error($conn);
+    echo mysqli_error($conn);
   }
- 
+
 }
+
+if (isset($_POST["changegender"])) {
+  if (changegender($_POST) > 0) {
+    header("Location: profile.php?successgender=true");
+    exit();
+  } else {
+    echo mysqli_error($conn);
+  }
+
+}
+
 $contact = query("SELECT * FROM `contact` WHERE `id`=1");
 $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
 ?>
@@ -60,45 +71,57 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
 </head>
 
 <body>
-<div id="custom-alert" class="alert alert-success fade show" style="display: none;" role="alert">
-  <strong>Yeay</strong> Username berhasil diganti!
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
+  <div id="custom-alert" class="alert alert-success fade show" style="display: none;" role="alert">
+    <strong>Yeay</strong> Username berhasil diganti!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
-<div id="custom-alert-pp" class="alert alert-success fade show" style="display: none;" role="alert">
-  <strong>Yeay</strong> Foto Profil berhasil diganti!
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
+  <div id="custom-alert-pp" class="alert alert-success fade show" style="display: none;" role="alert">
+    <strong>Yeay</strong> Foto Profil berhasil diganti!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
-<script>
-  // Fungsi untuk menampilkan alert
-  function showAlert(elementId) {
-    const alertElement = document.getElementById(elementId);
-    alertElement.style.display = "block";
+  <div id="custom-alert-gender" class="alert alert-success fade show" style="display: none;" role="alert">
+    <strong>Yeay</strong> Gender berhasil diedit!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
-    // Sembunyikan alert setelah 3 detik
-    setTimeout(function() {
-      alertElement.style.display = "none";
-    }, 3000);
-  }
+  <script>
+    // Fungsi untuk menampilkan alert
+    function showAlert(elementId) {
+      const alertElement = document.getElementById(elementId);
+      alertElement.style.display = "block";
 
-  // Cek apakah alert perlu ditampilkan berdasarkan parameter URL 'success'
-  const urlParams = new URLSearchParams(window.location.search);
+      // Sembunyikan alert setelah 3 detik
+      setTimeout(function () {
+        alertElement.style.display = "none";
+      }, 3000);
+    }
 
-  const successParamName = urlParams.get('successname');
-  if (successParamName && successParamName === "true") {
-    showAlert('custom-alert');
-  }
+    // Cek apakah alert perlu ditampilkan berdasarkan parameter URL 'success'
+    const urlParams = new URLSearchParams(window.location.search);
 
-  const successParamPP = urlParams.get('successpp');
-  if (successParamPP && successParamPP === "true") {
-    showAlert('custom-alert-pp');
-  }
-</script>
+    const successParamName = urlParams.get('successname');
+    if (successParamName && successParamName === "true") {
+      showAlert('custom-alert');
+    }
+
+    const successParamPP = urlParams.get('successpp');
+    if (successParamPP && successParamPP === "true") {
+      showAlert('custom-alert-pp');
+    }
+
+    const successParamgender = urlParams.get('successgender');
+    if (successParamgender && successParamgender === "true") {
+      showAlert('custom-alert-gender');
+    }
+  </script>
 
   <style>
     .fotoprofil {
@@ -163,7 +186,7 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
         <div class="container">
           <div class="row align-items-center">
 
-          <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
               <form action="shop.php" method="get" class="site-block-top-search">
 
                 <span class="icon icon-search2"></span>
@@ -266,7 +289,7 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
                 <img src="<?php if (!isset($us["pp"])) {
                   echo "images/defaultpp.png";
                 } else {
-                  echo "images/".$us["pp"];
+                  echo "images/" . $us["pp"];
                 } ?>" alt="" srcset="" class="img-fluid" style=" width: 100px;
       height: 100px;
       border-radius: 50%;">
@@ -282,24 +305,52 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
             <div class="col-md-6 order-1 mb-5 mb-md-0 form-group">
               <h6>Username</h6>
               <p>
-                <?= $us["name"]; ?><a onclick="togglePopupnama()" href="#" class="pl-3" >Ubah</a>
-              </p><br>
+                <?= $us["name"]; ?><a onclick="togglePopupnama()" href="#" class="pl-3">Ubah</a>
+              </p>
+              <h6>Gender</h6>
+              <p>
+                <?php if (empty($us["gender"])) {
+                  echo "Not Set";
+                }else {
+                  echo $us["gender"];
+                } ; ?><a onclick="togglePopupgender()" href="#" class="pl-3">Ubah</a>
+              </p>
               <button class="custom-button" onclick="window.location='login-form-06/forgotpass.php'">Ganti
                 Password</button>
             </div>
 
             <div class="overlay" id="overlay"></div>
-  
+
             <div class="popup-form" id="popupForm">
               <h2>Ubah Nama</h2>
               <form action="" method="post">
                 <!-- Tambahkan elemen formulir sesuai kebutuhan -->
                 <div class="form-group">
-                <label for="name">Nama:</label>
-                <input type="text" id="name" name="name" value="<?= $us["name"]; ?>" required class="form-control">
+                  <label for="name">Nama:</label>
+                  <input type="text" id="name" name="name" value="<?= $us["name"]; ?>" required class="form-control">
                 </div>
                 <input type="hidden" name="email" id="" value="<?= $us["email"]; ?>">
                 <button type="submit" class="btn btn-primary" name="changename">Kirim</button>
+                <a class="btn btn-danger" style="color:white;" onclick="window.location='profile.php'">Batal</a>
+              </form>
+            </div>
+
+            <div class="popup-form" id="popupForm-gender">
+              <h2>Ubah Foto Profil</h2>
+              <form action="" method="post" enctype="multipart/form-data">
+                <!-- Tambahkan elemen formulir sesuai kebutuhan -->
+                <div class="form-group">
+                  <div class="pria">
+                  <input type="radio" name="gender" id="pria" value="Pria">
+                  <label for="pria">Pria</label>
+                  </div>
+                  <div class="wanita">
+                  <input type="radio" name="gender" id="wanita" value="Wanita">
+                  <label for="wanita">Wanita</label>
+                  </div>
+                </div>
+                <input type="hidden" name="email" id="" value="<?= $us["email"]; ?>">
+                <button type="submit" class="btn btn-primary" name="changegender">Kirim</button>
                 <a class="btn btn-danger" style="color:white;" onclick="window.location='profile.php'">Batal</a>
               </form>
             </div>
@@ -309,8 +360,8 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
               <form action="" method="post" enctype="multipart/form-data">
                 <!-- Tambahkan elemen formulir sesuai kebutuhan -->
                 <div class="form-group">
-                
-                <input type="file" name="gambar" required>
+
+                  <input type="file" name="gambar" required>
                 </div>
                 <input type="hidden" name="email" id="" value="<?= $us["email"]; ?>">
                 <button type="submit" class="btn btn-primary" name="changepp">Kirim</button>
@@ -356,9 +407,24 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
           overlay.style.display = 'none';
         }
       }
+
+      function togglePopupgender() {
+        var overlay = document.getElementById('overlay');
+        var popupForm = document.getElementById('popupForm-gender');
+
+        // Jika popup form sedang tersembunyi, maka tampilkan
+        if (popupForm.style.display === 'none') {
+          popupForm.style.display = 'block';
+          overlay.style.display = 'block';
+        } else {
+          // Jika popup form sedang ditampilkan, maka sembunyikan
+          popupForm.style.display = 'none';
+          overlay.style.display = 'none';
+        }
+      }
     </script>
 
-<footer class="site-footer border-top">
+    <footer class="site-footer border-top">
       <div class="container">
         <div class="row">
           <div class="col-lg-6 mb-5 mb-lg-0">
@@ -393,29 +459,35 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
           <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
             <h3 class="footer-heading mb-4">Promo</h3>
             <a href="#" class="block-6">
-            <?php foreach ($imgh as $imgh):
-                                $gambar = $imgh["gambar"];
-                            ?>
-              <img src="images/<?= $gambar; ?>" alt="Image placeholder" class="img-fluid rounded mb-4">
+              <?php foreach ($imgh as $imgh):
+                $gambar = $imgh["gambar"];
+                ?>
+                <img src="images/<?= $gambar; ?>" alt="Image placeholder" class="img-fluid rounded mb-4">
               <?php endforeach; ?>
               <h3 class="font-weight-light  mb-0">Finding Your Perfect Shoes</h3>
               <p>Promo from nuary 15 &mdash; 25, 2019</p>
             </a>
           </div>
           <?php foreach ($contact as $ctc):
-                                $alamat = $ctc["alamat"];
-                                $phone = $ctc["phone"];
-                                $email = $ctc["email"];
-                            ?>
-          <div class="col-md-6 col-lg-3">
-            <div class="block-5 mb-5">
-              <h3 class="footer-heading mb-4">Contact Info</h3>
-              <ul class="list-unstyled">
-                <li class="address"><?= $alamat; ?></li>
-                <li class="phone"><a href="tel://23923929210"><?= $phone; ?></a></li>
-                <li class="email"><?= $email; ?></li>
-              </ul>
-            </div>
+            $alamat = $ctc["alamat"];
+            $phone = $ctc["phone"];
+            $email = $ctc["email"];
+            ?>
+            <div class="col-md-6 col-lg-3">
+              <div class="block-5 mb-5">
+                <h3 class="footer-heading mb-4">Contact Info</h3>
+                <ul class="list-unstyled">
+                  <li class="address">
+                    <?= $alamat; ?>
+                  </li>
+                  <li class="phone"><a href="tel://23923929210">
+                      <?= $phone; ?>
+                    </a></li>
+                  <li class="email">
+                    <?= $email; ?>
+                  </li>
+                </ul>
+              </div>
             <?php endforeach; ?>
 
             <div class="block-7">
