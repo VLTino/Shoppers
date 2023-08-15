@@ -153,32 +153,34 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
       color: black;
     }
 
-    .popup-form {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #f9f9f9;
-      padding: 20px;
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      border-radius: 10px;
-      width: 500px;
-    }
-
     /* CSS untuk overlay */
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 9998;
-    }
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+
+.popup-form {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  border-radius: 10px;
+  max-width: 90%; /* Ubah lebar maksimal sesuai kebutuhan */
+  width: 500px; /* Lebar default */
+}
+
   </style>
   <div class="site-wrap">
     <header class="site-navbar" role="banner">
@@ -336,7 +338,7 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
             </div>
 
             <div class="popup-form" id="popupForm-gender">
-              <h2>Ubah Foto Profil</h2>
+              <h2>Gender</h2>
               <form action="" method="post" enctype="multipart/form-data">
                 <!-- Tambahkan elemen formulir sesuai kebutuhan -->
                 <div class="form-group">
