@@ -216,7 +216,7 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
                     <ul class='dropdown-menu'>
                         <li class='dropdown-item'><a href='profile.php'> Edit Profile</a></li>
                         <li class='dropdown-item'><a href='transaksi.php'> Transaksi</a></li>
-                        <li class='dropdown-item'><a href='riwayat.php'> Riwayat Transaksi</a></li>
+                        
                         <li class='dropdown-item'><a href='logoutuser.php'> Logout</a></li>
                         <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
                     </ul>
@@ -276,7 +276,7 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
 
                 <li class="active mb-1"><a href="profile.php" style="color:black;">Edit Profile</a></li>
                 <li class="active mb-1"><a href="transaksi.php">Transaksi</a></li>
-                <li class="active mb-1"><a href="riwayat.php">Riwayat Transaksi</a></li>
+                
                 <!-- <li class="active mb-1"><a href="Gantisandi.php">Ganti Sandi</a></li> -->
 
               </ul>

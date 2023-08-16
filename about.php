@@ -79,7 +79,7 @@ foreach ($about as $ab){
                     <ul class='dropdown-menu'>
                         <li class='dropdown-item'><a href='profile.php'> Edit Profile</a></li>
                         <li class='dropdown-item'><a href='transaksi.php'> Transaksi</a></li>
-                        <li class='dropdown-item'><a href='riwayat.php'> Riwayat Transaksi</a></li>
+                        
                         <li class='dropdown-item'><a href='logoutuser.php'> Logout</a></li>
                         <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
                     </ul>
