@@ -1,4 +1,5 @@
 <?php session_start();
+require('admins/functions.php');
 $contact = query("SELECT * FROM `contact` WHERE `id`=1");
 $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1"); ?>
 <!DOCTYPE html>
