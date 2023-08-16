@@ -359,8 +359,8 @@ $location = query("SELECT * FROM `storelocation` WHERE `id` = 1;");
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Store Location</h1>
-                        
                     </div>
+                    <p style="color:red;font-weight:bold;">*Ini digunakan untuk cek ongkir</p>
 
                     <div class="col-md-12 order-1 mb-5 mb-md-0" style="border:solid 1px black;border-radius:10px;padding:10px; position: relative;">
     <?php foreach ($location as $lc): ?>
