@@ -57,7 +57,7 @@ try {
 
     //Content
     $mail->isHTML(true); //Set email format to HTML
-    $mail->Subject = 'Verifikasi akun Shoppers';
+    $mail->Subject = 'Ganti Password';
     $mail->Body = 'Hi! ' . $userData["name"] . ', ini adalah tautan untuk ganti password akun Anda.<br> <a href="http://p3.test/login-form-06/changepass.php?email=' . $email . '">Change Password</a>';
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 

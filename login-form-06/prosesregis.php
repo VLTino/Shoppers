@@ -73,7 +73,7 @@ try {
 
     if ($mail->send()) {
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $conn->query("INSERT INTO `customer` VALUES (NULL,NULL,'$name','$email','$password',0,'$code')");
+        $conn->query("INSERT INTO `customer` VALUES (NULL,NULL,'$name','$email','$password',0,'$code',NULL)");
         echo "<script>alert('Registrasi Berhasil, silahkan cek email untuk verifikasi akun Anda');window.location='index.php'</script>";
     }
 } catch (Exception $e) {
