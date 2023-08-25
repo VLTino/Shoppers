@@ -20,7 +20,7 @@ foreach ($minPrice as $mip) {
 }
 
 
-
+$sss =1 ;
 $contact = query("SELECT * FROM `contact` WHERE `id`=1");
 $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
 $category = query("SELECT * FROM `category`");
