@@ -24,10 +24,10 @@ if (isset($_GET["status"])) {
 foreach ($user as $us) {
     if (isset($status)) {
         $usid = $us["id"];
-        $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid AND `status` = '$status'");
+        $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid AND `status` = '$status' ORDER BY `id` DESC");
     } else {
         $usid = $us["id"];
-        $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid");
+        $transaksi = query("SELECT * FROM `orders` WHERE `id_user`= $usid ORDER BY `id` DESC");
     }
 }
 
@@ -216,10 +216,14 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
                                             echo $formattedId ?>
                                         </th>
                                         <td>
-                                            <?= $tr["order_date"]; ?>
+                                              <?php $originalDate = $tr["order_date"]; 
+                                                $newDate = date("d-m-Y", strtotime($originalDate)); 
+                                                echo $newDate;  ?>
                                         </td>
                                         <td>
-                                            <?= $tr["due_date"]; ?>
+                                            <?php $originalDate = $tr["due_date"]; 
+                                                $newDate = date("d-m-Y", strtotime($originalDate)); 
+                                                echo $newDate; ?>
                                         </td>
                                         <td>
                                             <?php $formattedPrice = "Rp " . number_format($tr["orders_total"], 0, ',', '.');
