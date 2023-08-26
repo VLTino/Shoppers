@@ -375,6 +375,7 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                                 <input type="hidden" name="id" id="" value="<?= $prd["id"]; ?>">
                                 Image <br>
                                 <img src="../images/<?= $prd["gambar"]; ?>" alt="" srcset="" style="width:500px;">
+                                <p style="color:red">( JPG,JPEG,PNG | 2 MB | 479 x 340 )</p>
                                 <input type="file" name="gambar" id=""> <br>
                                 Name Product
                                 <input type="text" name="product" id="" class="form-control" value="<?= $prd["name"]; ?>">
