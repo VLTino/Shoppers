@@ -372,7 +372,8 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                             <?php foreach ($ads as $ad): ?>
                                 Image <br>
                                 <img src="../images/<?= $ad["gambar"]; ?>" alt="" srcset="">
-                                <input type="file" name="gambar" id=""> <br>
+                                <p style="color:red">( JPG,JPEG,PNG | 2 MB | 900 x 600 )</p>
+                                <input type="file" name="gambar" id=""> <br><br>
                                 Header
                                 <input type="text" name="header" id="" class="form-control" value="<?= $ad["header"]; ?>">
                                 Teks

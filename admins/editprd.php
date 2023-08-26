@@ -17,12 +17,12 @@ $product = query("SELECT * FROM `product` WHERE `id` = $id ");
 if (isset($_POST["editprd"])) {
     if (editprd($_POST)) {
         echo "<script>
-        alert('data berhasil ditambahkan');
+        alert('data berhasil diedit');
         document.location.href = 'listprd.php';
         </script>";
     } else {
         echo "<script>
-        alert('data gagal ditambahkan');
+        alert('data gagal diedit');
         document.location.href = 'listprd.php';
         </script>";
     }

@@ -373,6 +373,7 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                         <div class="form-group">
                             Image <br>
                             <input type="file" name="gambar" id=""> <br>
+                            <p style="color:red">( JPG,JPEG,PNG | 2 MB | 900 x 1182 )</p>
                             Name Category
                             <input type="text" name="category" id="" class="form-control">
                             Teks Above Category

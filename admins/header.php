@@ -383,6 +383,7 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                         <img src="../images/<?= $img["gambar"]; ?>" alt="" srcset="" class="img-fluid"
                             style="width:900px;">
                     <?php endforeach; ?>
+                    <p style="color:red">( JPG,JPEG,PNG | 2 MB | 1900 x 890 )</p>
                     <form action="" method="post" enctype="multipart/form-data">
                         <input type="file" name="gambar" id=""> <br><br>
                         <button type="submit" class="btn btn-primary" name="headerimg">Edit</button>

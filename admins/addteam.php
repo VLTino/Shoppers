@@ -368,7 +368,7 @@ if (isset($_POST["team"])) {
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             Image <br>
-                            <input type="file" name="gambar" id=""> <br>
+                            <input type="file" name="gambar" id=""> <p style="color:red">( JPG,JPEG,PNG | 2 MB | 400 x 400 )</p>
                             Name 
                             <input type="text" name="name" id="" class="form-control">
                             As 

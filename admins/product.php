@@ -371,6 +371,7 @@ if (isset($_POST["prd"])) {
                         <div class="form-group">
                             Image <br>
                             <input type="file" name="gambar" id=""> <br>
+                            <p style="color:red">( JPG,JPEG,PNG | 2 MB | 479 x 340 )</p>
                             Name Product
                             <input type="text" name="product" id="" class="form-control">
                             Short About Product

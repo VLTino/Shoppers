@@ -14,12 +14,12 @@ $team = query("SELECT * FROM `team` WHERE `id` =$id");
 if (isset($_POST["edittm"])) {
     if (edittm($_POST)) {
         echo "<script>
-        alert('data berhasil ditambahkan');
+        alert('data berhasil diedit');
         document.location.href = 'listteam.php';
         </script>";
     } else {
         echo "<script>
-        alert('data gagal ditambahkan');
+        alert('data gagal diedit');
         document.location.href = 'listteam.php';
         </script>";
     }
@@ -98,13 +98,13 @@ if (isset($_POST["edittm"])) {
                 </div>
             </li>
  <!-- Nav Item - Pages Collapse Menu -->
- <li class="nav-item">
+ <li class="nav-item active">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true"
                     aria-controls="collapseFour">
                     <i class="fas fa-fw fa-book"></i>
                     <span>About</span>
                 </a>
-                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
+                <div id="collapseFour" class="collapse show" aria-labelledby="headingFour" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="aboutad.php">Edit About</a>
@@ -114,18 +114,18 @@ if (isset($_POST["edittm"])) {
                 </div>
             </li>
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                     aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-shopping-bag"></i>
                     <span>Product</span>
                 </a>
-                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Section:</h6>
                         <a class="collapse-item" href="listprd.php">List Product</a>
-                        <a class="collapse-item active" href="product.php">Add Product</a>
+                        <a class="collapse-item" href="product.php">Add Product</a>
                         <a class="collapse-item" href="category.php">Category</a>
                         <a class="collapse-item" href="color.php">Color</a>
                         <a class="collapse-item" href="size.php">Size</a>
@@ -379,6 +379,7 @@ if (isset($_POST["edittm"])) {
                             Image <br>
                             <img src="../images/<?= $gambar; ?>" alt="" srcset="" style="width:100px;height:100px;border-radius:50%;">
                             <input type="file" name="gambar" id=""> <br>
+                            <p style="color:red">( JPG,JPEG,PNG | 2 MB | 400 x 400 )</p>
                             Name 
                             <input type="text" name="name" id="" class="form-control" value="<?= $name; ?>">
                             As 

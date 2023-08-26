@@ -71,6 +71,16 @@ function img()
             </script>";
         return false;
     }
+
+    // Cek ukuran file
+    $ukuran_maksimum = 2 * 1024 * 1024; // 2MB dalam byte
+    if ($_FILES['gambar']['size'] > $ukuran_maksimum) {
+        echo "<script>
+            alert('Ukuran gambar terlalu besar. Maksimum 2MB');
+            </script>";
+        return false;
+    }
+
     //cek ekstensi
     $ekstensigambarvalid = ['jpg', 'jpeg', 'png'];
     $ekstensigambar = explode('.', $namafile);
@@ -101,6 +111,16 @@ function imgedit()
     if ($error === 4) {
         return false;
     }
+
+    // Cek ukuran file
+    $ukuran_maksimum = 2 * 1024 * 1024; // 2MB dalam byte
+    if ($_FILES['gambar']['size'] > $ukuran_maksimum) {
+        echo "<script>
+            alert('Ukuran gambar terlalu besar. Maksimum 2MB');
+            </script>";
+        return false;
+    }
+
     //cek ekstensi
     $ekstensigambarvalid = ['jpg', 'jpeg', 'png'];
     $ekstensigambar = explode('.', $namafile);
@@ -123,7 +143,7 @@ function imgedit()
 function edithdr($data)
 {
     global $conn;
-
+    error_reporting(0);
     $gambar = $data["gambar"];
 
     $result = mysqli_query($conn, "SELECT `gambar` FROM `imgheader` WHERE `id`= 1");
@@ -270,7 +290,7 @@ function deletectg($id)
 function plusprd($data)
 {
     global $conn;
-
+    error_reporting(0);
     $gambar = $data["gambar"];
     $nama = htmlspecialchars($data["product"]);
     $short = htmlspecialchars($data["sabout"]);
@@ -322,7 +342,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 function editprd($data)
 {
     global $conn;
-
+    error_reporting(0);
     $id = $data["id"];
     $gambar = $data["gambar"];
     $nama = htmlspecialchars($data["product"]);
@@ -469,7 +489,7 @@ function editsize($data)
 function editads($data)
 {
     global $conn;
-
+    error_reporting(0);
     $header = htmlspecialchars($data["header"]);
     $teks = $data["teks"];
     $link = $data["link"];
@@ -581,7 +601,7 @@ function changename($data)
 function changepp($data)
 {
     global $conn;
-
+    error_reporting(0);
     $gambar = $data["gambar"];
     $email = $data["email"];
 
@@ -622,6 +642,16 @@ function imgpp()
             </script>";
         return false;
     }
+
+    // Cek ukuran file
+    $ukuran_maksimum = 2 * 1024 * 1024; // 2MB dalam byte
+    if ($_FILES['gambar']['size'] > $ukuran_maksimum) {
+        echo "<script>
+            alert('Ukuran gambar terlalu besar. Maksimum 2MB');
+            </script>";
+        return false;
+    }
+    
     //cek ekstensi
     $ekstensigambarvalid = ['jpg', 'jpeg', 'png'];
     $ekstensigambar = explode('.', $namafile);
