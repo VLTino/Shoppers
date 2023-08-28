@@ -72,7 +72,7 @@ if (empty($product)) {
         <div class='block-4-text p-4'>
           <h3><a href='shop-single.php?id=".$prd['id']."'>".$prd['name']."</a></h3>
           <p class='mb-0'>".$prd['short']."</p>
-          <p class='text-primary font-weight-bold'>";
+          <p class='text-primaryc font-weight-bold'>";
 
     $priceFromDatabase = $prd['price'];
     $formattedPrice = 'Rp ' . number_format($priceFromDatabase, 0, ',', '.');

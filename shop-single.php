@@ -55,7 +55,7 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
   <link rel="stylesheet" href="css/aos.css">
 
   <link rel="stylesheet" href="css/style.css">
-
+  <link rel="stylesheet" href="css/style.php" type="text/css">
 </head>
 
 <body>
@@ -130,12 +130,34 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
                     echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
                   } ?>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
+                 <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true):
+                    $email = $_SESSION["email"];
+                    $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
+                    foreach ($user as $us) {
+                      $usid = $us['id'];
+  
+                      $countcart = query("SELECT COUNT(*) as total FROM cart WHERE `id_customer` = '$usid'");
+                  }
+
+                  foreach ($countcart as $count):
+                    $totalData = $count["total"];
+
+?>
                   <li>
                     <a href="cart.php" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
-                      <span class="count">2</span>
+                      <span class="count"><?= $totalData ?></span>
                     </a>
                   </li>
+                  <?php endforeach; ?>
+                  <?php else: ?>
+                    <li>
+                    <a href="cart.php" class="site-cart">
+                      <span class="icon icon-shopping_cart"></span>
+                      <span class="count">x</span>
+                    </a>
+                  </li>
+                  <?php endif; ?>
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span
                         class="icon-menu"></span></a></li>
                 </ul>
@@ -177,7 +199,7 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
             </div>
             <div class="col-md-6">
               <?= $prd["about"]; ?>
-              <p><strong class="text-primary h4">
+              <p><strong class="text-primaryc h4">
                   <?php
                   $priceFromDatabase = $prd["price"];
                   $formattedPrice = "Rp " . number_format($priceFromDatabase, 0, ',', '.');
@@ -273,6 +295,8 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
           </div>
         </div>
         </div>
+      
+        <div class="review">
         <?php else: ?>
           <?php foreach ($rating as $rt): 
             $star = $rt["rating"];
@@ -287,8 +311,7 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
             }
 
             ?>
-      <div class="container">
-        <div class="review">
+            <div class="container">
           <div class="row">
             <div class="col-lg-1">
               <img src="<?php if (!isset($gambar)) {
@@ -300,15 +323,15 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
             <div class="col-lg-10">
               <h5><?= $name; ?></h5>
               <div class="rating2">
-                <input type="radio" id="star5" name="rating" value="5" <?php if ($star == "5") echo "checked"; ?> disabled />
+                <input type="radio" id="star5" value="5" <?php if ($star == "5") echo "checked"; ?> disabled />
                 <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                <input type="radio" id="star4" name="rating" value="4" <?php if ($star == "4") echo "checked"; ?> disabled />
+                <input type="radio" id="star4" value="4" <?php if ($star == "4") echo "checked"; ?> disabled />
                 <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                <input type="radio" id="star3" name="rating" value="3" <?php if ($star == "3") echo "checked"; ?> disabled />
+                <input type="radio" id="star3" value="3" <?php if ($star == "3") echo "checked"; ?> disabled />
                 <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                <input type="radio" id="star2" name="rating" value="2" <?php if ($star == "2") echo "checked"; ?> disabled />
+                <input type="radio" id="star2" value="2" <?php if ($star == "2") echo "checked"; ?> disabled />
                 <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                <input type="radio" id="star1" name="rating" value="1" <?php if ($star == "1") echo "checked"; ?> disabled />
+                <input type="radio" id="star1" value="1" <?php if ($star == "1") echo "checked"; ?> disabled />
                 <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
               </div><br><br>
               <p style="margin:0px;"><?php echo date('Y-m-d H:i', strtotime($tanggal)); ?></p>
@@ -316,9 +339,9 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
             </div>
           </div>
         </div>
+          <?php endforeach; ?>
+          <?php endif; ?>
       </div>
-      <?php endforeach; ?>
-      <?php endif; ?>
     </div>
 
     <div class="site-section block-3 site-blocks-2 bg-light">
@@ -344,7 +367,7 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
                       <p class="mb-0">
                         <?= $prd["short"]; ?>
                       </p>
-                      <p class="text-primary font-weight-bold">
+                      <p class="text-primaryc font-weight-bold">
                         <?php $priceFromDatabase = $prd["price"];
                         $formattedPrice = "Rp " . number_format($priceFromDatabase, 0, ',', '.');
                         echo $formattedPrice; ?>
@@ -441,7 +464,7 @@ $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
                 src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
               <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
               with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank"
-                class="text-primary">Colorlib</a>
+                class="text-primaryc">Colorlib</a>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>

@@ -374,7 +374,7 @@ if (isset($_POST["aboutad"])) {
                             <p style="color:red;">width="100%" height="340"</p>
                             <textarea name="video" id="" cols="30" rows="10" class="form-control"><?= $ab["video"]; ?></textarea>
                             Teks
-                            <textarea name="teks" id="" cols="30" rows="10" class="form-control teks"><?= $ab["teks"]; ?></textarea> <br>
+                            <textarea name="teks" id="" cols="30" rows="10" class="form-control teks textarea"><?= $ab["teks"]; ?></textarea> <br>
                             <button type="submit" class="btn btn-primary" name="aboutad">Submit</button>
                         </div>
                     </form>

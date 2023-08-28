@@ -41,6 +41,7 @@ foreach ($about as $ab){
     <link rel="stylesheet" href="css/aos.css">
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.php" type="text/css">
     
   </head>
   <body>
@@ -88,12 +89,34 @@ foreach ($about as $ab){
                     echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
                   } ?>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
+                  <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true):
+                    $email = $_SESSION["email"];
+                    $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
+                    foreach ($user as $us) {
+                      $usid = $us['id'];
+  
+                      $countcart = query("SELECT COUNT(*) as total FROM cart WHERE `id_customer` = '$usid'");
+                  }
+
+                  foreach ($countcart as $count):
+                    $totalData = $count["total"];
+
+?>
                   <li>
                     <a href="cart.php" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
-                      <span class="count">2</span>
+                      <span class="count"><?= $totalData ?></span>
                     </a>
                   </li>
+                  <?php endforeach; ?>
+                  <?php else: ?>
+                    <li>
+                    <a href="cart.php" class="site-cart">
+                      <span class="icon icon-shopping_cart"></span>
+                      <span class="count">x</span>
+                    </a>
+                  </li>
+                  <?php endif; ?>
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span
                         class="icon-menu"></span></a></li>
                 </ul>
@@ -282,7 +305,7 @@ foreach ($about as $ab){
                 src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
               <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
               with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank"
-                class="text-primary">Colorlib</a>
+                class="text-primaryc">Colorlib</a>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>

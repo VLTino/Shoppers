@@ -9,6 +9,36 @@ if (!isset($_SESSION["admin"])) {
 require 'functions.php';
 
 $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
+$colorp = "SELECT `colorp` FROM `colortheme` WHERE `id` = 1"; // Sesuaikan dengan query Anda
+$colors = "SELECT `colors` FROM `colortheme` WHERE `id` = 1"; // Sesuaikan dengan query Anda
+
+$resultcolorp = $conn->query($colorp);
+
+if ($resultcolorp->num_rows > 0) {
+    $row = $resultcolorp->fetch_assoc();
+    $colorp = $row["colorp"];
+}
+
+$resultcolors = $conn->query($colors);
+
+if ($resultcolors->num_rows > 0) {
+    $row = $resultcolors->fetch_assoc();
+    $colors = $row["colors"];
+}
+
+if (isset($_POST["theme"])) {
+    if (theme($_POST)) {
+        echo "<script>
+        alert('data berhasil diedit');
+        document.location.href = 'admins.php';
+        </script>";
+    } else {
+        echo "<script>
+        alert('data gagal diedit');
+        document.location.href = 'admins.php';
+        </script>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +61,15 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="spectrum/dist/spectrum.css">
+    <link rel="stylesheet" type="text/css" href="spectrum/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="spectrum/docs/highlight/styles/default.css">
+    <link rel="stylesheet" type="text/css" href="spectrum/docs/highlight/styles/monokai-sublime.css">
+    <script type="text/javascript" src="spectrum/docs/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="spectrum/dist/spectrum.js"></script>
+    <script type='text/javascript' src='spectrum/docs/toc.js'></script>
+    <script type='text/javascript' src='spectrum/docs/docs.js'></script>
+    <script type='text/javascript' src='spectrum/docs/highlight/highlight.pack.js'></script>
 
 </head>
 
@@ -355,10 +394,31 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
 
                     <div class="row">
                         <div class="col-12">
-                            <h1 class="font-weight-bold text-center">Selamat Datang Admin!</h1>
+                            <h1 class="font-weight-bold text-center" style="color:black;">Selamat Datang Admin!</h1>
                         </div>
                     </div>
                     
+                    <div class="setting">
+                        <h3>Theme</h3>
+
+                        <form action="" method="post">
+                        Color Primary <br>
+                            <input id="colorpicker" name="colorp" type="text" value="<?= $colorp; ?>" /><br>
+                            <script>
+                                $("#colorpicker").spectrum({
+                                    color: ""
+                                });
+                            </script>
+                        Color Secondary <br>
+                            <input id="colorpicker2" name="colors" type="text" value="<?= $colors; ?>"/><br>
+                            <script>
+                                $("#colorpicker2").spectrum({
+                                    color: ""
+                                });
+                            </script>
+                            <button type="submit" name="theme" class="btn btn-primary">Set</button>
+                        </form>
+                    </div>
 
                     <!-- Content Row -->
 

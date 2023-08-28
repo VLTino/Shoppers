@@ -1,9 +1,9 @@
-<?php 
+<?php
 $conn = mysqli_connect("localhost", "root", "", "onlineshop");
 
 function imgplus($data)
 {
-    global$conn;
+    global $conn;
 
     $gambar = $data["gambar"];
 
@@ -96,9 +96,9 @@ function img()
     $namafilebaru .= '.';
     $namafilebaru .= $ekstensigambar;
 
-    
-        move_uploaded_file($tmpname, '../images/' . $namafilebaru);
-        return $namafilebaru;
+
+    move_uploaded_file($tmpname, '../images/' . $namafilebaru);
+    return $namafilebaru;
 
 }
 
@@ -189,7 +189,7 @@ function inpbnf($data)
     $header = htmlspecialchars($data["header"]);
 
     $query = "INSERT INTO `benefit` VALUES (NULL,'$icon','$teks','$header');";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -203,7 +203,7 @@ function editbnf($data)
     $header = htmlspecialchars($data["header"]);
 
     $query = "UPDATE `benefit` SET `icon`='$icon',`teks`='$teks',`header`='$header' WHERE `id`=$id; ";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -212,7 +212,7 @@ function deletebnf($id)
     global $conn;
 
     $query = "DELETE FROM `benefit` WHERE `id`=$id;";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -231,7 +231,7 @@ function plusctg($data)
     }
 
     $query = "INSERT INTO `category` VALUES (NULL,'$gambar','$category','$teks','$link');";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -255,7 +255,7 @@ function editctg($data)
     }
 
     $query = "UPDATE `category` SET `gambar`='$gambar',`category`='$category',`teks`='$teks',`link`='$link' WHERE `id` = $id";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     if ($gambarlama && $gambarlama != $gambar) {
         $old_file = "../images/$gambarlama";
@@ -298,7 +298,7 @@ function plusprd($data)
     $price = htmlspecialchars($data["price"]);
     $category = htmlspecialchars($data["category"]);
     $berat = htmlspecialchars($data["berat"]);
-     
+
 
 
     // Menghapus tanda titik pada angka yang masuk
@@ -312,30 +312,30 @@ function plusprd($data)
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST["color"])) {
             $selectedColors = $_POST["color"];
-    
+
             // Mengencode array "color" menjadi JSON
             $fixcolor = json_encode($selectedColors);
-            $fixcolor= str_replace('[', '', $fixcolor);
-            $fixcolor= str_replace(']', '', $fixcolor);
-            $fixcolor= str_replace('"', '', $fixcolor);
+            $fixcolor = str_replace('[', '', $fixcolor);
+            $fixcolor = str_replace(']', '', $fixcolor);
+            $fixcolor = str_replace('"', '', $fixcolor);
+        }
     }
-}
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["size"])) {
-        $selectedSizes = $_POST["size"];
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST["size"])) {
+            $selectedSizes = $_POST["size"];
 
-        // Mengencode array "size" menjadi JSON
-        $fixsize = json_encode($selectedSizes);
-        $fixsize= str_replace('[', '', $fixsize);
-        $fixsize= str_replace(']', '', $fixsize);
-        $fixsize= str_replace('"', '', $fixsize);
+            // Mengencode array "size" menjadi JSON
+            $fixsize = json_encode($selectedSizes);
+            $fixsize = str_replace('[', '', $fixsize);
+            $fixsize = str_replace(']', '', $fixsize);
+            $fixsize = str_replace('"', '', $fixsize);
 
-}
-}
+        }
+    }
 
     $query = "INSERT INTO `product` VALUES (NULL,'$gambar','$nama','$short','$about','$price','$category','$fixcolor','$fixsize','$berat');";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -351,32 +351,32 @@ function editprd($data)
     $price = htmlspecialchars($data["price"]);
     $category = htmlspecialchars($data["category"]);
     $berat = htmlspecialchars($data["berat"]);
-    
+
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST["color"])) {
             $selectedColors = $_POST["color"];
-    
+
             // Mengencode array "color" menjadi JSON
             $fixcolor = json_encode($selectedColors);
-            $fixcolor= str_replace('[', '', $fixcolor);
-            $fixcolor= str_replace(']', '', $fixcolor);
-            $fixcolor= str_replace('"', '', $fixcolor);
+            $fixcolor = str_replace('[', '', $fixcolor);
+            $fixcolor = str_replace(']', '', $fixcolor);
+            $fixcolor = str_replace('"', '', $fixcolor);
+        }
     }
-}
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["size"])) {
-        $selectedSizes = $_POST["size"];
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST["size"])) {
+            $selectedSizes = $_POST["size"];
 
-        // Mengencode array "size" menjadi JSON
-        $fixsize = json_encode($selectedSizes);
-        $fixsize= str_replace('[', '', $fixsize);
-        $fixsize= str_replace(']', '', $fixsize);
-        $fixsize= str_replace('"', '', $fixsize);
+            // Mengencode array "size" menjadi JSON
+            $fixsize = json_encode($selectedSizes);
+            $fixsize = str_replace('[', '', $fixsize);
+            $fixsize = str_replace(']', '', $fixsize);
+            $fixsize = str_replace('"', '', $fixsize);
 
-}
-}
+        }
+    }
 
     // Menghapus tanda titik pada angka yang masuk
     $price = str_replace('.', '', $price);
@@ -391,7 +391,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $query = "UPDATE `product` SET `gambar`='$gambar',`name`='$nama',`short`='$short',`about`='$about',`price`='$price',`category`='$category',`color`='$fixcolor',`size`='$fixsize',`berat`='$berat    ' WHERE `id` = $id";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     if ($gambarlama && $gambarlama != $gambar) {
         $old_file = "../images/$gambarlama";
@@ -416,7 +416,7 @@ function deleteprd($id)
         unlink($old_file);
     }
     $query = "DELETE FROM `product` WHERE `id`=$id;";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -428,7 +428,7 @@ function plusclr($data)
     $code = $data["color"];
 
     $query = "INSERT INTO `color` VALUES (NULL,'$color','$code')";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -441,7 +441,7 @@ function editclr($data)
     $code = $data["color"];
 
     $query = "UPDATE `color` SET `color`='$color',`codeclr`='$code' WHERE `id`=$id";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -450,7 +450,7 @@ function deleteclr($id)
     global $conn;
 
     $query = "DELETE FROM `color` WHERE `id`=$id;";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -469,7 +469,7 @@ function deletesz($id)
 {
     global $conn;
 
-    $query ="DELETE FROM `size` WHERE `id`=$id";
+    $query = "DELETE FROM `size` WHERE `id`=$id";
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
@@ -482,7 +482,7 @@ function editsize($data)
     $size = htmlspecialchars($data["size"]);
 
     $query = "UPDATE `size` SET `size`='$size' WHERE `id`=$id";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -505,7 +505,7 @@ function editads($data)
     }
 
     $query = "UPDATE `ads` SET `gambar`='$gambar',`header`='$header',`teks`='$teks',`link`='$link',`status`='$show' WHERE `id`=1";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     if ($gambarlama && $gambarlama != $gambar) {
         $old_file = "../images/$gambarlama";
@@ -522,10 +522,10 @@ function price($data)
 {
     global $conn;
 
-    $price=htmlspecialchars($data["price"]);
+    $price = htmlspecialchars($data["price"]);
 
     $query = "INSERT INTO `price` VALUES (NULL,'$price')";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -564,15 +564,15 @@ function cartplus($data)
 
     global $conn;
 
-    $idcos= $data["id_customer"];
-    $idprd= $data["product_id"];
-    $jumlah= $data["jumlah"];
+    $idcos = $data["id_customer"];
+    $idprd = $data["product_id"];
+    $jumlah = $data["jumlah"];
     $size = $data['size'];
     $color = $data['color'];
 
 
     $query = "INSERT INTO `cart` VALUES (NULL,$idcos,$idprd,$jumlah,'$color','$size')";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 }
@@ -582,7 +582,7 @@ function deletecart($id)
     global $conn;
 
     $query = "DELETE FROM `cart` WHERE `id`=$id;";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 
@@ -594,8 +594,8 @@ function changename($data)
     $email = $data["email"];
 
     $query = "UPDATE `customer` SET `name` = '$name' WHERE `email`='$email'";
-    mysqli_query($conn,$query);
-    return mysqli_affected_rows($conn); 
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
 }
 
 function changepp($data)
@@ -615,9 +615,9 @@ function changepp($data)
     }
 
     $query = "UPDATE `customer` SET `pp`='$gambar' WHERE `email`='$email'";
-    mysqli_query($conn,$query);
-    
-    
+    mysqli_query($conn, $query);
+
+
     if ($gambarlama && $gambarlama != $gambar) {
         $old_file = "images/$gambarlama";
         if (file_exists($old_file)) {
@@ -625,7 +625,7 @@ function changepp($data)
         }
     }
 
-return mysqli_affected_rows($conn);
+    return mysqli_affected_rows($conn);
 
 }
 
@@ -651,7 +651,7 @@ function imgpp()
             </script>";
         return false;
     }
-    
+
     //cek ekstensi
     $ekstensigambarvalid = ['jpg', 'jpeg', 'png'];
     $ekstensigambar = explode('.', $namafile);
@@ -667,12 +667,12 @@ function imgpp()
     $namafilebaru .= '.';
     $namafilebaru .= $ekstensigambar;
 
-   
-        move_uploaded_file($tmpname, 'images/' . $namafilebaru);
-        return $namafilebaru;
-    
-       
-    
+
+    move_uploaded_file($tmpname, 'images/' . $namafilebaru);
+    return $namafilebaru;
+
+
+
 }
 
 function resi($data)
@@ -683,7 +683,7 @@ function resi($data)
     $resi = $data["resi"];
 
     $query = "UPDATE `orders` SET `resi` = '$resi', `status` = 'dikirim' WHERE `id` = $id";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 }
@@ -693,10 +693,10 @@ function aboutad($data)
     global $conn;
 
     $video = $data["video"];
-    $teks = $data ["teks"];
+    $teks = $data["teks"];
 
     $query = "UPDATE `about` SET `video` ='$video' , `teks` = '$teks' WHERE `id` = 1";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 }
@@ -711,7 +711,7 @@ function storelc($data)
     $id_city = $data["id_city"];
 
     $query = "UPDATE `storelocation` SET `provinsi` = '$provinsi' , `kabupaten`='$kota' , `kecamatan`='$kecamatan' , `id_kota`='$id_city'  WHERE `id` = 1";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 }
@@ -724,7 +724,7 @@ function konfirmasi($data)
     $status = "sampai";
 
     $query = "UPDATE `orders` SET `status` = '$status'  WHERE `id` = $id";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 }
@@ -740,7 +740,7 @@ function ulas($data)
     $tanggal = $data["tanggal"];
 
     $query = "INSERT INTO `ulasan` VALUES (NULL,$idus,$idpr,'$teks',$rating,'$tanggal')";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 
@@ -761,7 +761,7 @@ function addteam($data)
     }
 
     $query = "INSERT INTO `team` VALUES (NULL,'$gambar','$name','$as','$about')";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 
@@ -779,7 +779,7 @@ function deletetm($id)
     if (file_exists($old_file)) {
         unlink($old_file);
     }
-    $query ="DELETE FROM `team` WHERE `id`=$id";
+    $query = "DELETE FROM `team` WHERE `id`=$id";
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
@@ -794,7 +794,7 @@ function edittm($data)
     $as = htmlspecialchars($data["as"]);
     $about = $data["about"];
     $id = $data["id"];
-    
+
 
     $result = mysqli_query($conn, "SELECT `gambar` FROM `team` WHERE `id`= $id");
     $row = mysqli_fetch_assoc($result);
@@ -806,7 +806,7 @@ function edittm($data)
     }
 
     $query = "UPDATE `team` SET `gambar`='$gambar',`name`='$name',`sebagai`='$as',`teks`='$about' WHERE `id` = $id";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     if ($gambarlama && $gambarlama != $gambar) {
         $old_file = "../images/$gambarlama";
@@ -826,7 +826,7 @@ function contact($data)
     $email = htmlspecialchars($data["email"]);
 
     $query = "UPDATE `contact` SET `alamat` = '$alamat', `phone` = '$phone', `email` = '$email' WHEER `id` = 1";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 }
@@ -839,8 +839,21 @@ function changegender($data)
     $gender = $data["gender"];
 
     $query = "UPDATE `customer` SET `gender` = '$gender' WHERE `email`= '$email'";
-    mysqli_query($conn,$query);
+    mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
+}
+
+function theme($data)
+{
+    global $conn;
+    $colorp = $data["colorp"];
+    $colors = $data["colors"];
+
+    $query = "UPDATE `colortheme` SET `colorp` = '$colorp', `colors` = '$colors' WHERE `id` = 1";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+
 }
 ?>

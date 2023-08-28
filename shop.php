@@ -50,6 +50,7 @@ $color = query("SELECT * FROM `color`");
 
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="css/style.php" type="text/css">
 
 </head>
 
@@ -103,12 +104,34 @@ $color = query("SELECT * FROM `color`");
                     echo "<li><a href='login-form-06'><span class='icon icon-person'></span></a></li>";
                   } ?>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
+                 <?php if (isset($_SESSION["login"]) && $_SESSION["login"] === true):
+                    $email = $_SESSION["email"];
+                    $user = query("SELECT * FROM `customer` WHERE `email`='$email'");
+                    foreach ($user as $us) {
+                      $usid = $us['id'];
+  
+                      $countcart = query("SELECT COUNT(*) as total FROM cart WHERE `id_customer` = '$usid'");
+                  }
+
+                  foreach ($countcart as $count):
+                    $totalData = $count["total"];
+
+?>
                   <li>
                     <a href="cart.php" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
-                      <span class="count">2</span>
+                      <span class="count"><?= $totalData ?></span>
                     </a>
                   </li>
+                  <?php endforeach; ?>
+                  <?php else: ?>
+                    <li>
+                    <a href="cart.php" class="site-cart">
+                      <span class="icon icon-shopping_cart"></span>
+                      <span class="count">x</span>
+                    </a>
+                  </li>
+                  <?php endif; ?>
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span
                         class="icon-menu"></span></a></li>
                 </ul>
@@ -205,7 +228,7 @@ $color = query("SELECT * FROM `color`");
                         <p class="mb-0">
                           <?= $prd["short"]; ?>
                         </p>
-                        <p class="text-primary font-weight-bold">
+                        <p class="text-primaryc font-weight-bold">
                           <?php
                           $priceFromDatabase = $prd["price"];
                           $formattedPrice = "Rp " . number_format($priceFromDatabase, 0, ',', '.');
@@ -237,7 +260,7 @@ $color = query("SELECT * FROM `color`");
               </div>
             </div>
           </div>
-
+          <div class="col-md-3 order-1 mb-5 mb-md-0">
           <!-- Filter form -->
           <form action="filter.php" method="post">
 
@@ -247,14 +270,14 @@ $color = query("SELECT * FROM `color`");
               <ul class="list-unstyled mb-0">
                 <li class="mb-1">
                   <input type="radio" name="category" id="all" value="" <?= empty($_POST['category']) ? 'checked' : ''; ?> class="filter-input">
-                  <label for="all"><span style="color:#7971ea;">All Category</span> </label>
+                  <label for="all"><span class="category">All Category</span> </label>
                 </li>
                 <?php foreach ($category as $ctg): ?>
                   <li class="mb-1">
                     <input type="radio" name="category" id="<?= $ctg["category"]; ?>" value="<?= $ctg["category"]; ?>"
                       <?= (isset($_POST['category']) && $_POST['category'] === $ctg["category"]) ? 'checked' : ''; ?>
                       class="filter-input">
-                    <label for="<?= $ctg["category"]; ?>"><span style="color:#7971ea;">
+                    <label for="<?= $ctg["category"]; ?>"><span class="category">
                         <?= $ctg["category"]; ?>
                       </span> <span class="text-black ml-auto"> (
                         <?php
@@ -275,7 +298,7 @@ $color = query("SELECT * FROM `color`");
             <div class="border p-4 rounded mb-4">
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
-                <div id="slider-range" class="border-primary"></div>
+                <div id="slider-range" class="border-primaryc"></div>
                 <input type="text" name="Price" id="amount" class="filter-input form-control border-0 pl-0 bg-white"
                   readonly />
               </div>
@@ -327,7 +350,7 @@ $color = query("SELECT * FROM `color`");
              
 
           </form>
-
+                </div>
 
           <!-- Add this script in the head section -->
           <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -509,7 +532,7 @@ $color = query("SELECT * FROM `color`");
                 src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
               <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
               with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank"
-                class="text-primary">Colorlib</a>
+                class="text-primaryc">Colorlib</a>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
