@@ -849,8 +849,10 @@ function theme($data)
     global $conn;
     $colorp = $data["colorp"];
     $colors = $data["colors"];
+    $fontpr = $data["fontpr"];
+    $fontse = $data["fontse"];
 
-    $query = "UPDATE `colortheme` SET `colorp` = '$colorp', `colors` = '$colors' WHERE `id` = 1";
+    $query = "UPDATE `colortheme` SET `colorp` = '$colorp', `colors` = '$colors', `fontpr` = '$fontpr', `fontse` = '$fontse' WHERE `id` = 1";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);

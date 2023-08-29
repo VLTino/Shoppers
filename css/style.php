@@ -5,6 +5,8 @@ require '../admins/functions.php';
 // Query untuk mengambil warna dari database
 $colorp = "SELECT colorp FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
 $colors = "SELECT colors FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
+$fontpr = "SELECT fontpr FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
+$fontse = "SELECT fontse FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
 
 $resultcolorp = $conn->query($colorp);
 
@@ -18,6 +20,20 @@ $resultcolors = $conn->query($colors);
 if ($resultcolors->num_rows > 0) {
     $row = $resultcolors->fetch_assoc();
     $colors = $row["colors"];
+}
+
+$resultfontse = $conn->query($fontse);
+
+if ($resultfontse->num_rows > 0) {
+    $row = $resultfontse->fetch_assoc();
+    $fontse = $row["fontse"];
+}
+
+$resultfontpr = $conn->query($fontpr);
+
+if ($resultfontpr->num_rows > 0) {
+    $row = $resultfontpr->fetch_assoc();
+    $fontpr = $row["fontpr"];
 }
 
 
@@ -142,4 +158,12 @@ a:hover {
     background-color: <?php echo $colorp; ?>;
     background-image: none;
     border-color: <?php echo $colorp; ?>;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: '<?php echo $fontse; ?>';
+}
+
+body {
+    font-family: '<?php echo $fontpr; ?>'
 }

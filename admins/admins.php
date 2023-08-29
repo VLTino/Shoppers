@@ -9,8 +9,10 @@ if (!isset($_SESSION["admin"])) {
 require 'functions.php';
 
 $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
-$colorp = "SELECT `colorp` FROM `colortheme` WHERE `id` = 1"; // Sesuaikan dengan query Anda
-$colors = "SELECT `colors` FROM `colortheme` WHERE `id` = 1"; // Sesuaikan dengan query Anda
+$colorp = "SELECT colorp FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
+$colors = "SELECT colors FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
+$fontpr = "SELECT fontpr FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
+$fontse = "SELECT fontse FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
 
 $resultcolorp = $conn->query($colorp);
 
@@ -26,6 +28,20 @@ if ($resultcolors->num_rows > 0) {
     $colors = $row["colors"];
 }
 
+$resultfontse = $conn->query($fontse);
+
+if ($resultfontse->num_rows > 0) {
+    $row = $resultfontse->fetch_assoc();
+    $fontse = $row["fontse"];
+}
+
+$resultfontpr = $conn->query($fontpr);
+
+if ($resultfontpr->num_rows > 0) {
+    $row = $resultfontpr->fetch_assoc();
+    $fontpr = $row["fontpr"];
+}
+
 if (isset($_POST["theme"])) {
     if (theme($_POST)) {
         echo "<script>
@@ -39,6 +55,24 @@ if (isset($_POST["theme"])) {
         </script>";
     }
 }
+
+$fonts = array(
+    "Phudu",
+    "Roboto",
+    "Open Sans",
+    "ADLaM Display",
+    "Black Ops One",
+    "Qwitcher Grypen",
+    "Roboto Slab",
+    "Dancing Script",
+    "Pacifico",
+    "Yellowtail",
+    "Lobster",
+    "PT Serif",
+    "Nunito",
+    "Mukta"
+);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -416,6 +450,20 @@ if (isset($_POST["theme"])) {
                                     color: ""
                                 });
                             </script>
+                            <div class="form-group">
+                                Font Primary
+                                <select class="form-control" name="fontpr">
+                            <?php foreach ($fonts as $font): ?>
+                                <option value="<?php echo $font; ?>" <?php if ($font == $fontpr) echo 'selected="selected"'; ?>><?php echo $font; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                Font Secondary
+                                <select class="form-control" name="fontse">
+                                    <?php foreach ($fonts as $font): ?>
+                                        <option value="<?php echo $font; ?>" <?php if ($font == $fontse) echo 'selected="selected"'; ?>><?php echo $font; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                             <button type="submit" name="theme" class="btn btn-primary">Set</button>
                         </form>
                     </div>
