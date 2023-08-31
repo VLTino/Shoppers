@@ -377,8 +377,6 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                                     value="<?= $ctg["category"]; ?>">
                                 Teks Above Category
                                 <input type="text" name="teks" id="" class="form-control" value="<?= $ctg["teks"]; ?>"> <br>
-                                Page Link
-                                <input type="text" name="link" id="" class="form-control" value="<?= $ctg["link"]; ?>">
                             <?php endforeach; ?>
                             <button type="submit" class="btn btn-primary" name="ctge">Submit</button>
                         </div>

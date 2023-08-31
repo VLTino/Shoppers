@@ -398,6 +398,8 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                                 <h6>Teks</h6>
                                 <textarea name="teks" id="" cols="30" rows="10"
                                     class="form-control"><?= $hdr["teks"]; ?></textarea><br>
+                                <h6>Link</h6>
+                                <input type="text" name="link" id="" value="<?= $hdr["link"]; ?>" class="form-control"><br>
                             <?php endforeach; ?>
                             <button type="submit" class="btn btn-primary" name="tkshdr">Edit</button>
                         </div>

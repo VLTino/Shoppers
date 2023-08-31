@@ -174,8 +174,9 @@ function edittkshdr($data)
 
     $header = htmlspecialchars($data["header"]);
     $teks = htmlspecialchars($data["teks"]);
+    $link = htmlspecialchars($data["link"]);
 
-    $query = "UPDATE `header` SET `header`='$header',`teks`='$teks' WHERE `id`=1;";
+    $query = "UPDATE `header` SET `header`='$header',`teks`='$teks', `link`='$link' WHERE `id`=1;";
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
@@ -223,14 +224,13 @@ function plusctg($data)
     $gambar = $data["gambar"];
     $category = htmlspecialchars($data["category"]);
     $teks = htmlspecialchars($data["teks"]);
-    $link = htmlspecialchars($data["link"]);
 
     $gambar = img();
     if (!$gambar) {
         return false;
     }
 
-    $query = "INSERT INTO `category` VALUES (NULL,'$gambar','$category','$teks','$link');";
+    $query = "INSERT INTO `category` VALUES (NULL,'$gambar','$category','$teks');";
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
@@ -243,7 +243,6 @@ function editctg($data)
     $gambar = $data["gambar"];
     $category = htmlspecialchars($data["category"]);
     $teks = htmlspecialchars($data["teks"]);
-    $link = htmlspecialchars($data["link"]);
 
     $result = mysqli_query($conn, "SELECT `gambar` FROM `category` WHERE `id`= $id");
     $row = mysqli_fetch_assoc($result);
@@ -254,7 +253,7 @@ function editctg($data)
         $gambar = $gambarlama;
     }
 
-    $query = "UPDATE `category` SET `gambar`='$gambar',`category`='$category',`teks`='$teks',`link`='$link' WHERE `id` = $id";
+    $query = "UPDATE `category` SET `gambar`='$gambar',`category`='$category',`teks`='$teks' WHERE `id` = $id";
     mysqli_query($conn, $query);
 
     if ($gambarlama && $gambarlama != $gambar) {

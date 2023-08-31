@@ -378,8 +378,6 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                             <input type="text" name="category" id="" class="form-control">
                             Teks Above Category
                             <input type="text" name="teks" id="" class="form-control"> <br>
-                            Page Link 
-                            <input type="text" name="link" id="" class="form-control">
                             <button type="submit" class="btn btn-primary" name="ctg">Submit</button>
                         </div>
                     </form>
@@ -391,7 +389,6 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                                 <th scope="col">Image</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Teks</th>
-                                <th scope="col">Page Link</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -408,7 +405,6 @@ $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
                                 <td><img src="../images/<?= $ctg["gambar"]; ?>" alt="" srcset="" style="width:100px;"></td>
                                 <td><?= $ctg["category"]; ?></td>
                                 <td><?= $ctg["teks"]; ?></td>
-                                <td><?= $ctg["link"]; ?></td>
                                 <td>
                                     <a href="editctg.php?id=<?= $ctg["id"]; ?>"
                                         class="btn-circle btn-success btn-sm"><i class="fas fa-pen"></i></a>
