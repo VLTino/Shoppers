@@ -7,13 +7,19 @@ $category = query("SELECT * FROM `category` ORDER BY `id` DESC");
 $contact = query("SELECT * FROM `contact` WHERE `id`=1");
 $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
 
+$storename = "SELECT * FROM `storename` WHERE `id`=1";
+$resultstorename = $conn->query($storename);
 
+if ($resultstorename->num_rows > 0) {
+    $row = $resultstorename->fetch_assoc();
+    $strname = $row["name"];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Shoppers &mdash; Colorlib e-Commerce Template</title>
+    <title><?= $strname; ?> &mdash; Colorlib e-Commerce Template</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -58,7 +64,7 @@ $imgh = query("SELECT * FROM `imgheader` WHERE `id`=1");
 
                         <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                             <div class="site-logo">
-                                <a href="index.php" class="js-logo-clone">Shoppers</a>
+                                <a href="index.php" class="js-logo-clone"><?= $strname; ?></a>
                             </div>
                         </div>
 

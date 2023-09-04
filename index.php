@@ -18,6 +18,13 @@ $benefit = query("SELECT * FROM `benefit`");
 $category = query("SELECT * FROM `category`");
 $newprd = query("SELECT * FROM `product` ORDER BY id DESC LIMIT 5");
 $ads = query("SELECT * FROM `ads` WHERE `id`=1");
+$storename = "SELECT * FROM `storename` WHERE `id`=1";
+$resultstorename = $conn->query($storename);
+
+if ($resultstorename->num_rows > 0) {
+    $row = $resultstorename->fetch_assoc();
+    $strname = $row["name"];
+}
 
 ?>
 
@@ -25,7 +32,7 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
 <html lang="en">
 
 <head>
-  <title>Shoppers &mdash; Colorlib e-Commerce Template</title>
+  <title><?= $strname; ?> &mdash; Colorlib e-Commerce Template</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -76,7 +83,7 @@ $ads = query("SELECT * FROM `ads` WHERE `id`=1");
 
             <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
               <div class="site-logo">
-                <a href="index.php" class="js-logo-clone">Shoppers</a>
+                <a href="index.php" class="js-logo-clone"><?= $strname; ?></a>
               </div>
             </div>
 

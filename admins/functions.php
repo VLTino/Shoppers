@@ -857,4 +857,17 @@ function theme($data)
     return mysqli_affected_rows($conn);
 
 }
+
+function strname($data)
+{
+    global $conn;
+
+    $name = htmlentities($data["name"]);
+    $fontstr = $data["fontstr"];
+
+    $query = "UPDATE `storename` SET `name` = '$name', `fontstr` = '$fontstr' WHERE `id` = 1";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
 ?>

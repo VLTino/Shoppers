@@ -8,6 +8,7 @@ if (!isset($_SESSION["admin"])) {
 
 require 'functions.php';
 
+$store = query("SELECT * FROM `storename`");
 $orders = query("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 3");
 $colorp = "SELECT colorp FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
 $colors = "SELECT colors FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
@@ -44,6 +45,20 @@ if ($resultfontpr->num_rows > 0) {
 
 if (isset($_POST["theme"])) {
     if (theme($_POST)) {
+        echo "<script>
+        alert('data berhasil diedit');
+        document.location.href = 'admins.php';
+        </script>";
+    } else {
+        echo "<script>
+        alert('data gagal diedit');
+        document.location.href = 'admins.php';
+        </script>";
+    }
+}
+
+if (isset($_POST["strname"])) {
+    if (strname($_POST)) {
         echo "<script>
         alert('data berhasil diedit');
         document.location.href = 'admins.php';
@@ -431,6 +446,25 @@ $fonts = array(
                             <h1 class="font-weight-bold text-center" style="color:black;">Selamat Datang Admin!</h1>
                         </div>
                     </div>
+
+                    <div class="shopname mb-5">
+                        <h3>Store</h3>
+                        <?php foreach ($store as $str): ?>
+                        <form action="" method="post">
+                        <div class="form-group">
+                            Store Name <br>
+                            <input type="text" name="name" id="" class="form-control" value="<?= $str["name"]; ?>">
+                            Font <br>
+                            <select class="form-control" name="fontstr">
+                                <?php foreach ($fonts as $font): ?>
+                                    <option value="<?php echo $font; ?>" <?php if ($font == $str["fontstr"]) echo 'selected="selected"'; ?>><?php echo $font; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary m-0" name="strname">Edit</button>
+                        </form>
+                        <?php endforeach; ?>
+                    </div>
                     
                     <div class="setting">
                         <h3>Theme</h3>
@@ -464,7 +498,7 @@ $fonts = array(
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <button type="submit" name="theme" class="btn btn-primary">Set</button>
+                            <button type="submit" name="theme" class="btn btn-primary m-0">Set</button>
                         </form>
                     </div>
 

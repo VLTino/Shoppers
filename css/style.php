@@ -7,6 +7,7 @@ $colorp = "SELECT colorp FROM colortheme WHERE id = 1"; // Sesuaikan dengan quer
 $colors = "SELECT colors FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
 $fontpr = "SELECT fontpr FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
 $fontse = "SELECT fontse FROM colortheme WHERE id = 1"; // Sesuaikan dengan query Anda
+$fontstr = "SELECT fontstr FROM storename WHERE id = 1"; // Sesuaikan dengan query Anda
 
 $resultcolorp = $conn->query($colorp);
 
@@ -34,6 +35,13 @@ $resultfontpr = $conn->query($fontpr);
 if ($resultfontpr->num_rows > 0) {
     $row = $resultfontpr->fetch_assoc();
     $fontpr = $row["fontpr"];
+}
+
+$resultfontstr = $conn->query($fontstr);
+
+if ($resultfontstr->num_rows > 0) {
+    $row = $resultfontstr->fetch_assoc();
+    $fontstr = $row["fontstr"];
 }
 
 
@@ -166,4 +174,8 @@ h1,h2,h3,h4,h5,h6 {
 
 body {
     font-family: '<?php echo $fontpr; ?>'
+}
+
+.js-logo-clone{
+    font-family: '<?php echo $fontstr; ?>'
 }
