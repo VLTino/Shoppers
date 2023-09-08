@@ -119,6 +119,9 @@ $fonts = array(
     <script type='text/javascript' src='spectrum/docs/toc.js'></script>
     <script type='text/javascript' src='spectrum/docs/docs.js'></script>
     <script type='text/javascript' src='spectrum/docs/highlight/highlight.pack.js'></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Black+Ops+One&family=Dancing+Script&family=Lobster&family=Open+Sans&family=PT+Serif&family=Pacifico&family=Phudu&family=Qwitcher+Grypen&family=Roboto&family=Roboto+Slab&family=Yellowtail&display=swap" rel="stylesheet">
 
 </head>
 
@@ -457,7 +460,7 @@ $fonts = array(
                             Font <br>
                             <select class="form-control" name="fontstr">
                                 <?php foreach ($fonts as $font): ?>
-                                    <option value="<?php echo $font; ?>" <?php if ($font == $str["fontstr"]) echo 'selected="selected"'; ?>><?php echo $font; ?></option>
+                                    <option value="<?php echo $font; ?>" style="font-family:<?php echo $font; ?>" <?php if ($font == $str["fontstr"]) echo 'selected="selected"'; ?>><?php echo $font; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -488,13 +491,13 @@ $fonts = array(
                                 Font Primary
                                 <select class="form-control" name="fontpr">
                             <?php foreach ($fonts as $font): ?>
-                                <option value="<?php echo $font; ?>" <?php if ($font == $fontpr) echo 'selected="selected"'; ?>><?php echo $font; ?></option>
+                                <option value="<?php echo $font; ?>" style="font-family:<?php echo $font; ?>" <?php if ($font == $fontpr) echo 'selected="selected"'; ?>><?php echo $font; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                                 Font Secondary
                                 <select class="form-control" name="fontse">
                                     <?php foreach ($fonts as $font): ?>
-                                        <option value="<?php echo $font; ?>" <?php if ($font == $fontse) echo 'selected="selected"'; ?>><?php echo $font; ?></option>
+                                        <option value="<?php echo $font; ?>" style="font-family:<?php echo $font; ?>" <?php if ($font == $fontse) echo 'selected="selected"'; ?>><?php echo $font; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
