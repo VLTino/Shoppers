@@ -294,6 +294,7 @@ function plusprd($data)
     $nama = htmlspecialchars($data["product"]);
     $short = htmlspecialchars($data["sabout"]);
     $about = $data["about"];
+    $about = mysqli_real_escape_string($conn, $about);
     $price = htmlspecialchars($data["price"]);
     $category = htmlspecialchars($data["category"]);
     $berat = htmlspecialchars($data["berat"]);
@@ -347,6 +348,7 @@ function editprd($data)
     $nama = htmlspecialchars($data["product"]);
     $short = htmlspecialchars($data["sabout"]);
     $about = $data["about"];
+    $about = mysqli_real_escape_string($conn, $about);
     $price = htmlspecialchars($data["price"]);
     $category = htmlspecialchars($data["category"]);
     $berat = htmlspecialchars($data["berat"]);
@@ -493,6 +495,8 @@ function editads($data)
     $teks = $data["teks"];
     $link = $data["link"];
     $show = $data["show"];
+    $gambar = $data ["gambar"];
+    $teks = mysqli_real_escape_string($conn, $teks);
 
     $result = mysqli_query($conn, "SELECT `gambar` FROM `ads` WHERE `id`= 1");
     $row = mysqli_fetch_assoc($result);
@@ -693,6 +697,7 @@ function aboutad($data)
 
     $video = $data["video"];
     $teks = $data["teks"];
+    $teks = mysqli_real_escape_string($conn, $teks);
 
     $query = "UPDATE `about` SET `video` ='$video' , `teks` = '$teks' WHERE `id` = 1";
     mysqli_query($conn, $query);
@@ -753,6 +758,7 @@ function addteam($data)
     $name = htmlspecialchars($data["name"]);
     $as = htmlspecialchars($data["as"]);
     $about = $data["about"];
+    $about = mysqli_real_escape_string($conn, $about);
 
     $gambar = img();
     if (!$gambar) {
@@ -793,6 +799,7 @@ function edittm($data)
     $as = htmlspecialchars($data["as"]);
     $about = $data["about"];
     $id = $data["id"];
+    $about = mysqli_real_escape_string($conn, $about);
 
 
     $result = mysqli_query($conn, "SELECT `gambar` FROM `team` WHERE `id`= $id");

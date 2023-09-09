@@ -7,12 +7,12 @@ $id = $_GET["id"];
 if ( deletetm($id) > 0) {
     echo "<script>
         alert('data berhasil dihapus');
-        document.location.href = 'size.php';
+        document.location.href = 'listteam.php';
         </script>";
 } else {
     echo "<script>
         alert('data gagal dihapus');
-        document.location.href = 'size.php';
+        document.location.href = 'listteam.php';
         </script>";
 }
 
