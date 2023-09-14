@@ -24,7 +24,9 @@ if (mysqli_connect_error()) {
 }
 
 // Query untuk mengambil data penjualan per hari dalam rentang tanggal yang diinginkan
-$query = "SELECT DATE(order_date) AS tanggal, COUNT(*) AS jumlah_pesanan 
+// ...
+// Query untuk mengambil data penjualan per hari dalam rentang tanggal yang diinginkan
+$query = "SELECT DATE(order_date) AS tanggal, COUNT(*) AS jumlah_pesanan, SUM(orders_total) AS total_uang 
           FROM orders 
           WHERE status NOT IN ('unpaid', 'expired') 
           AND DATE(order_date) BETWEEN '$startDate' AND '$endDate'
@@ -33,38 +35,48 @@ $query = "SELECT DATE(order_date) AS tanggal, COUNT(*) AS jumlah_pesanan
 $result = mysqli_query($koneksi, $query);
 
 // Buat array asosiatif untuk menyimpan jumlah pesanan per hari
+// Buat array asosiatif untuk menyimpan jumlah pesanan, total uang, dan tanggal
 $data = array();
 
-// Buat rentang hari dari tanggal awal hingga tanggal akhir
+// Inisialisasi tanggal awal dan akhir
 $currentDate = new DateTime($startDate);
 $endDateObj = new DateTime($endDate);
 
 while ($currentDate <= $endDateObj) {
     $tanggal = $currentDate->format('Y-m-d');
     
-    // Inisialisasi jumlah pesanan menjadi 0
+    // Inisialisasi jumlah pesanan dan total uang menjadi 0
     $jumlah_pesanan = 0;
+    $total_uang = 0;
     
     // Cek apakah tanggal ini ada dalam hasil query
     foreach ($result as $row) {
         if ($row['tanggal'] == $tanggal) {
             $jumlah_pesanan = $row['jumlah_pesanan'];
+            $total_uang = $row['total_uang'];
             break;
         }
     }
     
-    // Tambahkan tanggal dan jumlah pesanan ke dalam array data
-    $data[] = array('tanggal' => $tanggal, 'jumlah_pesanan' => $jumlah_pesanan);
+    // Tambahkan tanggal, jumlah pesanan, dan total uang ke dalam array data
+    $data[] = array('tanggal' => $tanggal, 'jumlah_pesanan' => $jumlah_pesanan, 'total_uang' => $total_uang);
     
     // Tambahkan 1 hari ke tanggal awal
     $currentDate->modify('+1 day');
 }
+
+// Hitung total pesanan dan total uang dari hasil query
+$totalPesanan = array_sum(array_column($data, 'jumlah_pesanan'));
+$totalUang = array_sum(array_column($data, 'total_uang'));
 
 // Tutup koneksi database
 mysqli_close($koneksi);
 
 // Ubah data menjadi format JSON
 $json_data = json_encode($data);
+
+// ...
+
 ?>
 
 <!DOCTYPE html>
@@ -86,10 +98,14 @@ $json_data = json_encode($data);
     </form>
     <div>
     <?php
-    // Hitung total pesanan dari hasil query
-    $totalPesanan = array_sum(array_column($data, 'jumlah_pesanan'));
+    // Format total uang ke dalam Rupiah
+    $formattedTotalUang = number_format($totalUang, 0, ',', '.'); // 0 desimal, koma sebagai pemisah ribuan, titik sebagai pemisah desimal
+
+    // Tampilkan total pesanan dan total uang dalam format Rupiah
+    echo '<h2>Total Pesanan: ' . $totalPesanan . '</h2>';
+    echo '<h2>Total Uang: Rp ' . $formattedTotalUang . '</h2>';
     ?>
-    <h2>Total Pesanan: <?php echo $totalPesanan; ?></h2>
+
 </div>
     <!-- Buat elemen untuk grafik -->
     <canvas id="myChart"></canvas>
